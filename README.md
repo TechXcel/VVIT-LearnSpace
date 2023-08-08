@@ -51,8 +51,7 @@ One of the unique features of VVIT LearnSpace is the project showcase section. T
 To get started with the development of VVIT LearnSpace, follow these steps:
 
 1. Clone this repository to your local machine.
-2. Set up the backend server by navigating to the `backend` directory and running `npm install`.
-3. Set up the frontend client by navigating to the `frontend` directory and running `npm install`.
-4. Set up the database by following the instructions in the `database` directory.
-5. Create a `.env` file in the `backend` directory with necessary environment variables (e.g., database connection details, AWS credentials).
-6. Start the development server for both the backend and frontend.
+2. Set up the backend server by navigating to the `server` directory and running `npm install`.
+3. Set up the frontend client by navigating to the `client` directory and running `npm install`.
+4. Create a `.env` file in the `server` directory with necessary environment variables (e.g., database connection details, AWS credentials).
+5. Start the development server for both the backend and frontend.
