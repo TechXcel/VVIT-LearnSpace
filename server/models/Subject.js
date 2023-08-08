@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const subjectSchema = new mongoose.Schema({
-  name: { 
+  name: {
     type: String,
-    required: true
-  }
+    required: [true, "Subject name is required"],
+  },
 });
 
-export default mongoose.model('Subject', subjectSchema);
+export default mongoose.model("Subject", subjectSchema);

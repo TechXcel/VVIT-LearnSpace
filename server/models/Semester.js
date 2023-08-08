@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const semesterSchema = new mongoose.Schema({
-  name: { 
-     type: String,
-     required: true
-   }
+  name: {
+    type: String,
+    required: [true, "Semester is required"],
+  },
 });
 
-export default mongoose.model('Semester', semesterSchema);
+export default mongoose.model("Semester", semesterSchema);
