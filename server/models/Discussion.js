@@ -49,16 +49,10 @@ const discussionSchema = new mongoose.Schema(
   }
 );
 
-discussionSchema.virtual("userInfo", {
-  ref: "User",
-  localField: "userId",
-  foreignField: "_id",
-});
-
-discussionSchema.virtual("replies.userInfo", {
-  ref: "User",
-  localField: "replies.userId",
-  foreignField: "_id",
-});
+// discussionSchema.virtual("replies.userInfo", {
+//   ref: "User",
+//   localField: "replies.userId",
+//   foreignField: "_id",
+// });
 
 export default mongoose.model("Discussion", discussionSchema);

@@ -23,15 +23,7 @@ const notificationSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
   }
 );
-
-notificationSchema.virtual("userInfo", {
-  ref: "User",
-  localField: "userId",
-  foreignField: "_id",
-});
 
 export default mongoose.model("Notification", notificationSchema);

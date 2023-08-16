@@ -20,6 +20,10 @@ const resourceSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please specify the subject of this resource."],
     },
+    semester: {
+      type: Number,
+      required: [true, "Semester is required"],
+    },
     type: {
       type: String,
       enum: ["lecture notes", "assignment", "previous paper", "project"],
@@ -70,30 +74,10 @@ const resourceSchema = new mongoose.Schema(
   }
 );
 
-resourceSchema.virtual("uploaderInfo", {
-  ref: "User",
-  localField: "uploader",
-  foreignField: "_id",
-});
-
-// With this virtual, when you fetch a Resource document, you can use the uploaderInfo property to populate details about the uploader from the User model.
-
-// const resource = await Resource.findById(resourceId).populate('uploaderInfo');
-// console.log(resource.uploaderInfo);
-
-// To populate resources uploaded by a user, you can use the populate method like this:
-// const resources = await Resource.find({ uploader: userId }).populate('uploaderInfo');
-
-resourceSchema.virtual("ratingsInfo", {
-  ref: "User",
-  localField: "ratings.userId",
-  foreignField: "_id",
-});
-
-resourceSchema.virtual("reviewsInfo", {
-  ref: "User",
-  localField: "reviews.userId",
-  foreignField: "_id",
+resourceSchema.virtual("resourceReviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "resourceId",
 });
 
 export default mongoose.model("Resource", resourceSchema);

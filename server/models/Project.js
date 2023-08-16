@@ -3,7 +3,7 @@ import validator from "validator";
 
 const projectSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -59,10 +59,10 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
-projectSchema.virtual("userInfo", {
-  ref: "User",
-  localField: "userId",
-  foreignField: "_id",
+projectSchema.virtual("projectReviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "projectId",
 });
 
 export default mongoose.model("Project", projectSchema);
