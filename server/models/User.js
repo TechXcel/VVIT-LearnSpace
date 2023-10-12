@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
@@ -76,5 +78,23 @@ userSchema.virtual("reviews", {
   localField: "_id",
   foreignField: "userId",
 });
+
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+UserSchema.methods.hashPassword = async function (password) {
+  return await bcrypt.hash(password, 10);
+};
+
+UserSchema.methods.createAccessToken = async function () {
+  return jwt.sign(
+    { userId: this._id, role: this.role },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1d",
+    }
+  );
+};
 
 export default mongoose.model("User", userSchema);
