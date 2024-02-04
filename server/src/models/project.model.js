@@ -3,7 +3,7 @@ import validator from "validator";
 
 const projectSchema = new mongoose.Schema(
   {
-    user: {
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -16,10 +16,9 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    tags: [{ type: String }],
-    files: [{ type: String }],
-    githubUrl: {
+    repositoryUrl: {
       type: String,
+      required: true,
       validate: {
         validator: (value) => {
           return /^(https:\/\/github.com\/)[A-Za-z0-9_-]+\/[A-Za-z0-9_-]+$/.test(
@@ -47,10 +46,8 @@ const projectSchema = new mongoose.Schema(
         message: "Invalid URL",
       },
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+    tags: [{ type: String, required: true }],
+    additionalFiles: [{ type: String }],
   },
   {
     timestamps: true,
@@ -65,4 +62,6 @@ projectSchema.virtual("projectReviews", {
   foreignField: "projectId",
 });
 
-export default mongoose.model("Project", projectSchema);
+const Project = mongoose.model("Project", projectSchema);
+
+export default Project;

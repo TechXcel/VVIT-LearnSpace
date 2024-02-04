@@ -26,7 +26,7 @@ const resourceSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["lecture notes", "assignment", "previous paper", "project"],
+      enum: ["lectureNote", "assignment", "previousPaper"],
       required: [true, "Please select a type for this resource."],
     },
     fileUrl: {
@@ -37,35 +37,18 @@ const resourceSchema = new mongoose.Schema(
         message: "Invalid URL",
       },
     },
-    ratings: [
-      {
-        userId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-        rating: Number,
-      },
-    ],
-    reviews: [
-      {
-        userId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-        text: String,
-      },
-    ],
     status: {
       type: String,
+      default: "pending",
       enum: ["pending", "approved", "rejected"],
       required: [true, "Please provide a status for this resource."],
     },
-    categories: [String],
-    tags: [String],
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+    tags: [
+      {
+        type: String,
+        required: [true, "Please provide at least one tag for this resource."],
+      },
+    ],
   },
   {
     timestamps: true,
@@ -74,10 +57,12 @@ const resourceSchema = new mongoose.Schema(
   }
 );
 
-resourceSchema.virtual("resourceReviews", {
+resourceSchema.virtual("reviews", {
   ref: "Review",
   localField: "_id",
   foreignField: "resourceId",
 });
 
-export default mongoose.model("Resource", resourceSchema);
+const Resource = mongoose.model("Resource", resourceSchema);
+
+export default Resource;
