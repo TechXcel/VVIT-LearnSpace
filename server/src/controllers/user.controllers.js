@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   await uploadFile(req.file, "avatar", req.body.name);
 
-  const perfectName = req.body.name.split(" ").join("-");
+  const perfectName = req.body.name.split(/\s+/).join("-");
 
   req.file.originalname = perfectName;
 
@@ -95,4 +95,69 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 });
 
-export { registerUser, loginUser };
+export const userPasswordUpdate = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  if (!oldPassword || !newPassword) {
+    throw new ApiError(404, "Old password and new password are required");
+  }
+
+  const userId = req.user._id;
+
+  if (!userId) {
+    throw new ApiError(404, "User ID is required");
+  }
+
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new ApiError(404, "User does not exist");
+  }
+
+  const passwordValid = await user.isPasswordCorrect(oldPassword);
+  if (!passwordValid) {
+    throw new ApiError(401, "Old password is incorrect");
+  }
+
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: false });
+
+  return res.status(200).json(new ApiResponse(200, null, "Password updated"));
+};
+
+const getUserDetails = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  if (!userId) {
+    throw new ApiError(400, "User ID is required");
+  }
+
+  const user = await User.findById(userId).populate([
+    "resources",
+    "projects",
+    "notifications",
+    "reviews",
+  ]);
+
+  if (!user) {
+    throw new ApiError(404, "User details does not exist");
+  }
+
+  return res.status(200).json(new ApiResponse(200, { user }, "User details"));
+});
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select("-password");
+
+  if (!users) {
+    throw new ApiError(404, "Users does not exist");
+  }
+
+  return res.status(200).json(new ApiResponse(200, { users }, "Users details"));
+});
+
+export {
+  registerUser,
+  loginUser,
+  getUserDetails,
+  getAllUsers,
+  userPasswordUpdate,
+};

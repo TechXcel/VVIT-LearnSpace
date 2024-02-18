@@ -13,7 +13,7 @@ const s3Client = new S3Client({
 export const uploadFile = async (file, folderName, name) => {
   const contentType = file.mimetype;
 
-  const perfectName = name.split(" ").join("-");
+  const perfectName = name.split(/\s+/).join("-");
 
   file.originalname = perfectName;
 
