@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const notificationSchema = new mongoose.Schema(
   {
-    userId: {
+    recipientId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -11,19 +11,12 @@ const notificationSchema = new mongoose.Schema(
       type: String,
       required: [true, "Notification content is required"],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    status: {
-      type: String,
-      enum: ["unread", "read"],
-      required: [true, "Notification status is required"],
-    },
   },
   {
     timestamps: true,
   }
 );
 
-export default mongoose.model("Notification", notificationSchema);
+const Notification = mongoose.model("Notification", notificationSchema);
+
+export default Notification;

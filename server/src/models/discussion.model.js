@@ -55,4 +55,6 @@ const discussionSchema = new mongoose.Schema(
 //   foreignField: "_id",
 // });
 
-export default mongoose.model("Discussion", discussionSchema);
+const Discussion = mongoose.model("Discussion", discussionSchema);
+
+export default Discussion;
