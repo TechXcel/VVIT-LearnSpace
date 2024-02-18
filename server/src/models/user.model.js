@@ -45,8 +45,8 @@ const userSchema = new Schema(
       required: false,
       default: function () {
         return this.gender === "male"
-          ? "https://learn-space.s3.ap-south-1.amazonaws.com/male.png"
-          : "https://learn-space.s3.ap-south-1.amazonaws.com/female.png";
+          ? "https://learnspace.s3.ap-south-1.amazonaws.com/male.png"
+          : "https://learnspace.s3.ap-south-1.amazonaws.com/female.png";
       },
       validate: {
         validator: validator.isURL,
