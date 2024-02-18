@@ -1,5 +1,5 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 dotenv.config();
 
 const s3Client = new S3Client({
@@ -9,3 +9,20 @@ const s3Client = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
+
+export const uploadFile = async (file, folderName, name) => {
+  const contentType = file.mimetype;
+
+  const perfectName = name.split(" ").join("-");
+
+  file.originalname = perfectName;
+
+  const command = new PutObjectCommand({
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: `${folderName}/${file.originalname}`,
+    Body: file.buffer,
+    ContentType: contentType,
+  });
+
+  await s3Client.send(command);
+};

@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { uploadFile } from "../utils/s3.js";
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, identityNumber, password, gender, branch, role } =
@@ -27,15 +28,15 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "User already exists");
   }
 
-  const user = await User.create({
-    name,
-    email,
-    identityNumber,
-    password,
-    gender,
-    branch,
-    role,
-  });
+  await uploadFile(req.file, "avatar", req.body.name);
+
+  const perfectName = req.body.name.split(" ").join("-");
+
+  req.file.originalname = perfectName;
+
+  req.body.avatar = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/avatar/${req.file.originalname}`;
+
+  const user = await User.create(req.body);
 
   const createdUser = await User.findById(user._id).select("-password");
 
