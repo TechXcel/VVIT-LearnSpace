@@ -34,7 +34,6 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Please enter your password"],
       min: [6, "Your password should be atleast 6 characters long"],
-      select: false,
     },
     gender: {
       type: String,
@@ -70,10 +69,7 @@ const userSchema = new Schema(
       ],
       required: [true, "Please select your branch"],
     },
-    section: {
-      type: String,
-      enum: ["A", "B", "C", "D"],
-    },
+
     role: {
       type: String,
       enum: ["student", "faculty"],
@@ -123,7 +119,7 @@ userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.generateAccessToken = function () {
+userSchema.methods.generateAccessToken = async function () {
   return jwt.sign(
     {
       _id: this._id,
