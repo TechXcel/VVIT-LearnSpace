@@ -95,7 +95,7 @@ const loginUser = asyncHandler(async (req, res) => {
     );
 });
 
-export const userPasswordUpdate = async (req, res) => {
+const userPasswordUpdate = async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   if (!oldPassword || !newPassword) {
     throw new ApiError(404, "Old password and new password are required");
