@@ -82,7 +82,8 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   // Generate an access token for the user
-  const accessToken = user.generateAccessToken();
+  const accessToken = await user.generateAccessToken();
+  console.log(accessToken);
 
   // Find the user document excluding the password field
   const loggedInUser = await User.findById(user._id);

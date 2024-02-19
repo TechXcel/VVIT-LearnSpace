@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "../src/routes/user.routes.js";
 import adminRouter from "../src/routes/admin.routes.js";
-
+import projectRouter from "../src/routes/project.routes.js"
 const app = express();
 
 app.use(
@@ -34,5 +34,5 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/users", userRouter);
-
+app.use("/api/v1/projects", projectRouter);
 export default app;
