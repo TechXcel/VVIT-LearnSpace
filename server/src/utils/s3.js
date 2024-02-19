@@ -11,18 +11,26 @@ const s3Client = new S3Client({
 });
 
 export const uploadFile = async (file, folderName, name) => {
-  const contentType = file.mimetype;
+  try {
+    const contentType = file.mimetype;
 
-  const perfectName = name.split(/\s+/).join("-");
+    // Use regex to replace spaces with hyphens in the name
+    const perfectName = name.replace(/\s+/g, "-");
 
-  file.originalname = perfectName;
+    // Update the file.originalname directly
+    file.originalname = perfectName;
 
-  const command = new PutObjectCommand({
-    Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `${folderName}/${file.originalname}`,
-    Body: file.buffer,
-    ContentType: contentType,
-  });
+    const command = new PutObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: `${folderName}/${file.originalname}`,
+      Body: file.buffer,
+      ContentType: contentType,
+    });
 
-  await s3Client.send(command);
+    // Use try-catch to handle potential errors during the upload
+    await s3Client.send(command);
+  } catch (error) {
+    console.error("Error uploading file to S3:", error);
+    throw error; // rethrow the error for further handling
+  }
 };
