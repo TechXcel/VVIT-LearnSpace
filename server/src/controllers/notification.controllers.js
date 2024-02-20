@@ -9,7 +9,7 @@ const createNotification = asyncHandler(async (req, res) => {
     req.body.recipientId=req.user._id
     console.log(req.user)
 
-    
+
     if (  !content ){
 
       throw new ApiError(400, "Please enter all the required fields");
@@ -91,3 +91,5 @@ const deleteNotification = asyncHandler(async (req, res) => {
     updateNotification,
     deleteNotification
   };
+
+  
