@@ -3,10 +3,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "../src/routes/user.routes.js";
 import adminRouter from "../src/routes/admin.routes.js";
-import projectRouter from "../src/routes/project.routes.js"
-import reviewRouter from "../src/routes/review.router.js"
-import resourceRouter from "../src/routes/resource.routes.js"
-
+import projectRouter from "../src/routes/project.routes.js";
+import reviewRouter from "./routes/review.routes.js";
+import resourceRouter from "../src/routes/resource.routes.js";
 
 const app = express();
 
@@ -39,8 +38,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/projects", projectRouter);
-app.use("/api/v1/review",reviewRouter);
-app.use("api/v1/resource",resourceRouter);
-
+app.use("/api/v1/review", reviewRouter);
+app.use("/api/v1/resources", resourceRouter);
 
 export default app;

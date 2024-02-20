@@ -42,7 +42,6 @@ const userSchema = new Schema(
     },
     avatar: {
       type: String,
-      required: false,
       default: function () {
         return this.gender === "male"
           ? "https://learnspace.s3.ap-south-1.amazonaws.com/male.png"
@@ -69,11 +68,14 @@ const userSchema = new Schema(
       ],
       required: [true, "Please select your branch"],
     },
-
     role: {
       type: String,
       enum: ["student", "faculty"],
       required: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   {

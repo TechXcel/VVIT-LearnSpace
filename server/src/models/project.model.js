@@ -41,6 +41,8 @@ const projectSchema = new mongoose.Schema(
     },
     coverImage: {
       type: String,
+      default:
+        "https://learnspace.s3.ap-south-1.amazonaws.com/project/project-cover.png",
       validate: {
         validator: validator.isURL,
         message: "Invalid URL",
