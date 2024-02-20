@@ -48,6 +48,10 @@ const projectSchema = new mongoose.Schema(
         message: "Invalid URL",
       },
     },
+    viewCount: {
+      type: Number,
+      default: 0,
+    },
     tags: [{ type: String, required: true }],
     additionalFiles: [{ type: String }],
   },

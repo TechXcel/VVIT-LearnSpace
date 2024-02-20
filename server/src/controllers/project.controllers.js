@@ -98,6 +98,10 @@ const getProjectById = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Project not found");
   }
 
+  // Increment the view count of the project by 1
+  project.viewCount += 1;
+  await project.save();
+
   // Respond with a success message and the resource details
   return res
     .status(200)
