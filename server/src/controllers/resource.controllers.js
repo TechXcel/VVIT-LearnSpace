@@ -3,7 +3,9 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadFile } from "../utils/s3.js";
 
 // Import the ApiResponse and ApiError classes
-import { ApiResponse, ApiError } from "../utils/ApiResponse.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+
 
 // Create a new resource
 const createResource = asyncHandler(async (req, res) => {
