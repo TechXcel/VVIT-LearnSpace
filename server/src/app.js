@@ -6,6 +6,8 @@ import adminRouter from "../src/routes/admin.routes.js";
 import projectRouter from "../src/routes/project.routes.js";
 import reviewRouter from "./routes/review.routes.js";
 import resourceRouter from "../src/routes/resource.routes.js";
+import notificationRouter from "../src/routes/notification.routes.js"
+
 
 const app = express();
 
@@ -40,5 +42,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/projects", projectRouter);
 app.use("/api/v1/review", reviewRouter);
 app.use("/api/v1/resources", resourceRouter);
+app.use("/api/v1/notification",notificationRouter)
+
 
 export default app;
