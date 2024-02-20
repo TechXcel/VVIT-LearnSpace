@@ -31,15 +31,22 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "User already exists");
   }
 
-  // Upload the user's avatar to AWS S3
-  await uploadFile(req.file, "avatar", req.body.name);
+  if (req.file) {
+    // Upload the user's avatar to AWS S3
+    await uploadFile(
+      req.file,
+      "avatar",
+      req.body.name,
+      req.body.identityNumber
+    );
 
-  // Modify the avatar file name to replace spaces with hyphens
-  const perfectName = req.body.name.split(/\s+/).join("-");
-  req.file.originalname = perfectName;
+    // Modify the avatar file name to replace spaces with hyphens
+    const perfectName = req.body.name.split(/\s+/).join("-");
+    req.file.originalname = perfectName;
 
-  // Set the avatar URL based on the AWS S3 bucket structure
-  req.body.avatar = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/avatar/${req.file.originalname}`;
+    // Set the avatar URL based on the AWS S3 bucket structure
+    req.body.avatar = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.identityNumber}/avatar/${req.file.originalname}`;
+  }
 
   // Create a new user in the database
   const user = await User.create(req.body);
@@ -54,7 +61,13 @@ const registerUser = asyncHandler(async (req, res) => {
   // Respond with a success message and the created user
   return res
     .status(201)
-    .json(new ApiResponse(200, createdUser, "User registered Successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { user: createdUser },
+        "User registered Successfully"
+      )
+    );
 });
 
 // Login a user
@@ -82,7 +95,8 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   // Generate an access token for the user
-  const accessToken = user.generateAccessToken();
+  const accessToken = await user.generateAccessToken();
+  console.log(accessToken);
 
   // Find the user document excluding the password field
   const loggedInUser = await User.findById(user._id);

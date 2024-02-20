@@ -10,7 +10,7 @@ const s3Client = new S3Client({
   },
 });
 
-export const uploadFile = async (file, folderName, name) => {
+export const uploadFile = async (file, folderName, name, identityNumber) => {
   try {
     const contentType = file.mimetype;
 
@@ -22,7 +22,7 @@ export const uploadFile = async (file, folderName, name) => {
 
     const command = new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: `${folderName}/${file.originalname}`,
+      Key: `${identityNumber}/${folderName}/${file.originalname}`,
       Body: file.buffer,
       ContentType: contentType,
     });

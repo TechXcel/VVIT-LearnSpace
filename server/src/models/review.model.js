@@ -20,12 +20,12 @@ const reviewSchema = new mongoose.Schema(
     resourceId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Resource",
-      required: [true, "Resource ID is required"],
+      //required: [true, "Resource ID is required"],
     },
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Project",
-      required: [true, "Project ID is required"],
+      //required: [true, "Project ID is required"],
     },
   },
   {

@@ -1,9 +1,8 @@
 import Resource from "../models/resource.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadFile } from "../utils/s3.js";
-
-// Import the ApiResponse and ApiError classes
-import { ApiResponse, ApiError } from "../utils/ApiResponse.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 // Create a new resource
 const createResource = asyncHandler(async (req, res) => {
@@ -31,14 +30,19 @@ const createResource = asyncHandler(async (req, res) => {
   }
 
   // Upload the file to AWS S3
-  await uploadFile(req.file, "resource", req.body.title);
+  await uploadFile(
+    req.file,
+    "resource",
+    req.body.title,
+    req.user.identityNumber
+  );
 
   // Modify the file name to replace spaces with hyphens
   const perfectName = req.body.title.split(/\s+/).join("-");
   req.file.originalname = perfectName;
 
   // Create the file URL based on the AWS S3 bucket structure
-  req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/resource/${req.type}/${req.file.originalname}`;
+  req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.user.identityNumber}/resource/${req.file.originalname}`;
 
   // Set the uploader ID based on the authenticated user
   req.body.uploader = req.user._id;
@@ -82,6 +86,10 @@ const getResourceById = asyncHandler(async (req, res) => {
   if (!resource) {
     throw new ApiError(404, "Resource not found");
   }
+
+  // Increment the view count of the resource by 1
+  resource.viewCount += 1;
+  await resource.save();
 
   // Respond with a success message and the resource details
   return res

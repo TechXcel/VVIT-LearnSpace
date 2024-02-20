@@ -1,23 +1,21 @@
-// projectRoutes.js
-import express from 'express';
+import { Router } from "express";
 import {
   createProject,
+  deleteProjectById,
   getAllProjects,
   getProjectById,
-  updateProject,
-  deleteProject,
-  rateProject,
-  reviewProject
-} from '../controllers/projectController.js';
+  updateProjectById,
+} from "../controllers/project.controllers.js";
+import { verifyUserJWT } from "../middlewares/auth.middleware.js";
 
-const router = express.Router();
+const router = Router();
 
-router.post('/', createProject);
-router.get('/', getAllProjects);
-router.get('/:id', getProjectById);
-router.put('/:id', updateProject);
-router.delete('/:id', deleteProject);
-router.post('/:id/rate', rateProject);
-router.post('/:id/review', reviewProject);
+router.route("/").post(verifyUserJWT, createProject).get(getAllProjects);
+
+router
+  .route("/:projectId")
+  .get(getProjectById)
+  .patch(updateProjectById)
+  .delete(deleteProjectById);
 
 export default router;

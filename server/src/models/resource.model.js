@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import validator from "validator";
 
 const resourceSchema = new mongoose.Schema(
   {
@@ -29,14 +28,6 @@ const resourceSchema = new mongoose.Schema(
       enum: ["lectureNote", "assignment", "previousPaper"],
       required: [true, "Please select a type for this resource."],
     },
-    fileUrl: {
-      type: String,
-      required: [true, "Please provide a valid file URL for this resource."],
-      validate: {
-        validator: validator.isURL,
-        message: "Invalid URL",
-      },
-    },
     status: {
       type: String,
       default: "pending",
@@ -49,6 +40,10 @@ const resourceSchema = new mongoose.Schema(
         required: [true, "Please provide at least one tag for this resource."],
       },
     ],
+    viewCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
