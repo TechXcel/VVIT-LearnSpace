@@ -12,7 +12,7 @@ const Header = () => {
         <MobileNav />
         <div className="flex items-center justify-end flex-1 space-x-2">
           <nav className="flex items-center space-x-2">
-            <Link to="/login">
+            <Link to="/auth/signin">
               <Button>Sign In</Button>
             </Link>
             <ModeToggle />

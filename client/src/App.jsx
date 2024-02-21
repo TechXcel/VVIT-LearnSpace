@@ -4,11 +4,14 @@ import Landing from "./pages/Landing";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import AddProject from "./components/project/AddProject";
+import Header from "./components/common/header/Header";
+import Footer from "./components/common/Footer";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<Landing />} />
 
@@ -21,6 +24,7 @@ function App() {
             <Route path="addProject" element={<AddProject />} />
           </Route>
         </Routes>
+        <Footer />
       </Router>
     </ThemeProvider>
   );
