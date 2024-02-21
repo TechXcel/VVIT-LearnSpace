@@ -13,7 +13,7 @@ const Header = () => {
         <div className="flex items-center justify-end flex-1 space-x-2">
           <nav className="flex items-center space-x-2">
             <Link to="/auth/signin">
-              <Button>Sign In</Button>
+              <Button className="font-semibold">Sign In</Button>
             </Link>
             <ModeToggle />
           </nav>

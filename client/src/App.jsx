@@ -3,9 +3,9 @@ import { ThemeProvider } from "./components/theme-provider";
 import Landing from "./pages/Landing";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-import AddProject from "./components/project/AddProject";
 import Header from "./components/common/header/Header";
 import Footer from "./components/common/Footer";
+import Projects from "./components/projects/Projects";
 
 function App() {
   return (
@@ -20,8 +20,8 @@ function App() {
             <Route path="signup" element={<Register />} />
           </Route>
 
-          <Route path="/project">
-            <Route path="addProject" element={<AddProject />} />
+          <Route path="/">
+            <Route path="projects" element={<Projects />} />
           </Route>
         </Routes>
         <Footer />
