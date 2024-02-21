@@ -67,7 +67,6 @@ const RegisterForm = () => {
               />
             </div>
           </div>
-
           <div>
             <Label htmlFor="picture" className="text-base font-medium">
               Avatar
@@ -76,7 +75,6 @@ const RegisterForm = () => {
               <Input id="picture" type="file" className="border-neutral-700" />
             </div>
           </div>
-
           <div>
             <div className="flex items-center justify-between mt-2">
               <div>
@@ -123,7 +121,6 @@ const RegisterForm = () => {
               </div>
             </div>
           </div>
-
           <div>
             <Button className="w-full font-semibold" type="button">
               Create Account <ArrowRight className="ml-2" size={16} />
