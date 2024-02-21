@@ -33,6 +33,7 @@ const registerAdmin = asyncHandler(async (req, res) => {
     .status(201)
     .json(new ApiResponse(200, createdAdmin, "Admin registered Successfully"));
 });
+
 const loginAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 

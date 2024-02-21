@@ -1,5 +1,11 @@
+import { ModeToggle } from "@/components/mode-toggle";
+
 const Landing = () => {
-  return <div>Landing</div>;
+  return (
+    <div>
+      <ModeToggle />
+    </div>
+  );
 };
 
 export default Landing;
