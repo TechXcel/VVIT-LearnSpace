@@ -14,7 +14,7 @@ import {
 
 const ProjectCard = ({ project }) => {
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] h-full">
       <CardHeader>
         <img
           src={project.coverImage}

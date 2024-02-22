@@ -1,5 +1,52 @@
+import { Link } from "react-router-dom";
+import Student from "../icons/Student";
+import Faculty from "../icons/User";
+import { Button } from "../ui/button";
+import { ScrollArea } from "../ui/scroll-area";
+import { sidebarItems } from "@/data/sidebarItems";
+
 const Sidebar = () => {
-  return <div>Sidebar</div>;
+  return (
+    <ScrollArea>
+      <div className="flex flex-col p-2 gap-y-3 md:p-6">
+        <div className="space-y-4">
+          <div className="px-3 py-3">
+            <h2 className="px-4 mb-2 text-lg font-semibold tracking-tight">
+              Users
+            </h2>
+            <div className="space-y-1">
+              <Link to="/admin/students">
+                <Button variant="ghost" className="justify-start w-full">
+                  <Student />
+                  Students
+                </Button>
+              </Link>
+
+              <Button variant="ghost" className="justify-start w-full">
+                <Faculty />
+                Faculty
+              </Button>
+            </div>
+          </div>
+          <div className="px-3 py-2">
+            <h2 className="px-4 mb-2 text-lg font-semibold tracking-tight">
+              Resources
+            </h2>
+            <div className="space-y-1">
+              {sidebarItems.map((item, index) => (
+                <Link key={index} to={item.link}>
+                  <Button variant="ghost" className="justify-start w-full">
+                    {item.icon}
+                    {item.text}
+                  </Button>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ScrollArea>
+  );
 };
 
 export default Sidebar;

@@ -2,8 +2,7 @@ export const projects = [
   {
     owner: "60b9f1c74af5f902d04aebc1", // replace with a valid ObjectId for the user
     title: "Awesome Project 1",
-    description:
-      "This is the description for Awesome 1, Awesome Project 1, Awesome Project 1, Awesome Project 1, Awesome Project 1, Awesome Project 1",
+    description: "This is the description for Awesome 1",
     repositoryUrl: "https://github.com/user1/awesome-project-1",
     liveDemoUrl: "https://awesome-project-1-demo.com",
     coverImage:

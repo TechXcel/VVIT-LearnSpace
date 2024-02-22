@@ -124,7 +124,7 @@ const AddProject = () => {
                 ]}
                 selected={selected}
                 onChange={setSelected}
-                className="w-52 col-span-3"
+                className="col-span-3 w-52"
                 title="Select tags"
               />
             </div>
