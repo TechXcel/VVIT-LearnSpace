@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Plus from "../icons/Plus";
 import { Button } from "../ui/button";
 import {
@@ -11,18 +12,12 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { MultiSelect } from "../ui/multi-select";
 import { Textarea } from "../ui/textarea";
-// import Select from "react-select";
-// import makeAnimated from "react-select/animated";
-
-// const options = [
-//   { value: "chocolate", label: "Chocolate" },
-//   { value: "strawberry", label: "Strawberry" },
-//   { value: "vanilla", label: "Vanilla" },
-// ];
-// const animatedComponents = makeAnimated();
 
 const AddProject = () => {
+  const [selected, setSelected] = useState([]);
+
   return (
     <>
       <Dialog>
@@ -92,19 +87,47 @@ const AddProject = () => {
                 className="col-span-3"
               />
             </div>
-            {/* <div className="grid items-center grid-cols-4 gap-4">
+            <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="name" className="text-right">
-                Live URL
+                Categories
               </Label>
-              <Select
-                options={options}
-                className="col-span-3"
-                placeholder="Select your project type"
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
+              <MultiSelect
+                options={[
+                  {
+                    value: "next.js",
+                    label: "Next.js",
+                  },
+                  {
+                    value: "sveltekit",
+                    label: "SvelteKit",
+                  },
+                  {
+                    value: "nuxt.js",
+                    label: "Nuxt.js",
+                  },
+                  {
+                    value: "remix",
+                    label: "Remix",
+                  },
+                  {
+                    value: "astro",
+                    label: "Astro",
+                  },
+                  {
+                    value: "wordpress",
+                    label: "WordPress",
+                  },
+                  {
+                    value: "express.js",
+                    label: "Express.js",
+                  },
+                ]}
+                selected={selected}
+                onChange={setSelected}
+                className="w-52 col-span-3"
+                title="Select tags"
               />
-            </div> */}
+            </div>
           </div>
 
           <DialogFooter>
