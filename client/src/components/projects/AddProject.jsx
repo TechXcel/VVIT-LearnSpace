@@ -81,6 +81,17 @@ const AddProject = () => {
                 className="col-span-3"
               />
             </div>
+            <div className="grid items-center grid-cols-4 gap-4">
+              <Label htmlFor="name" className="text-right">
+                Banner
+              </Label>
+              <Input
+                id="name"
+                type="file"
+                placeholder="Live project URL"
+                className="col-span-3"
+              />
+            </div>
             {/* <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="name" className="text-right">
                 Live URL
