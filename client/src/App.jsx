@@ -25,6 +25,14 @@ function App() {
             <Route path="projects" element={<Projects />} />
             <Route path="projects/:projectId" element={<ViewProject />} />
           </Route>
+          <Route path="/">
+            <Route path="notes" element={<ViewProject />}>
+              <Route path="cse" element={<ViewProject />}>
+                <Route path="1" element={<ViewProject />} />
+                <Route path="2" element={<ViewProject />} />
+              </Route>
+            </Route>
+          </Route>
         </Routes>
         <Footer />
       </Router>

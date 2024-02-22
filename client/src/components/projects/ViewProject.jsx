@@ -1,7 +1,6 @@
 import { projects } from "@/data/projects";
-import { AspectRatio } from "../ui/aspect-ratio";
 import { Button } from "../ui/button";
-import { Card, CardContent, CardHeader } from "../ui/card";
+import { Card, CardHeader } from "../ui/card";
 
 const ViewProject = () => {
   const project = projects.slice(0, 1)[0];
@@ -36,7 +35,7 @@ const ViewProject = () => {
               neat an on be gave show snug tore.
             </div>
 
-            <p class="pb-6">
+            <p className="pb-6">
               Difficulty on insensible reasonable in. From as went he they.
               Preference themselves me as thoroughly partiality considered on in
               estimating. Middletons acceptance discovered projecting so is so
