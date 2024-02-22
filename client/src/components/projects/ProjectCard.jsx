@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { Link } from "react-router-dom";
 import Eye from "../icons/Eye";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -28,13 +29,6 @@ const ProjectCard = ({ project }) => {
             <Eye />
             <p>{project.viewCount}</p>
           </div>
-          <div className="flex items-center justify-center gap-2">
-            <Avatar>
-              <AvatarImage src="https://github.com/shaikahmadnawaz.png" />
-              <AvatarFallback>AN</AvatarFallback>
-            </Avatar>
-            <p>Nawaz</p>
-          </div>
         </div>
         <CardTitle>{project.title}</CardTitle>
         <CardDescription>
@@ -52,10 +46,20 @@ const ProjectCard = ({ project }) => {
         </div>
       </CardContent>
 
-      <CardFooter>
-        <Button className="w-full" type="button">
-          More Details
-        </Button>
+      <CardFooter className="justify-between">
+        <Link to={`/projects/:projectId`}>
+          <Button type="button">More Details</Button>
+        </Link>
+        <div className="flex items-center justify-center gap-2">
+          <Avatar>
+            <AvatarImage src="https://github.com/shaikahmadnawaz.png" />
+            <AvatarFallback>AN</AvatarFallback>
+          </Avatar>
+          <div>
+            <p className="text-base">Nawaz</p>
+            <p className="text-sm">20BQ1A05L5</p>
+          </div>
+        </div>
       </CardFooter>
     </Card>
   );

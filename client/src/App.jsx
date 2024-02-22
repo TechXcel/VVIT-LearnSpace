@@ -6,6 +6,7 @@ import Register from "./pages/auth/Register";
 import Header from "./components/common/header/Header";
 import Footer from "./components/common/Footer";
 import Projects from "./components/projects/Projects";
+import ViewProject from "./components/projects/ViewProject";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
 
           <Route path="/">
             <Route path="projects" element={<Projects />} />
+            <Route path="projects/:projectId" element={<ViewProject />} />
           </Route>
         </Routes>
         <Footer />
