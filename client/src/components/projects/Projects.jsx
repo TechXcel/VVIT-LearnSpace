@@ -12,7 +12,7 @@ const Projects = () => {
         </div>
         <AddProject />
       </div>
-      <div className="grid items-center justify-center w-full grid-cols-4 gap-10 mx-auto mt-8">
+      <div className="grid items-center justify-center w-full grid-cols-1 gap-4 mt-8 md:gap-10 md:grid-cols-4">
         {projects.map((project, index) => {
           return <ProjectCard key={index} project={project} />;
         })}
