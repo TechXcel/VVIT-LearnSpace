@@ -7,13 +7,9 @@ import Header from "./components/common/header/Header";
 import Footer from "./components/common/Footer";
 import Projects from "./components/projects/Projects";
 import ViewProject from "./components/projects/ViewProject";
-<<<<<<< HEAD
-import AdminLayout from "./layouts/AdminLayout";
-=======
 import Branches from "./components/resources/notes/Branches";
 import Sems from "./components/resources/notes/Sems";
 import ViewSubjects from "./components/resources/notes/ViewSubjects";
->>>>>>> 5636e77 (Notes ui added)
 
 function App() {
   return (
@@ -27,8 +23,6 @@ function App() {
             <Route path="signin" element={<Login />} />
             <Route path="signup" element={<Register />} />
           </Route>
-
-          <Route path="/admin" element={<AdminLayout />}></Route>
 
           <Route path="/">
             <Route path="projects" element={<Projects />} />
