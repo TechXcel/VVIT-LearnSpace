@@ -1,4 +1,4 @@
-import { notes } from "@/data/notes";
+import { papers } from "@/data/papers";
 import SubjectCard from "./SubjectCard";
 import { useParams } from "react-router-dom";
 
@@ -17,14 +17,14 @@ const ViewSubjects =()=> {
       </div>
       <div className="grid items-center justify-center w-full grid-cols-1 gap-4 mt-8 md:gap-10 md:grid-cols-4">
           
-      {notes.map((note, index) => {
+      {papers.map((note, index) => {
           if (note.branch==branchName && note.semester==semId ){
             return <SubjectCard key={index} note={note} />;
           }
           
         })
       }
-        
+ 
       </div>
     </div>
   )
