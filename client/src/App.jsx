@@ -7,7 +7,13 @@ import Header from "./components/common/header/Header";
 import Footer from "./components/common/Footer";
 import Projects from "./components/projects/Projects";
 import ViewProject from "./components/projects/ViewProject";
+<<<<<<< HEAD
 import AdminLayout from "./layouts/AdminLayout";
+=======
+import Branches from "./components/resources/notes/Branches";
+import Sems from "./components/resources/notes/Sems";
+import ViewSubjects from "./components/resources/notes/ViewSubjects";
+>>>>>>> 5636e77 (Notes ui added)
 
 function App() {
   return (
@@ -29,12 +35,10 @@ function App() {
             <Route path="projects/:projectId" element={<ViewProject />} />
           </Route>
           <Route path="/">
-            <Route path="notes" element={<ViewProject />}>
-              <Route path="cse" element={<ViewProject />}>
-                <Route path="1" element={<ViewProject />} />
-                <Route path="2" element={<ViewProject />} />
-              </Route>
-            </Route>
+            <Route path="notes" element={<Branches />} />
+            <Route path="notes/:branchName" element={<Sems />} />
+            <Route path="notes/:branchName/:semId" element={<ViewSubjects />} />
+            
           </Route>
         </Routes>
         <Footer />
