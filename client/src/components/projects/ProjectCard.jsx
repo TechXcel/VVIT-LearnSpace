@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import { Link } from "react-router-dom";
 import Eye from "../icons/Eye";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -13,7 +14,6 @@ import {
 } from "../ui/card";
 
 const ProjectCard = ({ project }) => {
-  
   return (
     <Card className="w-[350px] h-full">
       <CardHeader>

@@ -4,9 +4,6 @@ import { Card, CardHeader } from "../ui/card";
 
 const ViewProject = () => {
   const project = projects.slice(0, 1)[0];
-  console.log(project);
-  
-
   return (
     <div className="container flex flex-col items-center w-full max-w-screen-2xl">
       <main className="mt-10">

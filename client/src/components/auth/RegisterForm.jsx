@@ -76,9 +76,9 @@ const RegisterForm = () => {
             </div>
           </div>
           <div>
-            <div className="flex items-center justify-between mt-2">
+            <div className="flex items-center justify-between mt-2 gap-x-4">
               <div>
-                <Label htmlFor="picture" className="text-base font-medium">
+                <Label htmlFor="gender" className="text-base font-medium">
                   Gender
                 </Label>
                 <div className="mt-2">
@@ -97,7 +97,7 @@ const RegisterForm = () => {
               </div>
 
               <div>
-                <Label htmlFor="picture" className="text-base font-medium">
+                <Label htmlFor="branch" className="text-base font-medium">
                   Branch
                 </Label>
                 <div className="mt-2">
@@ -109,8 +109,8 @@ const RegisterForm = () => {
                       <SelectGroup>
                         {branches.map((branch, index) => {
                           return (
-                            <SelectItem key={index} value={branch}>
-                              {branch}
+                            <SelectItem key={index} value={branch.title}>
+                              {branch.title}
                             </SelectItem>
                           );
                         })}

@@ -10,8 +10,7 @@ import ViewProject from "./components/projects/ViewProject";
 import Branches from "./components/resources/notes/Branches";
 import Sems from "./components/resources/notes/Sems";
 import ViewSubjects from "./components/resources/notes/ViewSubjects";
-
-
+import AdminLayout from "./layouts/AdminLayout";
 
 function App() {
   return (
@@ -30,12 +29,14 @@ function App() {
             <Route path="projects" element={<Projects />} />
             <Route path="projects/:projectId" element={<ViewProject />} />
           </Route>
+
           <Route path="/">
             <Route path="notes" element={<Branches />} />
             <Route path="notes/:branchName" element={<Sems />} />
             <Route path="notes/:branchName/:semId" element={<ViewSubjects />} />
-            
           </Route>
+
+          <Route path="/admin" element={<AdminLayout />}></Route>
         </Routes>
         <Footer />
       </Router>
