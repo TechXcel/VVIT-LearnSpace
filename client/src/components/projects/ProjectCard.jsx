@@ -13,6 +13,7 @@ import {
 } from "../ui/card";
 
 const ProjectCard = ({ project }) => {
+  
   return (
     <Card className="w-[350px] h-full">
       <CardHeader>

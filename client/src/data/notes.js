@@ -6,6 +6,7 @@ export const notes=[
         subject: "English",
         semester: 1,
         type: "lab",
+        
         status: "pending",
         tags: ["english", "communication", "language"],
         viewCount: 20,

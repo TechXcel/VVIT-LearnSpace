@@ -6,6 +6,7 @@ export const branches = [
   {
     "title": "CSM",
     "desc": "Computer Science and Mathematics"
+    
   },
   {
     "title": "AID",

@@ -3,6 +3,7 @@ import SubjectCard from "./SubjectCard";
 import { useParams } from "react-router-dom";
 
 const ViewSubjects =()=> {
+  
   const {branchName}=useParams();
   const {semId}=useParams();
   return (

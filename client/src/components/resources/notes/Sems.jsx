@@ -10,6 +10,7 @@ const Sems =()=> {
         <div className="flex flex-col justify-center">
           <h2 className="text-2xl font-medium">Semesters </h2>
           <p>Sem List.</p>
+          
         </div>
        
       </div>

@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 
 const BranchCard = ({branch}) => {
 
+  
     return (
 
         <motion.div

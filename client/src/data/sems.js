@@ -2,6 +2,7 @@ export const sems=[
     {
         "year":"First Year",
         "semNumber":"1"
+        
 
     },
     {
