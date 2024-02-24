@@ -16,6 +16,7 @@ import Sem from "./components/resources/papers/Sems";
 import ViewSubject from "./components/resources/papers/ViewSubjects";
 import Students from "./components/admin/students/Students";
 import Faculty from "./components/admin/faculty/Faculty";
+import ProjectsTable from "./components/admin/projects/ProjectsTable";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="students" element={<Students />} />
             <Route path="faculty" element={<Faculty />} />
+            <Route path="projects" element={<ProjectsTable />} />
           </Route>
         </Routes>
         <Footer />

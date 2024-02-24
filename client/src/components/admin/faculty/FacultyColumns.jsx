@@ -124,28 +124,24 @@ export const FacultyColumns = [
     },
   },
   {
-    accessorKey: "isActive",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0 hover:bg-transparent"
-        >
-          Status
-          <ArrowUpDown />
-        </Button>
-      );
-    },
+    accessorKey: "status",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Status
+        <ArrowUpDown />
+      </Button>
+    ),
     cell: ({ row }) => {
-      const value = row.original.isActive;
+      const status = row.original.isActive;
       return (
         <span
-          className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-            value ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-          }`}
+          className={`capitalize ${status ? "text-green-500" : "text-red-500"}`}
         >
-          {value ? "Active" : "Inactive"}
+          {status ? "active" : "inactive"}
         </span>
       );
     },
