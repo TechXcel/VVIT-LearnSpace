@@ -1,6 +1,7 @@
-import DataTable from "../ui/data-table";
-import { payments } from "@/data/payments";
-import { columns } from "@/data/columns";
+import { students } from "@/data/students";
+import DataTable from "../../ui/data-table";
+
+import { columns } from "@/components/admin/students/StudentColumns";
 
 const Students = () => {
   return (
@@ -8,11 +9,11 @@ const Students = () => {
       <div>
         <h2 className="text-2xl font-bold tracking-tight">Students</h2>
         <p className="text-muted-foreground">
-          Here&apos;s the list of our students!
+          Here&apos;s the list of students!
         </p>
       </div>
 
-      <DataTable data={payments} columns={columns} />
+      <DataTable data={students} columns={columns} />
     </div>
   );
 };

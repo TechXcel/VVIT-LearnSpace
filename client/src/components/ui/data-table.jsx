@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DataTablePagination } from "./data-table-pagination";
 import AdjustmentsHorizontal from "../icons/AdjustmentsHorizontal";
+import Search from "../icons/Search";
 
 const DataTable = ({ columns, data }) => {
   const [sorting, setSorting] = useState([]);
