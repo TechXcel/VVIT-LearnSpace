@@ -11,6 +11,9 @@ import Branches from "./components/resources/notes/Branches";
 import Sems from "./components/resources/notes/Sems";
 import ViewSubjects from "./components/resources/notes/ViewSubjects";
 import AdminLayout from "./layouts/AdminLayout";
+import Branch from "./components/resources/papers/Branches";
+import Sem from "./components/resources/papers/Sems";
+import ViewSubject from "./components/resources/papers/ViewSubjects";
 
 function App() {
   return (
@@ -34,6 +37,11 @@ function App() {
             <Route path="notes" element={<Branches />} />
             <Route path="notes/:branchName" element={<Sems />} />
             <Route path="notes/:branchName/:semId" element={<ViewSubjects />} />
+          </Route>
+          <Route path="/">
+            <Route path="papers" element={<Branch />} />
+            <Route path="papers/:branchName" element={<Sem />} />
+            <Route path="papers/:branchName/:semId" element={<ViewSubject />} />
           </Route>
 
           <Route path="/admin" element={<AdminLayout />}></Route>
