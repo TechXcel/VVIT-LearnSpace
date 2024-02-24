@@ -17,7 +17,11 @@ const resourceSchema = new mongoose.Schema(
     },
     fileUrl: {
       type: String,
-      required: [true, "Please upload the file for this resource."],
+      required: [true, "Please provide a valid file URL for this resource."],
+      validate: {
+        validator: validator.isURL,
+        message: "Invalid URL",
+      },
     },
     subject: {
       type: String,
