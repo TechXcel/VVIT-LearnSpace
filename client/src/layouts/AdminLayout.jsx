@@ -4,6 +4,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Outlet } from "react-router-dom";
 
 const AdminLayout = () => {
   return (
@@ -17,8 +18,8 @@ const AdminLayout = () => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={80}>
-          <div className="flex items-center justify-center h-full p-6">
-            <span className="font-semibold">Content</span>
+          <div className="flex h-full flex-1 flex-col space-y-8 p-8">
+          <Outlet/>
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

@@ -14,6 +14,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import Branch from "./components/resources/papers/Branches";
 import Sem from "./components/resources/papers/Sems";
 import ViewSubject from "./components/resources/papers/ViewSubjects";
+import Students from "./components/admin/Students";
 
 function App() {
   return (
@@ -44,7 +45,9 @@ function App() {
             <Route path="papers/:branchName/:semId" element={<ViewSubject />} />
           </Route>
 
-          <Route path="/admin" element={<AdminLayout />}></Route>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="students" element={<Students/>} />
+          </Route>
         </Routes>
         <Footer />
       </Router>
