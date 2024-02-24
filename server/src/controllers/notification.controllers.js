@@ -11,7 +11,7 @@ const createNotification = asyncHandler(async (req, res) => {
   if (!content) {
     throw new ApiError(400, "Please enter all the required fields");
   }
-
+ 
   const newNotification = await Notification.create(req.body);
 
   if (!newNotification) {
