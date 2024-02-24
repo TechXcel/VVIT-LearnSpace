@@ -15,6 +15,10 @@ const resourceSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide a description for this resource."],
     },
+    fileUrl: {
+      type: String,
+      required: [true, "Please upload the file for this resource."],
+    },
     subject: {
       type: String,
       required: [true, "Please specify the subject of this resource."],

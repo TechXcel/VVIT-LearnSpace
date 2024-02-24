@@ -17,6 +17,7 @@ import ViewSubject from "./components/resources/papers/ViewSubjects";
 import Students from "./components/admin/students/Students";
 import Faculty from "./components/admin/faculty/Faculty";
 import ProjectsTable from "./components/admin/projects/ProjectsTable";
+import NotesTable from "./components/admin/notes/NotesTable";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="students" element={<Students />} />
             <Route path="faculty" element={<Faculty />} />
             <Route path="projects" element={<ProjectsTable />} />
+            <Route path="notes" element={<NotesTable />} />
           </Route>
         </Routes>
         <Footer />
