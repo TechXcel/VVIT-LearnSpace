@@ -12,7 +12,7 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const StudentColumns = [
+export const FacultyColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -86,6 +86,22 @@ export const StudentColumns = [
           className="p-0 hover:bg-transparent"
         >
           Email
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+  },
+
+  {
+    accessorKey: "designation",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0 hover:bg-transparent"
+        >
+          Designation
           <ArrowUpDown />
         </Button>
       );

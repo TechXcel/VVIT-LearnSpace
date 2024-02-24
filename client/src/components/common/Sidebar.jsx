@@ -22,10 +22,12 @@ const Sidebar = () => {
                 </Button>
               </Link>
 
-              <Button variant="ghost" className="justify-start w-full">
-                <Faculty />
-                Faculty
-              </Button>
+              <Link to="/admin/faculty">
+                <Button variant="ghost" className="justify-start w-full">
+                  <Faculty />
+                  Faculty
+                </Button>
+              </Link>
             </div>
           </div>
           <div className="px-3 py-2">

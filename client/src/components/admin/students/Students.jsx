@@ -1,7 +1,7 @@
 import { students } from "@/data/students";
 import DataTable from "../../ui/data-table";
 
-import { columns } from "@/components/admin/students/StudentColumns";
+import { StudentColumns } from "@/components/admin/students/StudentColumns";
 
 const Students = () => {
   return (
@@ -13,7 +13,7 @@ const Students = () => {
         </p>
       </div>
 
-      <DataTable data={students} columns={columns} />
+      <DataTable data={students} columns={StudentColumns} />
     </div>
   );
 };
