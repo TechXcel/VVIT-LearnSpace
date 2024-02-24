@@ -19,6 +19,8 @@ import Faculty from "./components/admin/faculty/Faculty";
 import ProjectsTable from "./components/admin/projects/ProjectsTable";
 import NotesTable from "./components/admin/notes/NotesTable";
 
+import Assignment from "./components/resources/assignments/Assignment";
+
 function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
@@ -42,10 +44,15 @@ function App() {
             <Route path="notes/:branchName" element={<Sems />} />
             <Route path="notes/:branchName/:semId" element={<ViewSubjects />} />
           </Route>
+
           <Route path="/">
             <Route path="papers" element={<Branch />} />
             <Route path="papers/:branchName" element={<Sem />} />
             <Route path="papers/:branchName/:semId" element={<ViewSubject />} />
+          </Route>
+
+          <Route path="/assignments">
+            <Route path=":assignmentId" element={<Assignment />} />
           </Route>
 
           <Route path="/admin" element={<AdminLayout />}>
