@@ -19,7 +19,10 @@ import Faculty from "./components/admin/faculty/Faculty";
 import ProjectsTable from "./components/admin/projects/ProjectsTable";
 import NotesTable from "./components/admin/notes/NotesTable";
 
-import Assignment from "./components/resources/assignments/Assignment";
+import Assignments from "./components/resources/assignments/Assignments";
+
+import Problems from "./components/resources/assignments/Problems";
+import Editor from "./components/resources/assignments/Editor";
 
 function App() {
   return (
@@ -52,7 +55,9 @@ function App() {
           </Route>
 
           <Route path="/assignments">
-            <Route path=":assignmentId" element={<Assignment />} />
+            <Route index element={<Assignments />} />
+            <Route path=":assignmentId" element={<Problems />} />
+            <Route path=":assignmentId/:problemId" element={<Editor />} />
           </Route>
 
           <Route path="/admin" element={<AdminLayout />}>

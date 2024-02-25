@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { problems } from "@/data/assignments";
 
 import axios from "axios";
 import { classnames } from "./editor/general";
@@ -18,7 +19,7 @@ import { Button } from "@/components/ui/button";
 
 const javascriptDefault = `// some comment`;
 
-const Assignment = () => {
+const Editor = () => {
   const [code, setCode] = useState(javascriptDefault);
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
@@ -183,7 +184,7 @@ const Assignment = () => {
       <div className="flex items-center justify-between">
         <div className="py-4">
           <h2 className="text-2xl font-bold tracking-tight">
-            JavaScript Arrow Functions
+            {problems[0].title}
           </h2>
           <p className="text-muted-foreground">
             The majority element is the element that appears more than ⌊n / 2⌋
@@ -245,4 +246,4 @@ const Assignment = () => {
     </section>
   );
 };
-export default Assignment;
+export default Editor;
