@@ -290,3 +290,97 @@ export const adminNotesData = [
     fileUrl: "https://example.com/files/react_intro.pdf",
   },
 ];
+
+
+
+export const userNotesData=[
+  {
+    "uploader": "user1@vvit.net",
+    "title": "Introduction to React",
+    "subject": "Web Development",
+    "semester": 5,
+    "type": "lectureNote",
+    "status": "approved",
+    "tags": ["React", "JavaScript", "Web Development"],
+    "viewCount": 120,
+    "fileUrl": "https://example.com/files/react_intro.pdf"
+  },
+  {
+    "uploader": "user1@vvit.net",
+    "title": "Python Basics",
+    "subject": "Programming",
+    "semester": 3,
+    "type": "lectureNote",
+    "status": "pending",
+    "tags": ["Python", "Programming"],
+    "viewCount": 80,
+    "fileUrl": "https://example.com/files/react_intro.pdf"
+  },
+  {
+    "uploader": "user1@vvit.net",
+    "title": "Database Design",
+    "subject": "Database Management",
+    "semester": 6,
+    "type": "lectureNote",
+    "status": "approved",
+    "tags": ["Database", "SQL"],
+    "viewCount": 150,
+    "fileUrl": "https://example.com/files/react_intro.pdf"
+  },
+  {
+    "uploader": "user1@vvit.net",
+    "title": "Machine Learning Fundamentals",
+    "subject": "Machine Learning",
+    "semester": 7,
+    "type": "lectureNote",
+    "status": "approved",
+    "tags": ["Machine Learning", "AI"],
+    "viewCount": 200,
+    "fileUrl": "https://example.com/files/react_intro.pdf"
+  },
+  {
+    "uploader": "user1@vvit.net",
+    "title": "Node.js Basics",
+    "subject": "Web Development",
+    "semester": 4,
+    "type": "lectureNote",
+    "status": "pending",
+    "tags": ["Node.js", "JavaScript"],
+    "viewCount": 90,
+    "fileUrl": "https://example.com/files/react_intro.pdf"
+  },
+  {
+    "uploader": "user1@vvit.net",
+    "title": "Java Programming Principles",
+    "subject": "Programming",
+    "semester": 2,
+    "type": "lectureNote",
+    "status": "approved",
+    "tags": ["Java", "Programming"],
+    "viewCount": 180,
+    "fileUrl": "https://example.com/files/react_intro.pdf"
+  },
+  {
+    "uploader": "user1@vvit.net",
+    "title": "Responsive Web Design",
+    "subject": "Web Development",
+    "semester": 5,
+    "type": "lectureNote",
+    "status": "pending",
+    "tags": ["HTML5", "CSS3"],
+    "viewCount": 110,
+    "fileUrl": "https://example.com/files/react_intro.pdf"
+  },
+  {
+    "uploader": "user1@vvit.net",
+    "title": "Unity Game Development Basics",
+    "subject": "Game Development",
+    "semester": 6,
+    "type": "lectureNote",
+    "status": "approved",
+    "tags": ["Unity", "Game Development"],
+    "viewCount": 250,
+    "fileUrl": "https://example.com/files/react_intro.pdf"
+  },
+ 
+]

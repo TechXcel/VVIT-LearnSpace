@@ -8,7 +8,7 @@ const SemCard = ({ sem }) => {
   const { branchName } = useParams();
 
   return (
-    <Card className="flex-col max-w-md gap-6 text-black rounded-lg shadow-lg bg-gradient-to-br from-orange-200 via-orange-200 to-orange-300 ">
+    <Card className="flex-col max-w-md gap-6 text-white rounded-lg shadow-lg bg-gradient-to-br from-orange-500 to-orange-500 ">
       <Link to={`/notes/${branchName}/${sem.semNumber}`}>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>{sem.year}</div>

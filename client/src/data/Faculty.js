@@ -2,6 +2,7 @@ export const faculty = [
   {
     _id: "fac001",
     identityNumber: "FID001",
+    
     name: "Dr. Vikram Singh",
     designation: "Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/male.png",

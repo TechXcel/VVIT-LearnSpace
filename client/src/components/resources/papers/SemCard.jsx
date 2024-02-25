@@ -14,7 +14,7 @@ const SemCard = ({sem}) => {
     const {branchName}=useParams();
 
     return (
-      <Card className="max-w-md bg-gradient-to-br from-orange-200 via-orange-200 to-orange-300 text-black flex-col gap-6 rounded-lg shadow-lg ">
+      <Card className="max-w-md bg-gradient-to-tr from-orange-500  to-orange-500 text-white flex-col gap-6 rounded-lg shadow-lg ">
         <Link to={`/papers/${branchName}/${sem.semNumber}`}>
          
             <CardHeader className="flex items-center justify-between flex-row">

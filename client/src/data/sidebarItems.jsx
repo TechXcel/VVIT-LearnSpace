@@ -11,3 +11,11 @@ export const sidebarItems = [
   { icon: <Assignment />, text: "Assignments", link: "/admin/assignments" },
   { icon: <Research />, text: "Research", link: "/admin/research" },
 ];
+
+export const UsersidebarItems = [
+  { icon: <Project />, text: "Projects", link: "/user/projects" },
+  { icon: <Note />, text: "Notes", link: "/user/notes" },
+  { icon: <Paper />, text: "Papers", link: "/user/papers" },
+  { icon: <Assignment />, text: "Assignments", link: "/user/assignments" },
+  { icon: <Research />, text: "Research", link: "/user/research" },
+];

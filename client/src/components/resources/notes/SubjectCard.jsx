@@ -35,7 +35,7 @@ const SubjectCard = ({ note }) => {
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0 }}
-      transition={{ duration: 1.5 }}
+      transition={{ duration: 1 }}
     >
       <Card className="w-[350px]">
         <CardTitle className="p-10">{note.title}</CardTitle>

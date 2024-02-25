@@ -18,6 +18,9 @@ import Students from "./components/admin/students/Students";
 import Faculty from "./components/admin/faculty/Faculty";
 import ProjectsTable from "./components/admin/projects/ProjectsTable";
 import NotesTable from "./components/admin/notes/NotesTable";
+import UserLayout from "./layouts/UserLayout";
+import UserProjectTable from "./components/user/projects/UserProjectTable";
+import UserNotesTable from "./components/user/notes/UserNotesTable";
 
 function App() {
   return (
@@ -53,6 +56,10 @@ function App() {
             <Route path="faculty" element={<Faculty />} />
             <Route path="projects" element={<ProjectsTable />} />
             <Route path="notes" element={<NotesTable />} />
+          </Route>
+          <Route path="/user" element={<UserLayout />}>
+            <Route path="projects" element={<UserProjectTable />} />
+            <Route path="notes" element={<UserNotesTable />} />
           </Route>
         </Routes>
         <Footer />
