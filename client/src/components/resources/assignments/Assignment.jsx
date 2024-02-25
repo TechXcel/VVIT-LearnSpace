@@ -7,13 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import EditorWindow from "./editor/EditorWindow";
 import LanguagesDropdown from "./editor/LanguageDropdown";
-import ThemeDropdown from "./editor/ThemeDropdown";
+// import ThemeDropdown from "./editor/ThemeDropdown";
 import { defineTheme } from "./editor/defineTheme";
 import { languageOptions } from "@/data/languageOptions";
 import useKeyPress from "./editor/useKeyPress";
 import OutputWindow from "./editor/OutputWindow";
 import CustomInput from "./editor/CustomInput";
 import OutputDetails from "./editor/OutputDetails";
+import { Button } from "@/components/ui/button";
 
 const javascriptDefault = `// some comment`;
 
@@ -160,8 +161,13 @@ const Assignment = () => {
     });
   };
 
+  const handleSave = () => {
+    console.log("Saving code:", code);
+    // Add logic to save the code to your backend or storage if needed
+  };
+
   return (
-    <>
+    <section className="container flex flex-col w-full max-w-screen-2xl">
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -173,17 +179,31 @@ const Assignment = () => {
         draggable
         pauseOnHover
       />
-      <div className="w-full h-4 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div>
-      <div className="flex flex-row">
-        <div className="px-4 py-2">
+
+      <div className="flex items-center justify-between">
+        <div className="py-4">
+          <h2 className="text-2xl font-bold tracking-tight">
+            JavaScript Arrow Functions
+          </h2>
+          <p className="text-muted-foreground">
+            The majority element is the element that appears more than ⌊n / 2⌋
+            times. You may assume that the majority element always exists in the
+            array.
+          </p>
+        </div>
+
+        <div>
           <LanguagesDropdown onSelectChange={onSelectChange} />
         </div>
-        <div className="px-4 py-2">
-          <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-        </div>
       </div>
-      <div className="flex flex-row items-start px-4 py-4 space-x-4">
-        <div className="flex flex-col items-end justify-start w-full h-full">
+
+      <div className="flex flex-row gap-x-4">
+        {/* <div className="py-2 ">
+          <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
+        </div> */}
+      </div>
+      <div className="flex flex-row items-start py-4 space-x-4">
+        <div className="flex flex-col items-end justify-start w-full h-full border rounded-md">
           <EditorWindow
             code={code}
             onChange={onChange}
@@ -192,28 +212,37 @@ const Assignment = () => {
           />
         </div>
 
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
+        <div className="right-container gap-y-4 flex flex-shrink-0 w-[30%] flex-col">
           <OutputWindow outputDetails={outputDetails} />
-          <div className="flex flex-col items-end">
-            <CustomInput
+          <div className="flex items-end justify-between">
+            {/* <CustomInput
               customInput={customInput}
               setCustomInput={setCustomInput}
-            />
-            <button
+            /> */}
+            <Button
               onClick={handleCompile}
               disabled={!code}
-              className={classnames(
-                "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0",
-                !code ? "opacity-50" : ""
-              )}
+              className={classnames("", !code ? "opacity-50" : "")}
             >
               {processing ? "Processing..." : "Compile and Execute"}
-            </button>
+            </Button>
+            <Button
+              onClick={handleSave}
+              disabled={!code || processing}
+              className={classnames(
+                "",
+                !code || processing ? "opacity-50" : ""
+              )}
+            >
+              Save Code
+            </Button>
           </div>
-          {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+          <div>
+            {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+          </div>
         </div>
       </div>
-    </>
+    </section>
   );
 };
 export default Assignment;

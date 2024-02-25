@@ -14,7 +14,7 @@ const EditorWindow = ({ onChange, language, code, theme }) => {
   return (
     <div className="w-full h-full overflow-hidden rounded-md overlay shadow-4xl">
       <Editor
-        height="79vh"
+        height="85vh"
         width={`100%`}
         language={language || "javascript"}
         value={value}

@@ -1,25 +1,19 @@
 /* eslint-disable react/prop-types */
 
+import { Badge } from "@/components/ui/badge";
+
 const OutputDetails = ({ outputDetails }) => {
   return (
     <div className="flex flex-col mt-4 space-y-3 metrics-container">
       <p className="text-sm">
         Status:{" "}
-        <span className="px-2 py-1 font-semibold bg-gray-100 rounded-md">
-          {outputDetails?.status?.description}
-        </span>
+        <Badge variant="secondary">{outputDetails?.status?.description}</Badge>
       </p>
       <p className="text-sm">
-        Memory:{" "}
-        <span className="px-2 py-1 font-semibold bg-gray-100 rounded-md">
-          {outputDetails?.memory}
-        </span>
+        Memory: <Badge variant="secondary">{outputDetails?.memory}</Badge>
       </p>
       <p className="text-sm">
-        Time:{" "}
-        <span className="px-2 py-1 font-semibold bg-gray-100 rounded-md">
-          {outputDetails?.time}
-        </span>
+        Time: <Badge variant="secondary">{outputDetails?.time}</Badge>
       </p>
     </div>
   );

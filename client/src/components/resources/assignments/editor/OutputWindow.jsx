@@ -35,10 +35,8 @@ const OutputWindow = ({ outputDetails }) => {
   };
   return (
     <>
-      <h1 className="mb-2 text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700">
-        Output
-      </h1>
-      <div className="w-full h-56 bg-[#1e293b] rounded-md text-white font-normal text-sm overflow-y-auto">
+      <h1 className="text-xl font-bold">Output</h1>
+      <div className="w-full h-56 overflow-y-auto text-sm font-normal rounded-md text-neutral-50 dark:text-neutral-950 dark:bg-neutral-50 bg-neutral-950">
         {outputDetails ? <>{getOutput()}</> : null}
       </div>
     </>
