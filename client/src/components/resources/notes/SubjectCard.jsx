@@ -10,11 +10,13 @@ import {
   CardDescription,
   CardTitle,
   CardFooter,
+  CardHeader,
 } from "../../ui/card";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "../../ui/badge";
 import { motion } from "framer-motion";
+import Download from "@/components/icons/Download";
 
 const SubjectCard = ({ note }) => {
   //const {branchName}=useParams();
@@ -31,62 +33,44 @@ const SubjectCard = ({ note }) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0 }}
-      transition={{ duration: 1 }}
-    >
-      <Card className="w-[350px]">
-        <CardTitle className="p-10">{note.title}</CardTitle>
+    // <motion.div
+    //   initial={{ opacity: 0, scale: 0 }}
+    //   animate={{ opacity: 1, scale: 1 }}
+    //   exit={{ opacity: 0, scale: 0 }}
+    //   transition={{ duration: 1 }}
+    // >
+    <Card className="w-full h-full transition-all duration-500 ease-in-out border shadow-sm hover:scale-105">
+      <CardHeader>
+        <CardTitle>{note.title}</CardTitle>
+        <CardDescription>{note.description}</CardDescription>
+      </CardHeader>
 
-        <CardContent className="flex flex-col gap-y-3">
-          <div className="flex items-center justify-between w-full">
-            <div className="flex items-center justify-center gap-2">
-              <Eye />
-              <p>{note.viewCount}</p>
-            </div>
-          </div>
-
-          <CardDescription>
-            {note.description.substring(0, 100)}...
-            {note.type}
-          </CardDescription>
-          <div className="flex space-x-2">
-            <Badge
-              className={
-                note.status === "pending"
-                  ? "bg-red-500 hover:bg-red-600"
-                  : "bg-green-500 hover:bg-green-600"
-              }
-            >
-              {note.status}
-            </Badge>
-          </div>
-          {/*
-            <div className="flex flex-wrap">
-            {note.tags.map((tag, index) => (
-                <span
-                key={index}
-                className="inline-block px-3 py-1 mb-3 mr-2 text-xs font-semibold rounded-full bg-primary"
-                >
-                # {tag}
-                </span>
-            ))}
-            </div>
-            */}
-        </CardContent>
-        <CardFooter className="justify-between">
-          <Button type="button" onClick={download}>
-            View Syllabus
+      <CardFooter className="flex justify-between">
+        <a
+          download
+          href="https://www.jntuk.edu.in/wp-content/uploads/2019/08/I-Year-CSE-Syllabus-1.pdf"
+          target="_blank"
+        >
+          <Button>
+            <>
+              <Download /> Syllabus
+            </>
           </Button>
-
-          <Button type="button" onClick={download}>
-            View Notes
+        </a>
+        <a
+          download
+          href="https://www.jntuk.edu.in/wp-content/uploads/2019/08/I-Year-CSE-Syllabus-1.pdf"
+          target="_blank"
+        >
+          <Button>
+            <>
+              <Download /> Notes
+            </>
           </Button>
-        </CardFooter>
-      </Card>
-    </motion.div>
+        </a>
+      </CardFooter>
+    </Card>
+    // </motion.div>
   );
 };
 

@@ -8,7 +8,7 @@ const Branches = () => {
         <div className="flex flex-col justify-center">
           <h2 className="text-2xl font-bold tracking-tight">Notes</h2>
           <p className="text-muted-foreground">
-            These are featured notes, filter by branch!
+            These are featured notes, filter by branch.
           </p>
         </div>
       </div>

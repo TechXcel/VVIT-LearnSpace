@@ -8,11 +8,9 @@ import Footer from "./components/common/Footer";
 import Projects from "./components/projects/Projects";
 import ViewProject from "./components/projects/ViewProject";
 import Branches from "./components/resources/notes/Branches";
-import Sems from "./components/resources/notes/Sems";
-import ViewSubjects from "./components/resources/notes/ViewSubjects";
+
 import AdminLayout from "./layouts/AdminLayout";
 import Branch from "./components/resources/papers/Branches";
-import Sem from "./components/resources/papers/Sems";
 import ViewSubject from "./components/resources/papers/ViewSubjects";
 import Students from "./components/admin/students/Students";
 import Faculty from "./components/admin/faculty/Faculty";
@@ -21,6 +19,10 @@ import NotesTable from "./components/admin/notes/NotesTable";
 import StudentLayout from "./layouts/StudentLayout";
 import StudentProjectsTable from "./components/student/projects/StudentProjectsTable";
 import StudentNotesTable from "./components/student/notes/StudentNotesTable";
+
+import Semesters from "./components/resources/notes/Semesters";
+import PapersSemesters from "./components/resources/papers/PapersSemesters";
+import Subjects from "./components/resources/notes/Subjects";
 
 function App() {
   return (
@@ -42,12 +44,12 @@ function App() {
 
           <Route path="/">
             <Route path="notes" element={<Branches />} />
-            <Route path="notes/:branchName" element={<Sems />} />
-            <Route path="notes/:branchName/:semId" element={<ViewSubjects />} />
+            <Route path="notes/:branchName" element={<Semesters />} />
+            <Route path="notes/:branchName/:semId" element={<Subjects />} />
           </Route>
           <Route path="/">
             <Route path="papers" element={<Branch />} />
-            <Route path="papers/:branchName" element={<Sem />} />
+            <Route path="papers/:branchName" element={<PapersSemesters />} />
             <Route path="papers/:branchName/:semId" element={<ViewSubject />} />
           </Route>
 
