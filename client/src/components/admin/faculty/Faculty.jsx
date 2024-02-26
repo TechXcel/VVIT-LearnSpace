@@ -1,5 +1,6 @@
 import DataTable from "@/components/ui/data-table";
-import { faculty } from "@/data/faculty";
+import { faculty } from "@/data/Faculty";
+
 import { FacultyColumns } from "./FacultyColumns";
 
 const Faculty = () => {

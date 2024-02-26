@@ -1,6 +1,9 @@
 import ArrowUpDown from "@/components/icons/ArrowUpDown";
+//import GitHub from "@/components/icons/GitHub";
+import LiveLink from "@/components/icons/LiveLink";
 import MoreVertical from "@/components/icons/MoreVertical";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,9 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Checkbox } from "@/components/ui/checkbox";
-
-export const StudentColumns = [
+export const StudentNoteColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -38,74 +39,44 @@ export const StudentColumns = [
     enableHiding: false,
   },
   {
-    header: "Avatar",
-    cell: ({ row }) => {
-      return (
-        <img src={row.original.avatar} className="w-10 h-10 rounded-full" />
-      );
-    },
+    accessorKey: "title",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Title
+        <ArrowUpDown />
+      </Button>
+    ),
   },
   {
-    accessorKey: "identityNumber",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0 hover:bg-transparent"
-        >
-          ID
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-  },
-
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0 hover:bg-transparent"
-        >
-          Name
-          <ArrowUpDown />
-        </Button>
-      );
-    },
+    accessorKey: "fileUrl",
+    header: () => "Notes",
+    cell: ({ row }) => (
+      <a href={row.original.fileUrl} target="_blank" rel="noopener noreferrer">
+        <LiveLink />
+      </a>
+    ),
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0 hover:bg-transparent"
-        >
-          Email
-          <ArrowUpDown />
-        </Button>
-      );
-    },
+    accessorKey: "viewCount",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        View Count
+        <ArrowUpDown />
+      </Button>
+    ),
   },
-
   {
-    accessorKey: "branch",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0 hover:bg-transparent"
-        >
-          Branch
-          <ArrowUpDown />
-        </Button>
-      );
-    },
+    accessorKey: "tags",
+    header: "Tags",
+    cell: ({ row }) => row.original.tags.join(", "),
   },
   {
     accessorKey: "status",
@@ -119,27 +90,26 @@ export const StudentColumns = [
         <ArrowUpDown />
       </Button>
     ),
-    cell: ({ row }) => {
-      const status = row.original.isActive;
-      return (
-        <span
-          className={`capitalize ${status ? "text-green-500" : "text-red-500"}`}
-        >
-          {status ? "active" : "inactive"}
-        </span>
-      );
-    },
+    cell: ({ row }) => (
+      <span
+        className={`capitalize ${row.original.status === "approved" ? "text-green-500" : "text-yellow-500"}`}
+      >
+        {row.original.status}
+      </span>
+    ),
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const user = row.original;
+      const project = row.original;
 
       const toggleStatus = () => {
-       // const updatedStatus = user.isActive ? false : true;
+        // Toggle the status
+        // const newStatus =
+        project.status === "approved" ? "pending" : "approved";
 
-        // Now, update the user status using your update function
-        // For example: updateUserStatus(user.id, updatedStatus);
+        // You would normally call an API or update the status in your data source here
+        // For example: updateProjectStatus(project.id, newStatus);
       };
 
       return (
@@ -157,7 +127,7 @@ export const StudentColumns = [
             <DropdownMenuItem>Delete</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={toggleStatus}>
-              {user.isActive ? "Make Inactive" : "Make Active"}
+              {project.status === "approved" ? "Make Pending" : "Approve"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

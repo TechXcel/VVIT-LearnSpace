@@ -10,9 +10,9 @@ const BranchCard = ({ branch }) => {
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0 }}
-      transition={{ duration: 2.5 }}
+      transition={{ duration: 1 }}
     >
-      <Card className="flex-col max-w-md gap-6 text-black rounded-lg shadow-lg bg-gradient-to-br from-orange-200 via-orange-200 to-orange-300">
+      <Card className="flex-col max-w-md gap-6 text-white rounded-lg shadow-lg bg-gradient-to-tr from-orange-500  to-orange-500">
         <Link to={`/notes/${branch.title}`}>
           <CardHeader className="flex flex-row items-center justify-between ">
             <div>{branch.title}</div>

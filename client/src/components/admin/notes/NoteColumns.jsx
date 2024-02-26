@@ -1,5 +1,5 @@
 import ArrowUpDown from "@/components/icons/ArrowUpDown";
-import GitHub from "@/components/icons/GitHub";
+//import GitHub from "@/components/icons/GitHub";
 import LiveLink from "@/components/icons/LiveLink";
 import MoreVertical from "@/components/icons/MoreVertical";
 import { Button } from "@/components/ui/button";
@@ -118,7 +118,7 @@ export const NoteColumns = [
 
       const toggleStatus = () => {
         // Toggle the status
-        const newStatus =
+       // const newStatus =
           project.status === "approved" ? "pending" : "approved";
 
         // You would normally call an API or update the status in your data source here
