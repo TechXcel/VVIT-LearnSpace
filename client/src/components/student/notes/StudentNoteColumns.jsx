@@ -38,7 +38,6 @@ export const StudentNoteColumns = [
     enableSorting: false,
     enableHiding: false,
   },
-
   {
     accessorKey: "title",
     header: ({ column }) => (
