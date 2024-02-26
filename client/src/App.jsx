@@ -18,11 +18,9 @@ import Students from "./components/admin/students/Students";
 import Faculty from "./components/admin/faculty/Faculty";
 import ProjectsTable from "./components/admin/projects/ProjectsTable";
 import NotesTable from "./components/admin/notes/NotesTable";
-
 import Assignments from "./components/resources/assignments/Assignments";
-
 import Problems from "./components/resources/assignments/Problems";
-import Editor from "./components/resources/assignments/Editor";
+import Editor from "./components/resources/assignments/editor/Editor";
 
 function App() {
   return (

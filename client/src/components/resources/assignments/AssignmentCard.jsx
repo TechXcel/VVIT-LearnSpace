@@ -1,64 +1,55 @@
 /* eslint-disable react/prop-types */
 // import Eye from "@/components/icons/Eye";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 
+// get assignments from server
+
 const AssignmentCard = ({ assignment }) => {
   const slug = assignment.title.toLowerCase().replace(/\s+/g, "-");
   return (
-    <Card className="w-[350px] h-full">
-      <CardHeader>
-        <CardTitle>{assignment.title}</CardTitle>
-      </CardHeader>
+    <Link to={`/assignments/${slug}`}>
+      <Card className="w-full h-full transition-all duration-500 ease-in-out border shadow-sm hover:scale-105">
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <span>{assignment.title}</span>
+            <Badge variant="secondary" className="ml-2">
+              {assignment.viewCount}
+            </Badge>
+          </CardTitle>
+          <CardDescription>{assignment.description}</CardDescription>
+        </CardHeader>
 
-      <CardContent className="flex flex-col gap-y-3">
-        {/* <div className="flex items-center justify-between w-full">
-          <div className="flex items-center justify-center gap-2">
-            <Eye />
-            <p>{assignment.viewCount}</p>
+        <CardContent className="flex flex-col gap-y-3">
+          <div className="flex flex-wrap">
+            {assignment.tags.map((tag, index) => (
+              <Badge variant="outline" key={index} className="mr-2">
+                {tag}
+              </Badge>
+            ))}
           </div>
-        </div> */}
+        </CardContent>
 
-        <CardDescription>
-          {assignment.description.substring(0, 100)}...
-        </CardDescription>
-        <div className="flex flex-wrap">
-          {assignment.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="inline-block px-3 py-1 mr-2 text-xs font-semibold rounded-full bg-primary"
-            >
-              # {tag}
-            </span>
-          ))}
-        </div>
-      </CardContent>
-
-      <CardFooter className="justify-between">
-        <Link to={`/assignments/${slug}`}>
-          <Button type="button">View Assignment</Button>
-        </Link>
-        <div className="flex items-center justify-center gap-2">
-          <Avatar>
-            <AvatarImage src="https://github.com/shaikahmadnawaz.png" />
-            <AvatarFallback>AN</AvatarFallback>
-          </Avatar>
+        {/* <CardFooter className="justify-between">
           <div>
-            <p className="text-base">Nawaz</p>
-            <p className="text-sm">20BQ1A05L5</p>
+            <Label>
+              By:{" "}
+              <span className="text-sm font-normal">
+                Krishna Prasad, Associate Professor
+              </span>
+            </Label>
           </div>
-        </div>
-      </CardFooter>
-    </Card>
+        </CardFooter> */}
+      </Card>
+    </Link>
   );
 };
 

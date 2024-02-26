@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 import { problems } from "@/data/assignments";
-
+import { Loader2 } from "lucide-react";
 import axios from "axios";
-import { classnames } from "./editor/general";
+import { classnames } from "./general";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import EditorWindow from "./editor/EditorWindow";
-import LanguagesDropdown from "./editor/LanguageDropdown";
+import EditorWindow from "./EditorWindow";
+import LanguagesDropdown from "./LanguageDropdown";
 // import ThemeDropdown from "./editor/ThemeDropdown";
-import { defineTheme } from "./editor/defineTheme";
+import { defineTheme } from "./defineTheme";
 import { languageOptions } from "@/data/languageOptions";
-import useKeyPress from "./editor/useKeyPress";
-import OutputWindow from "./editor/OutputWindow";
-import CustomInput from "./editor/CustomInput";
-import OutputDetails from "./editor/OutputDetails";
+import useKeyPress from "./useKeyPress";
+import OutputWindow from "./OutputWindow";
+import CustomInput from "./CustomInput";
+import OutputDetails from "./OutputDetails";
 import { Button } from "@/components/ui/button";
+import ChevronLeft from "@/components/icons/ChevronLeft";
+import { Link } from "react-router-dom";
+import Play from "@/components/icons/Play";
+import Save from "@/components/icons/Save";
 
 const javascriptDefault = `// some comment`;
 
@@ -163,6 +167,7 @@ const Editor = () => {
   };
 
   const handleSave = () => {
+    console.log(typeof code);
     console.log("Saving code:", code);
     // Add logic to save the code to your backend or storage if needed
   };
@@ -182,15 +187,13 @@ const Editor = () => {
       />
 
       <div className="flex items-center justify-between">
-        <div className="py-4">
-          <h2 className="text-2xl font-bold tracking-tight">
-            {problems[0].title}
-          </h2>
-          <p className="text-muted-foreground">
-            The majority element is the element that appears more than ⌊n / 2⌋
-            times. You may assume that the majority element always exists in the
-            array.
-          </p>
+        <div className="flex items-center py-4 gap-x-5">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">
+              {problems[0].title}
+            </h2>
+            <p className="text-muted-foreground">{problems[0].description}</p>
+          </div>
         </div>
 
         <div>
@@ -225,7 +228,15 @@ const Editor = () => {
               disabled={!code}
               className={classnames("", !code ? "opacity-50" : "")}
             >
-              {processing ? "Processing..." : "Compile and Execute"}
+              {processing ? (
+                <>
+                  Processing <Loader2 className="w-4 h-4 ml-2 animate-spin" />
+                </>
+              ) : (
+                <>
+                  <Play /> Compile and Execute
+                </>
+              )}
             </Button>
             <Button
               onClick={handleSave}
@@ -235,7 +246,9 @@ const Editor = () => {
                 !code || processing ? "opacity-50" : ""
               )}
             >
-              Save Code
+              <>
+                <Save /> Save
+              </>
             </Button>
           </div>
           <div>

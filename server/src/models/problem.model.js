@@ -4,11 +4,11 @@ const problemSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Please enter the problem title"],
     },
     description: {
       type: String,
-      required: true,
+      required: [true, "Please enter the problem description"],
     },
     viewCount: {
       type: Number,
@@ -22,12 +22,12 @@ const problemSchema = new mongoose.Schema(
     difficulty: {
       type: String,
       enum: ["Easy", "Medium", "Hard"],
-      required: true,
+      required: [true, "Please enter the problem difficulty"],
     },
-    assignment: {
+    assignmentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Assignment",
-      required: true,
+      required: [true, "Please select the assignment"],
     },
   },
   {
@@ -41,6 +41,12 @@ problemSchema.virtual("assignments", {
   ref: "Assignment",
   localField: "_id",
   foreignField: "assignment",
+});
+
+problemSchema.virtual("submissions", {
+  ref: "Submission",
+  localField: "_id",
+  foreignField: "problemId",
 });
 
 const Problem = mongoose.model("Problem", problemSchema);

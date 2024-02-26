@@ -23,17 +23,17 @@ const assignmentSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    completedBy: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
   },
   {
     timestamps: true,
   }
 );
+
+assignmentSchema.virtual("problems", {
+  ref: "Problem",
+  localField: "_id",
+  foreignField: "assignmentId",
+});
 
 const Assignment = mongoose.model("Assignment", assignmentSchema);
 

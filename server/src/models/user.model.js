@@ -85,6 +85,18 @@ const userSchema = new Schema(
   }
 );
 
+userSchema.virtual("assignments", {
+  ref: "Assignment",
+  localField: "_id",
+  foreignField: "createdBy",
+});
+
+userSchema.virtual("submissions", {
+  ref: "Submission",
+  localField: "_id",
+  foreignField: "submittedBy",
+});
+
 userSchema.virtual("resources", {
   ref: "Resource",
   localField: "_id",
