@@ -69,7 +69,7 @@ const ProblemsColumns = [
     header: () => "Attempt",
     cell: ({ row }) => (
       <Link to={String(row.original.serialNo)}>
-        <LiveLink />
+        <Button>Solve</Button>
       </Link>
     ),
   },

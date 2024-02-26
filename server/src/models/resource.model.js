@@ -33,7 +33,7 @@ const resourceSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["lectureNote", "assignment", "previousPaper"],
+      enum: ["lectureNote", "previousPaper"],
       required: [true, "Please select a type for this resource."],
     },
     status: {
