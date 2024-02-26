@@ -253,7 +253,7 @@ export const adminProjectsData = [
 
 export const userProjectsData=[
   {
-    "owner": "user1@vvit.net",
+    
     "title": "React Project",
     "subject": "Web Development",
     "semester": 5,
@@ -264,7 +264,7 @@ export const userProjectsData=[
     "fileUrl": "https://example.com/files/react_intro.pdf"
   },
   {
-    "owner": "user1@vvit.net",
+    
     "title": "Python Basics",
     "subject": "Programming",
     "semester": 3,
@@ -275,7 +275,7 @@ export const userProjectsData=[
     "fileUrl": "https://example.com/files/react_intro.pdf"
   },
   {
-    "owner": "user1@vvit.net",
+    
     "title": "Database Design",
     "subject": "Database Management",
     "semester": 6,
@@ -286,7 +286,7 @@ export const userProjectsData=[
     "fileUrl": "https://example.com/files/react_intro.pdf"
   },
   {
-    "owner": "user1@vvit.net",
+    
     "title": "Machine Learning Fundamentals",
     "subject": "Machine Learning",
     "semester": 7,
@@ -297,7 +297,7 @@ export const userProjectsData=[
     "fileUrl": "https://example.com/files/react_intro.pdf"
   },
   {
-    "owner": "user1@vvit.net",
+    
     "title": "Node.js Basics",
     "subject": "Web Development",
     "semester": 4,
@@ -308,7 +308,7 @@ export const userProjectsData=[
     "fileUrl": "https://example.com/files/react_intro.pdf"
   },
   {
-    "owner": "user1@vvit.net",
+    
     "title": "Java Programming Principles",
     "subject": "Programming",
     "semester": 2,
@@ -319,7 +319,7 @@ export const userProjectsData=[
     "fileUrl": "https://example.com/files/react_intro.pdf"
   },
   {
-    "owner": "user1@vvit.net",
+    
     "title": "Responsive Web Design",
     "subject": "Web Development",
     "semester": 5,
@@ -330,7 +330,7 @@ export const userProjectsData=[
     "fileUrl": "https://example.com/files/react_intro.pdf"
   },
   {
-    "owner": "user1@vvit.net",
+   
     "title": "Unity Game Development Basics",
     "subject": "Game Development",
     "semester": 6,
