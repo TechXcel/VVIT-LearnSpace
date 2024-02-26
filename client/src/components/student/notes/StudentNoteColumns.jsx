@@ -1,5 +1,5 @@
 import ArrowUpDown from "@/components/icons/ArrowUpDown";
-import GitHub from "@/components/icons/GitHub";
+//import GitHub from "@/components/icons/GitHub";
 import LiveLink from "@/components/icons/LiveLink";
 import MoreVertical from "@/components/icons/MoreVertical";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const UserProjectColumns = [
+export const StudentNoteColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -38,19 +38,7 @@ export const UserProjectColumns = [
     enableSorting: false,
     enableHiding: false,
   },
-  {
-    accessorKey: "owner",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="p-0 hover:bg-transparent"
-      >
-        Owner
-        <ArrowUpDown />
-      </Button>
-    ),
-  },
+
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -65,27 +53,10 @@ export const UserProjectColumns = [
     ),
   },
   {
-    accessorKey: "repositoryUrl",
-    header: () => "GitHub",
+    accessorKey: "fileUrl",
+    header: () => "Notes",
     cell: ({ row }) => (
-      <a
-        href={row.original.repositoryUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <GitHub />
-      </a>
-    ),
-  },
-  {
-    accessorKey: "liveDemoUrl",
-    header: () => "Live",
-    cell: ({ row }) => (
-      <a
-        href={row.original.liveDemoUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href={row.original.fileUrl} target="_blank" rel="noopener noreferrer">
         <LiveLink />
       </a>
     ),
@@ -135,8 +106,8 @@ export const UserProjectColumns = [
 
       const toggleStatus = () => {
         // Toggle the status
-        //const newStatus =
-          project.status === "approved" ? "pending" : "approved";
+        // const newStatus =
+        project.status === "approved" ? "pending" : "approved";
 
         // You would normally call an API or update the status in your data source here
         // For example: updateProjectStatus(project.id, newStatus);
