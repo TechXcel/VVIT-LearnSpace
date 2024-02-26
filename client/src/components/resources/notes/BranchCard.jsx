@@ -6,23 +6,23 @@ import { motion } from "framer-motion";
 
 const BranchCard = ({ branch }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0 }}
-      transition={{ duration: 1 }}
-    >
-      <Card className="flex-col max-w-md gap-6 text-white rounded-lg shadow-lg bg-gradient-to-tr from-orange-500  to-orange-500">
-        <Link to={`/notes/${branch.title}`}>
-          <CardHeader className="flex flex-row items-center justify-between ">
-            <div>{branch.title}</div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-1">{branch.desc}</div>
-          </CardContent>
-        </Link>
-      </Card>
-    </motion.div>
+    // <motion.div
+    //   initial={{ opacity: 0, scale: 0 }}
+    //   animate={{ opacity: 1, scale: 1 }}
+    //   exit={{ opacity: 0, scale: 0 }}
+    //   transition={{ duration: 1 }}
+    // >
+
+    <Card className="w-full h-full transition-all duration-500 ease-in-out border shadow-sm hover:scale-105">
+      <Link to={`/notes/${branch.title}`}>
+        <CardHeader className="flex flex-col">
+          <div>{branch.title}</div>
+          <div className="space-y-1">{branch.desc}</div>
+        </CardHeader>
+      </Link>
+    </Card>
+
+    // </motion.div>
   );
 };
 
