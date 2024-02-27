@@ -30,6 +30,7 @@ import PapersSemesters from "./components/resources/papers/PapersSemesters";
 import Subjects from "./components/resources/notes/Subjects";
 import FacultyLayout from "./layouts/FacultyLayout";
 import FacultyAssignments from "./components/faculty/assignments/FacultyAssignments";
+import FacultyProblems from "./components/faculty/assignments/problems/FacultyProblems";
 
 function App() {
   return (
@@ -80,7 +81,11 @@ function App() {
           </Route>
 
           <Route path="/faculty" element={<FacultyLayout />}>
-            <Route path="assignments" element={<FacultyAssignments />} />
+            <Route path="assignments" element={<FacultyAssignments />}></Route>
+            <Route
+              path="assignments/:assignmentId"
+              element={<FacultyProblems />}
+            />
           </Route>
         </Routes>
         <Footer />

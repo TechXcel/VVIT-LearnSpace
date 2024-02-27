@@ -8,7 +8,7 @@ import { FacultyAssignmentColumns } from "./FacultyAssignmentColumns";
 
 const FacultyAssignments = () => {
   return (
-    <div className="flex flex-col space-y-8">
+    <div className="flex flex-col p-8 space-y-8">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Assignments</h2>

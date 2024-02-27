@@ -1,8 +1,8 @@
 import ArrowUpDown from "@/components/icons/ArrowUpDown";
 import Code from "@/components/icons/Code";
-import GitHub from "@/components/icons/GitHub";
-import LiveLink from "@/components/icons/LiveLink";
+
 import MoreVertical from "@/components/icons/MoreVertical";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 
-export const FacultyAssignmentColumns = [
+export const FacultyProblemColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -43,22 +43,48 @@ export const FacultyAssignmentColumns = [
   },
   {
     accessorKey: "title",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="p-0 hover:bg-transparent"
-      >
-        Title
-        <ArrowUpDown />
-      </Button>
-    ),
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0 hover:bg-transparent"
+        >
+          Title
+          <ArrowUpDown />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "description",
     header: () => "Description",
     cell: ({ row }) => <p>{row.original.description}</p>,
   },
+  {
+    accessorKey: "difficulty",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0 hover:bg-transparent"
+        >
+          Difficulty
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => (
+      <Badge
+        variant="secondary"
+        className={`capitalize ${row.original.difficulty === "Easy" ? "bg-green-100 text-green-800" : row.original.difficulty === "Medium" ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"}`}
+      >
+        {row.original.difficulty}
+      </Badge>
+    ),
+  },
+
   {
     accessorKey: "viewCount",
     header: ({ column }) => (
@@ -80,49 +106,21 @@ export const FacultyAssignmentColumns = [
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         className="p-0 hover:bg-transparent"
       >
-        Completions
+        Submissions
         <ArrowUpDown />
       </Button>
     ),
   },
+  // navigate through problem objectId
   {
-    accessorKey: "tags",
-    header: "Tags",
-    cell: ({ row }) => row.original.tags.join(", "),
-  },
-  {
-    accessorKey: "problems",
-    header: () => "Problems",
-    cell: ({ row }) => {
-      const slug = row.original.title.toLowerCase().replace(/\s+/g, "-");
-      return (
-        <Link to={`${slug}`}>
-          <Button variant="secondary">
-            <Code /> View
-          </Button>
-        </Link>
-      );
-    },
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-8 h-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreVertical />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    accessorKey: "submissions",
+    header: () => "Submissions",
+    cell: ({ row }) => (
+      <Link to={String(row.original.objectId)}>
+        <Button variant="secondary">
+          <Code /> Check
+        </Button>
+      </Link>
+    ),
   },
 ];

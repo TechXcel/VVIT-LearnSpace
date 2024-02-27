@@ -104,6 +104,7 @@ export const problems = [
     description:
       "Explain the concept of variables and their scope in JavaScript.",
     viewCount: 15,
+    completionCount: 10,
     status: "In Progress",
     difficulty: "Easy",
     assignmentId: 1,
@@ -114,6 +115,7 @@ export const problems = [
     description:
       "Create a JavaScript function that demonstrates the use of promises for asynchronous operations.",
     viewCount: 8,
+    completionCount: 5,
     status: "Completed",
     difficulty: "Medium",
     assignmentId: 1,
@@ -124,6 +126,7 @@ export const problems = [
     description:
       "Explain the difference between var, let, and const in JavaScript.",
     viewCount: 12,
+    completionCount: 8,
     status: "Not Started",
     difficulty: "Easy",
     assignmentId: 1,
@@ -134,6 +137,7 @@ export const problems = [
     description:
       "Create a JavaScript function that demonstrates the use of setTimeout and setInterval.",
     viewCount: 10,
+    completionCount: 7,
     status: "In Progress",
     difficulty: "Hard",
     assignmentId: 1,
@@ -143,6 +147,7 @@ export const problems = [
     title: "JavaScript Functions",
     description: "Explain the concept of functions in JavaScript.",
     viewCount: 20,
+    completionCount: 15,
     status: "Completed",
     difficulty: "Medium",
     assignmentId: 1,
