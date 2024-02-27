@@ -153,3 +153,46 @@ export const problems = [
     assignmentId: 1,
   },
 ];
+
+export const submissions = [
+  {
+    id: 1,
+    assignmentTitle: "JavaScript Variables and Scope",
+    userEmail: "user1@vvit.net",
+    problemTitle: "JavaScript Variables and Scope",
+    providedSolution: "console.log('Hello, World!');",
+    language: "JavaScript",
+  },
+  {
+    id: 2,
+    assignmentTitle: "JavaScript Variables and Scope",
+    userEmail: "user2@vvit.net",
+    problemTitle: "Asynchronous JavaScript with Promises",
+    providedSolution: "new Promise((resolve, reject) => {});",
+    language: "JavaScript",
+  },
+  {
+    id: 3,
+    assignmentTitle: "Java OOP Concepts",
+    userEmail: "user3@vvit.net",
+    problemTitle: "Var vs Let vs Const",
+    providedSolution: "public class MyClass {}",
+    language: "Java",
+  },
+  {
+    id: 4,
+    assignmentTitle: "Python Basics",
+    userEmail: "user1@vvit.net",
+    problemTitle: "setTimeout and setInterval",
+    providedSolution: "print('Hello, World!')",
+    language: "Python",
+  },
+  {
+    id: 5,
+    assignmentTitle: "React Basics",
+    userEmail: "user2@vvit.net",
+    problemTitle: "JavaScript Functions",
+    providedSolution: "const element = <h1>Hello, React!</h1>;",
+    language: "JavaScript",
+  },
+];

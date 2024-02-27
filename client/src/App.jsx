@@ -33,6 +33,8 @@ import FacultyNotesTable from "./components/admin/faculty/FacultyNotesTable";
 import FacultyProjectsTable from "./components/admin/faculty/FacultyProjectsTable";
 import FacultyAssignments from "./components/faculty/assignments/FacultyAssignments";
 import FacultyProblems from "./components/faculty/assignments/problems/FacultyProblems";
+import StudentsSubmissions from "./components/faculty/assignments/problems/submissions/StudentsSubmissions";
+import SolutionEditor from "./components/faculty/assignments/problems/submissions/SolutionEditor";
 
 function App() {
   return (
@@ -40,46 +42,57 @@ function App() {
       <Router>
         <Header />
         <Routes>
+          {/* Landing page route */}
           <Route path="/" element={<Landing />} />
 
+          {/* Authentication routes */}
           <Route path="/auth">
             <Route path="signin" element={<Login />} />
             <Route path="signup" element={<Register />} />
           </Route>
 
+          {/* Projects routes */}
           <Route path="/">
             <Route path="projects" element={<Projects />} />
             <Route path="projects/:projectId" element={<ViewProject />} />
           </Route>
 
+          {/* Notes routes */}
           <Route path="/">
             <Route path="notes" element={<Branches />} />
             <Route path="notes/:branchName" element={<Semesters />} />
             <Route path="notes/:branchName/:semId" element={<Subjects />} />
           </Route>
 
+          {/* Papers routes */}
           <Route path="/">
             <Route path="papers" element={<Branch />} />
             <Route path="papers/:branchName" element={<PapersSemesters />} />
             <Route path="papers/:branchName/:semId" element={<ViewSubject />} />
           </Route>
 
+          {/* Assignments routes */}
           <Route path="/assignments">
             <Route index element={<Assignments />} />
             <Route path=":assignmentId" element={<Problems />} />
             <Route path=":assignmentId/:problemId" element={<Editor />} />
           </Route>
 
+          {/* Admin routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="students" element={<Students />} />
             <Route path="faculty" element={<Faculty />} />
             <Route path="projects" element={<ProjectsTable />} />
             <Route path="notes" element={<NotesTable />} />
           </Route>
+
+          {/* Student routes */}
           <Route path="/student" element={<StudentLayout />}>
             <Route path="projects" element={<StudentProjectsTable />} />
             <Route path="notes" element={<StudentNotesTable />} />
           </Route>
+
+          {/* Faculty routes */}
           <Route path="/faculty" element={<FacultyLayout />}>
             <Route path="notes" element={<FacultyNotesTable />} />
             <Route path="projects" element={<FacultyProjectsTable />} />
@@ -87,6 +100,14 @@ function App() {
             <Route
               path="assignments/:assignmentId"
               element={<FacultyProblems />}
+            />
+            <Route
+              path="assignments/:assignmentId/:problemId"
+              element={<StudentsSubmissions />}
+            />
+            <Route
+              path="assignments/:assignmentId/:problemId/:submissionId"
+              element={<SolutionEditor />}
             />
           </Route>
         </Routes>
