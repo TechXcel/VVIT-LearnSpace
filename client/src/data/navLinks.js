@@ -15,7 +15,10 @@ export const navLinks = [
     title: "Papers",
     url: "/papers",
   },
-
+  {
+    title: "Research",
+    url: "/research",
+  },
   {
     title: "Resources",
     url: "/resources",

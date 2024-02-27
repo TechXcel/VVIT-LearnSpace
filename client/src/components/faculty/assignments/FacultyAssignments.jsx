@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
 import { assignments } from "@/data/assignments";
 import { FacultyAssignmentColumns } from "./FacultyAssignmentColumns";
+import AddAssignment from "./AddAssignment";
 
 const FacultyAssignments = () => {
   return (
-    <div className="flex flex-col p-8 space-y-8">
+    <div className="flex flex-col space-y-8">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Assignments</h2>
@@ -16,11 +17,7 @@ const FacultyAssignments = () => {
             Here&apos;s the list of assignments you added!
           </p>
         </div>
-        <Button>
-          <>
-            <Plus /> New Assignment
-          </>
-        </Button>
+        <AddAssignment />
       </div>
 
       <DataTable data={assignments} columns={FacultyAssignmentColumns} />

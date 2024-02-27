@@ -31,6 +31,8 @@ import Subjects from "./components/resources/notes/Subjects";
 import FacultyLayout from "./layouts/FacultyLayout";
 import FacultyNotesTable from "./components/admin/faculty/FacultyNotesTable";
 import FacultyProjectsTable from "./components/admin/faculty/FacultyProjectsTable";
+import FacultyAssignments from "./components/faculty/assignments/FacultyAssignments";
+import FacultyProblems from "./components/faculty/assignments/problems/FacultyProblems";
 
 function App() {
   return (
@@ -81,7 +83,11 @@ function App() {
           <Route path="/faculty" element={<FacultyLayout />}>
             <Route path="notes" element={<FacultyNotesTable />} />
             <Route path="projects" element={<FacultyProjectsTable />} />
-            
+            <Route path="assignments" element={<FacultyAssignments />}></Route>
+            <Route
+              path="assignments/:assignmentId"
+              element={<FacultyProblems />}
+            />
           </Route>
         </Routes>
         <Footer />

@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
 import { assignments, problems } from "@/data/assignments";
 import { FacultyProblemColumns } from "./FacultyProblemColumns";
+import AddProblem from "./AddProblem";
 
 const FacultyProblems = () => {
   return (
-    <div className="container flex flex-col items-center w-full py-8 max-w-screen-2xl">
+    <div className="flex flex-col items-center w-full max-w-screen-2xl">
       <div className="flex flex-col justify-between w-full gap-y-8">
         <div className="flex items-center justify-between">
           <div>
@@ -18,11 +19,7 @@ const FacultyProblems = () => {
               {assignments[0].description}
             </p>
           </div>
-          <Button>
-            <>
-              <Plus /> New Problem
-            </>
-          </Button>
+          <AddProblem />
         </div>
 
         <DataTable columns={FacultyProblemColumns} data={problems} />
