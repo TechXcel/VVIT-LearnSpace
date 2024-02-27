@@ -39,8 +39,8 @@ const problemSchema = new mongoose.Schema(
 
 problemSchema.virtual("assignments", {
   ref: "Assignment",
-  localField: "_id",
-  foreignField: "assignment",
+  localField: "assignmentId",
+  foreignField: "_id",
 });
 
 problemSchema.virtual("submissions", {
