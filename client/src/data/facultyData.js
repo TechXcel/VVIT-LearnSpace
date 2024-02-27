@@ -95,7 +95,7 @@ export const faculty = [
     isActive: true,
   },
   {
-    _id: "fac010",
+    _id: "fac011",
     identityNumber: "FID010",
     name: "Dr. Sneha Kapoor",
     designation: "Professor",

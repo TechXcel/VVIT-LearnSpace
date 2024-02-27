@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 import Play from "@/components/icons/Play";
 import Save from "@/components/icons/Save";
 
-const javascriptDefault = `// some comment`;
+const javascriptDefault = `// start practicing your code here!`;
 
 const Editor = () => {
   const [code, setCode] = useState(javascriptDefault);
