@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from "validator";
 
 const resourceSchema = new mongoose.Schema(
   {
@@ -33,7 +34,7 @@ const resourceSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["lectureNote", "assignment", "previousPaper"],
+      enum: ["lectureNote", "previousPaper"],
       required: [true, "Please select a type for this resource."],
     },
     status: {

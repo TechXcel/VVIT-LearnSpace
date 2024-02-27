@@ -1,5 +1,9 @@
 export const navLinks = [
   {
+    title: "Assignments",
+    url: "/assignments",
+  },
+  {
     title: "Projects",
     url: "/projects",
   },
@@ -12,8 +16,8 @@ export const navLinks = [
     url: "/papers",
   },
   {
-    title: "Assignments",
-    url: "/assignments",
+    title: "Research",
+    url: "/research",
   },
   {
     title: "Resources",

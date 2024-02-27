@@ -38,21 +38,21 @@ function MultiSelect({
         <Button
           variant="outline"
           aria-expanded={open}
-          className={`w-[245px] md:w-[277px] justify-between ${selected.length > 1 ? "h-full" : "h-10"}`}
+          className={`w-full justify-between text-muted-foreground hover:text-muted-foreground ${selected.length > 1 ? "h-full" : "h-10"}`}
           onClick={() => setOpen(!open)}
         >
-          {title}
-          <div className="flex gap-1 flex-wrap">
+          {selected.length > 0 ? null : title}
+          <div className="flex flex-wrap gap-1">
             {selected.map((item) => (
               <Badge
                 variant="secondary"
                 key={item}
-                className="mr-1 mb-1"
+                className="mb-1 mr-1"
                 onClick={() => handleUnselect(item)}
               >
                 {item}
                 <button
-                  className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleUnselect(item);
@@ -64,19 +64,21 @@ function MultiSelect({
                   }}
                   onClick={() => handleUnselect(item)}
                 >
-                  <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                  <X className="w-3 h-3 text-muted-foreground hover:text-foreground" />
                 </button>
               </Badge>
             ))}
           </div>
-          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+          {selected.length > 0 ? (
+            <ChevronsUpDown className="w-4 h-4 opacity-50 shrink-0" />
+          ) : null}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command className={className}>
           <CommandInput placeholder="Search ..." />
           <CommandEmpty>No item found.</CommandEmpty>
-          <CommandGroup className="max-h-64 overflow-auto">
+          <CommandGroup className="overflow-auto max-h-64">
             {options.map((option) => (
               <CommandItem
                 key={option.value}

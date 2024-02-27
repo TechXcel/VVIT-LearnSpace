@@ -1,7 +1,7 @@
 import DataTable from "@/components/ui/data-table";
-import adminProjectsData from "@/data/projects";
 
 import { ProjectColumns } from "./ProjectColumns";
+import { adminProjectsData } from "@/data/projects";
 
 const ProjectsTable = () => {
   return (

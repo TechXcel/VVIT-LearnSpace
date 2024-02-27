@@ -35,6 +35,7 @@ const DataTable = ({ columns, data }) => {
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
+  const [filtering, setFiltering] = useState("");
   const table = useReactTable({
     data,
     columns,
@@ -51,6 +52,7 @@ const DataTable = ({ columns, data }) => {
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter: filtering,
     },
   });
 
@@ -58,11 +60,10 @@ const DataTable = ({ columns, data }) => {
     <div className="space-y-4">
       <div className="flex items-center">
         <Input
-          placeholder="Filter emails..."
-          value={table.getColumn("email")?.getFilterValue() ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
+          placeholder="Search..."
+          type="text"
+          value={filtering}
+          onChange={(e) => setFiltering(e.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>

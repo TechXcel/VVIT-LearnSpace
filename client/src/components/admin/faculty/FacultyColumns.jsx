@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
 
 export const FacultyColumns = [
   {
@@ -124,6 +125,27 @@ export const FacultyColumns = [
     },
   },
   {
+    accessorKey: "isVerified",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Verified
+        <ArrowUpDown />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <Badge
+        variant="secondary"
+        className={`capitalize ${row.original.isVerified ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+      >
+        {row.original.isVerified ? "yes" : "no"}
+      </Badge>
+    ),
+  },
+  {
     accessorKey: "status",
     header: ({ column }) => (
       <Button
@@ -152,7 +174,7 @@ export const FacultyColumns = [
       const user = row.original;
 
       const toggleStatus = () => {
-        const updatedStatus = user.isActive ? false : true;
+       // const updatedStatus = user.isActive ? false : true;
 
         // Now, update the user status using your update function
         // For example: updateUserStatus(user.id, updatedStatus);
@@ -172,6 +194,10 @@ export const FacultyColumns = [
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>Delete</DropdownMenuItem>
             <DropdownMenuSeparator />
+
+            <DropdownMenuItem onClick={toggleStatus}>
+              {user.isVerified ? "Unverify" : "Verify"}
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={toggleStatus}>
               {user.isActive ? "Make Inactive" : "Make Active"}
             </DropdownMenuItem>
