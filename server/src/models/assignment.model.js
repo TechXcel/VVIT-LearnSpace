@@ -23,14 +23,23 @@ const assignmentSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
 assignmentSchema.virtual("problems", {
   ref: "Problem",
+  localField: "_id",
+  foreignField: "assignmentId",
+});
+
+assignmentSchema.virtual("submissions", {
+  ref: "Submission",
   localField: "_id",
   foreignField: "assignmentId",
 });

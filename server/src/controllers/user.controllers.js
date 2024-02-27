@@ -161,6 +161,8 @@ const getUserDetails = asyncHandler(async (req, res) => {
     "projects",
     "notifications",
     "reviews",
+    "assignments",
+   
   ]);
 
   if (!user) {

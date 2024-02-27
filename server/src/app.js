@@ -7,7 +7,9 @@ import projectRouter from "../src/routes/project.routes.js";
 import reviewRouter from "./routes/review.routes.js";
 import resourceRouter from "../src/routes/resource.routes.js";
 import notificationRouter from "../src/routes/notification.routes.js"
-
+import assignmentRouter from "../src/routes/assignment.routes.js";
+import problemRouter from "../src/routes/problem.routes.js";
+import submissionRouter from "../src/routes/submit.routes.js"
 
 const app = express();
 
@@ -43,7 +45,8 @@ app.use("/api/v1/projects", projectRouter);
 app.use("/api/v1/review", reviewRouter);
 app.use("/api/v1/resources", resourceRouter);
 app.use("/api/v1/notification",notificationRouter)
-
-
+app.use("/api/v1/assignment",assignmentRouter);
+app.use("/api/v1/problem",problemRouter);
+app.use("/api/v1/submission",submissionRouter);
 
 export default app;
