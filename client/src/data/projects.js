@@ -1,8 +1,9 @@
 export const projects = [
   {
+    id: 1,
     owner: "60b9f1c74af5f902d04aebc1", // replace with a valid ObjectId for the user
     title: "Awesome Project 1",
-    description: "This is the description for Awesome 1",
+    description: "This is the description for Awesome 1.",
     repositoryUrl: "https://github.com/user1/awesome-project-1",
     liveDemoUrl: "https://awesome-project-1-demo.com",
     coverImage:
@@ -14,6 +15,7 @@ export const projects = [
     ],
   },
   {
+    id: 2,
     owner: "60b9f1c74af5f902d04aebc2", // replace with a valid ObjectId for the user
     title: "Cool Project 2",
     description: "Check out this cool project! It's number 2.",
@@ -28,6 +30,7 @@ export const projects = [
     ],
   },
   {
+    id: 3,
     owner: "60b9f1c74af5f902d04aebc3", // replace with a valid ObjectId for the user
     title: "Fantastic Project 3",
     description: "Discover the fantastic world of Project 3!",
@@ -113,7 +116,7 @@ export const projects = [
   },
 ];
 
-const adminProjectsData = [
+export const adminProjectsData = [
   {
     owner: "user1@vvit.net",
     title: "Web Development with React",
@@ -251,4 +254,87 @@ const adminProjectsData = [
   },
 ];
 
-export default adminProjectsData;
+export const userProjectsData = [
+  {
+    title: "React Project",
+    subject: "Web Development",
+    semester: 5,
+    type: "lectureNote",
+    status: "approved",
+    tags: ["React", "JavaScript", "Web Development"],
+    viewCount: 120,
+    fileUrl: "https://example.com/files/react_intro.pdf",
+  },
+  {
+    title: "Python Basics",
+    subject: "Programming",
+    semester: 3,
+    type: "lectureNote",
+    status: "pending",
+    tags: ["Python", "Programming"],
+    viewCount: 80,
+    fileUrl: "https://example.com/files/react_intro.pdf",
+  },
+  {
+    title: "Database Design",
+    subject: "Database Management",
+    semester: 6,
+    type: "lectureNote",
+    status: "approved",
+    tags: ["Database", "SQL"],
+    viewCount: 150,
+    fileUrl: "https://example.com/files/react_intro.pdf",
+  },
+  {
+    title: "Machine Learning Fundamentals",
+    subject: "Machine Learning",
+    semester: 7,
+    type: "lectureNote",
+    status: "approved",
+    tags: ["Machine Learning", "AI"],
+    viewCount: 200,
+    fileUrl: "https://example.com/files/react_intro.pdf",
+  },
+  {
+    title: "Node.js Basics",
+    subject: "Web Development",
+    semester: 4,
+    type: "lectureNote",
+    status: "pending",
+    tags: ["Node.js", "JavaScript"],
+    viewCount: 90,
+    fileUrl: "https://example.com/files/react_intro.pdf",
+  },
+  {
+    title: "Java Programming Principles",
+    subject: "Programming",
+    semester: 2,
+    type: "lectureNote",
+    status: "approved",
+    tags: ["Java", "Programming"],
+    viewCount: 180,
+    fileUrl: "https://example.com/files/react_intro.pdf",
+  },
+  {
+    title: "Responsive Web Design",
+    subject: "Web Development",
+    semester: 5,
+    type: "lectureNote",
+    status: "pending",
+    tags: ["HTML5", "CSS3"],
+    viewCount: 110,
+    fileUrl: "https://example.com/files/react_intro.pdf",
+  },
+  {
+    title: "Unity Game Development Basics",
+    subject: "Game Development",
+    semester: 6,
+    type: "lectureNote",
+    status: "approved",
+    tags: ["Unity", "Game Development"],
+    viewCount: 250,
+    fileUrl: "https://example.com/files/react_intro.pdf",
+  },
+];
+
+export default userProjectsData;
