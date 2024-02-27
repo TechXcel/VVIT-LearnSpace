@@ -28,6 +28,8 @@ import StudentNotesTable from "./components/student/notes/StudentNotesTable";
 import Semesters from "./components/resources/notes/Semesters";
 import PapersSemesters from "./components/resources/papers/PapersSemesters";
 import Subjects from "./components/resources/notes/Subjects";
+import FacultyLayout from "./layouts/FacultyLayout";
+import FacultyAssignments from "./components/faculty/assignments/FacultyAssignments";
 
 function App() {
   return (
@@ -71,9 +73,14 @@ function App() {
             <Route path="projects" element={<ProjectsTable />} />
             <Route path="notes" element={<NotesTable />} />
           </Route>
+
           <Route path="/student" element={<StudentLayout />}>
             <Route path="projects" element={<StudentProjectsTable />} />
             <Route path="notes" element={<StudentNotesTable />} />
+          </Route>
+
+          <Route path="/faculty" element={<FacultyLayout />}>
+            <Route path="assignments" element={<FacultyAssignments />} />
           </Route>
         </Routes>
         <Footer />

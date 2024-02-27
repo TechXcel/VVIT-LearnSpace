@@ -4,6 +4,7 @@ export const assignments = [
     title: "JavaScript Basics",
     description: "Learn the fundamentals of JavaScript programming.",
     viewCount: 10,
+    completionCount: 5,
     tags: ["JavaScript", "Programming"],
   },
   {
@@ -11,6 +12,7 @@ export const assignments = [
     title: "Java OOP Concepts",
     description: "Explore object-oriented programming in Java.",
     viewCount: 5,
+    completionCount: 3,
     tags: ["Java", "OOP"],
   },
   {
@@ -18,6 +20,7 @@ export const assignments = [
     title: "Python Basics",
     description: "Learn the fundamentals of Python programming.",
     viewCount: 15,
+    completionCount: 7,
     tags: ["Python", "Programming"],
   },
   {
@@ -25,6 +28,7 @@ export const assignments = [
     title: "React Basics",
     description: "Learn the fundamentals of React programming.",
     viewCount: 20,
+    completionCount: 10,
     tags: ["React", "Programming"],
   },
   {
@@ -32,6 +36,7 @@ export const assignments = [
     title: "Node.js Basics",
     description: "Learn the fundamentals of Node.js programming.",
     viewCount: 25,
+    completionCount: 12,
     tags: ["Node.js", "Programming"],
   },
   {
@@ -39,6 +44,7 @@ export const assignments = [
     title: "Express Basics",
     description: "Learn the fundamentals of Express programming.",
     viewCount: 30,
+    completionCount: 15,
     tags: ["Express", "Programming"],
   },
   {
@@ -46,6 +52,7 @@ export const assignments = [
     title: "MongoDB Basics",
     description: "Learn the fundamentals of MongoDB programming.",
     viewCount: 35,
+    completionCount: 20,
     tags: ["MongoDB", "Programming"],
   },
   {
@@ -53,6 +60,7 @@ export const assignments = [
     title: "SQL Basics",
     description: "Learn the fundamentals of SQL programming.",
     viewCount: 40,
+    completionCount: 25,
     tags: ["SQL", "Programming"],
   },
   {
@@ -60,6 +68,7 @@ export const assignments = [
     title: "HTML Basics",
     description: "Learn the fundamentals of HTML programming.",
     viewCount: 45,
+    completionCount: 30,
     tags: ["HTML", "Programming"],
   },
   {
@@ -67,6 +76,7 @@ export const assignments = [
     title: "CSS Basics",
     description: "Learn the fundamentals of CSS programming.",
     viewCount: 50,
+    completionCount: 35,
     tags: ["CSS", "Programming"],
   },
   {
@@ -74,6 +84,7 @@ export const assignments = [
     title: "Bootstrap Basics",
     description: "Learn the fundamentals of Bootstrap programming.",
     viewCount: 55,
+    completionCount: 40,
     tags: ["Bootstrap", "Programming"],
   },
   {
@@ -81,6 +92,7 @@ export const assignments = [
     title: "Tailwind CSS Basics",
     description: "Learn the fundamentals of Tailwind CSS programming.",
     viewCount: 60,
+    completionCount: 45,
     tags: ["Tailwind CSS", "Programming"],
   },
 ];
