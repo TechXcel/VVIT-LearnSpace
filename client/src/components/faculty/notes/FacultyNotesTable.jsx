@@ -1,10 +1,7 @@
 import DataTable from "@/components/ui/data-table";
 import { facultyNotesData } from "@/data/notes";
-
-import { NoteColumns } from "../notes/NoteColumns";
 import AddNotes from "@/components/student/notes/AddNotes";
-
-
+import { FacultyNoteColumns } from "./FacultyNoteColumns";
 
 const FacultyNotesTable = () => {
   return (
@@ -16,7 +13,7 @@ const FacultyNotesTable = () => {
         </div>
         <AddNotes />
       </div>
-      <DataTable data={facultyNotesData} columns={NoteColumns} />
+      <DataTable data={facultyNotesData} columns={FacultyNoteColumns} />
     </div>
   );
 };

@@ -1,10 +1,8 @@
 import ArrowUpDown from "@/components/icons/ArrowUpDown";
-import Code from "@/components/icons/Code";
-
+//import GitHub from "@/components/icons/GitHub";
+import LiveLink from "@/components/icons/LiveLink";
 import MoreVertical from "@/components/icons/MoreVertical";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -14,9 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router-dom";
 
-export const FacultyProblemColumns = [
+export const FacultyNoteColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -41,50 +38,29 @@ export const FacultyProblemColumns = [
     enableSorting: false,
     enableHiding: false,
   },
+
   {
     accessorKey: "title",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0 hover:bg-transparent"
-        >
-          Title
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "description",
-    header: () => "Description",
-    cell: ({ row }) => <p>{row.original.description}</p>,
-  },
-  {
-    accessorKey: "difficulty",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0 hover:bg-transparent"
-        >
-          Difficulty
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <Badge
-        variant="secondary"
-        className={`capitalize ${row.original.difficulty === "Easy" ? "bg-green-100 text-green-800" : row.original.difficulty === "Medium" ? "bg-yellow-100 text-yellow-800" : "bg-red-100 text-red-800"}`}
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
       >
-        {row.original.difficulty}
-      </Badge>
+        Title
+        <ArrowUpDown />
+      </Button>
     ),
   },
-
+  {
+    accessorKey: "fileUrl",
+    header: () => "Notes",
+    cell: ({ row }) => (
+      <a href={row.original.fileUrl} target="_blank" rel="noopener noreferrer">
+        <LiveLink />
+      </a>
+    ),
+  },
   {
     accessorKey: "viewCount",
     header: ({ column }) => (
@@ -93,39 +69,31 @@ export const FacultyProblemColumns = [
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         className="p-0 hover:bg-transparent"
       >
-        Views
+        View Count
         <ArrowUpDown />
       </Button>
     ),
   },
   {
-    accessorKey: "completionCount",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="p-0 hover:bg-transparent"
-      >
-        Submissions
-        <ArrowUpDown />
-      </Button>
-    ),
+    accessorKey: "tags",
+    header: "Tags",
+    cell: ({ row }) => row.original.tags.join(", "),
   },
-  // navigate through problem objectId
-  {
-    accessorKey: "submissions",
-    header: () => "Submissions",
-    cell: ({ row }) => (
-      <Link to={String(row.original.objectId)}>
-        <Button variant="secondary">
-          <Code /> Check
-        </Button>
-      </Link>
-    ),
-  },
+
   {
     id: "actions",
     cell: ({ row }) => {
+      const project = row.original;
+
+      const toggleStatus = () => {
+        // Toggle the status
+        // const newStatus =
+        project.status === "approved" ? "pending" : "approved";
+
+        // You would normally call an API or update the status in your data source here
+        // For example: updateProjectStatus(project.id, newStatus);
+      };
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

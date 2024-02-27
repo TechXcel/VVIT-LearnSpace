@@ -1,8 +1,8 @@
 import DataTable from "@/components/ui/data-table";
 import { facultyProjectsData } from "@/data/projects";
 
-
-import { ProjectColumns } from "../projects/ProjectColumns";
+import { ProjectColumns } from "../../admin/projects/ProjectColumns";
+import { FacultyProjectColumns } from "./FacultyProjectColumns";
 
 const FacultyProjectsTable = () => {
   return (
@@ -15,9 +15,8 @@ const FacultyProjectsTable = () => {
             Here&apos;s the list of projects!
           </p>
         </div>
-        
       </div>
-      <DataTable data={facultyProjectsData} columns={ProjectColumns} />
+      <DataTable data={facultyProjectsData} columns={FacultyProjectColumns} />
     </div>
   );
 };
