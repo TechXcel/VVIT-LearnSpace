@@ -2,12 +2,13 @@ export const faculty = [
   {
     _id: "fac001",
     identityNumber: "FID001",
-    
+
     name: "Dr. Vikram Singh",
     designation: "Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/male.png",
     email: "vikram@vvit.net",
-    branch: "Computer Science",
+    branch: "CSE",
+    isVerified: true,
     isActive: true,
   },
   {
@@ -17,7 +18,8 @@ export const faculty = [
     designation: "Associate Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/female.png",
     email: "aisha@vvit.net",
-    branch: "Electrical Engineering",
+    branch: "EEE",
+    isVerified: true,
     isActive: false,
   },
   {
@@ -27,7 +29,8 @@ export const faculty = [
     designation: "Assistant Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/male.png",
     email: "rajesh@vvit.net",
-    branch: "Mechanical Engineering",
+    branch: "ME",
+    isVerified: false,
     isActive: true,
   },
   {
@@ -37,7 +40,8 @@ export const faculty = [
     designation: "Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/female.png",
     email: "nandini@vvit.net",
-    branch: "Civil Engineering",
+    branch: "Civil",
+    isVerified: false,
     isActive: false,
   },
   {
@@ -47,7 +51,7 @@ export const faculty = [
     designation: "Associate Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/male.png",
     email: "arjun@vvit.net",
-    branch: "Aerospace Engineering",
+    branch: "AE",
     isActive: true,
   },
   {
@@ -57,7 +61,7 @@ export const faculty = [
     designation: "Assistant Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/female.png",
     email: "ananya@vvit.net",
-    branch: "Chemical Engineering",
+    branch: "CE",
     isActive: false,
   },
   {
@@ -67,7 +71,7 @@ export const faculty = [
     designation: "Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/male.png",
     email: "amit@vvit.net",
-    branch: "Biotechnology",
+    branch: "Bio",
     isActive: true,
   },
   {
@@ -77,7 +81,7 @@ export const faculty = [
     designation: "Associate Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/female.png",
     email: "kavita@vvit.net",
-    branch: "Information Technology",
+    branch: "IT",
     isActive: false,
   },
   {
@@ -87,7 +91,7 @@ export const faculty = [
     designation: "Assistant Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/male.png",
     email: "rajeev@vvit.net",
-    branch: "Electronics and Communication",
+    branch: "ECE",
     isActive: true,
   },
   {
@@ -97,7 +101,7 @@ export const faculty = [
     designation: "Professor",
     avatar: "https://learnspace.s3.ap-south-1.amazonaws.com/female.png",
     email: "sneha@vvit.net",
-    branch: "Information Science",
+    branch: "IT",
     isActive: true,
   },
 ];

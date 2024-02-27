@@ -16,8 +16,8 @@ import { Link } from "react-router-dom";
 const AssignmentCard = ({ assignment }) => {
   const slug = assignment.title.toLowerCase().replace(/\s+/g, "-");
   return (
-    <Link to={`/assignments/${slug}`}>
-      <Card className="w-full h-full transition-all duration-500 ease-in-out border shadow-sm hover:scale-105">
+    <Card className="w-full h-full transition-all duration-500 ease-in-out border shadow-sm hover:scale-105">
+      <Link to={`/assignments/${slug}`}>
         <CardHeader>
           <CardTitle className="flex items-center">
             <span>{assignment.title}</span>
@@ -48,8 +48,8 @@ const AssignmentCard = ({ assignment }) => {
             </Label>
           </div>
         </CardFooter> */}
-      </Card>
-    </Link>
+      </Link>
+    </Card>
   );
 };
 
