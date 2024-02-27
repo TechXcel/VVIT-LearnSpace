@@ -1,4 +1,5 @@
 import Sidebar from "@/components/common/Sidebar";
+
 import {
   ResizableHandle,
   ResizablePanel,
@@ -19,7 +20,7 @@ const FacultyLayout = () => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={80}>
-          <div className="flex flex-col flex-1 h-full space-y-8">
+          <div className="flex flex-col flex-1 h-full p-8 space-y-8">
             <Outlet />
           </div>
         </ResizablePanel>

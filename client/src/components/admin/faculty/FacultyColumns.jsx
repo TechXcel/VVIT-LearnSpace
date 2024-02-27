@@ -174,7 +174,7 @@ export const FacultyColumns = [
       const user = row.original;
 
       const toggleStatus = () => {
-        const updatedStatus = user.isActive ? false : true;
+       // const updatedStatus = user.isActive ? false : true;
 
         // Now, update the user status using your update function
         // For example: updateUserStatus(user.id, updatedStatus);
