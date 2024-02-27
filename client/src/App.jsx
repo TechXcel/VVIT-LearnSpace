@@ -35,6 +35,7 @@ import FacultyAssignments from "./components/faculty/assignments/FacultyAssignme
 import FacultyProblems from "./components/faculty/assignments/problems/FacultyProblems";
 import StudentsSubmissions from "./components/faculty/assignments/problems/submissions/StudentsSubmissions";
 import SolutionEditor from "./components/faculty/assignments/problems/submissions/SolutionEditor";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -112,6 +113,7 @@ function App() {
           </Route>
         </Routes>
         <Footer />
+        <Toaster position="top-right" reverseOrder={false} />
       </Router>
     </ThemeProvider>
   );
