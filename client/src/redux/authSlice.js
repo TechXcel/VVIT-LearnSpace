@@ -63,6 +63,7 @@ const authSlice = createSlice({
     user: {},
     token: token,
     isLoading: false,
+    role: "",
   },
   reducers: {
     logout: (state) => {
@@ -79,6 +80,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.user = payload.data.admin;
       localStorage.setItem("token", payload.data.accessToken);
+      localStorage.setItem("role", payload.data.admin.role);
       toast.success(payload.message);
     });
     builder.addCase(adminLogin.rejected, (state, { payload }) => {
@@ -93,6 +95,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.user = payload.data.user;
       localStorage.setItem("token", payload.data.accessToken);
+      localStorage.setItem("role", payload.data.user.role);
       toast.success(payload.message);
     });
     builder.addCase(userLogin.rejected, (state, { payload }) => {
