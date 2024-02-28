@@ -1,6 +1,11 @@
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { FormError } from "../common/FormError";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { useDispatch } from "react-redux";
 import { ArrowRight } from "lucide-react";
 import {
   Select,
@@ -11,46 +16,73 @@ import {
   SelectValue,
 } from "../ui/select";
 import { branches } from "@/data/branches";
+import { userRegister } from "@/redux/authSlice";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const form = useForm();
+  const { register, handleSubmit, formState, clearErrors } = form;
+  const { errors } = formState;
+  const [branch, setBranch] = useState();
+
+  const handleUserRegistration = async (data) => {
+    const userData = new FormData();
+    data.branch = branch;
+    userData.append("avatar", data.avatar[0]);
+    Object.keys(data).forEach((key) => {
+      if (key !== "avatar") {
+        userData.append(key, data[key]);
+      }
+    });
+
+    const response = await dispatch(userRegister(userData));
+    if (response.meta.requestStatus === "fulfilled") {
+      navigate("/auth/login");
+    }
+  };
   return (
     <>
-      <form action="#" method="POST" className="mt-8">
+      <form className="mt-8" onSubmit={handleSubmit(handleUserRegistration)}>
         <div className="space-y-5">
           <div>
             <Label htmlFor="name" className="text-base font-medium">
               Full Name
             </Label>
-            <div className="mt-2">
+            <div className="mt-2 space-y-2">
               <Input
                 type="text"
                 className="border-neutral-700"
-                placeholder="Full Name"
+                placeholder="Student name"
+                {...register("name", {
+                  required: "Name is required",
+                  minLength: {
+                    value: 3,
+                    message: "Name should be atleast 3 characters",
+                  },
+                })}
               />
+              {errors.name && <FormError message={errors.name.message} />}
             </div>
           </div>
           <div>
             <Label htmlFor="email" className="text-base font-medium">
-              Email Address
+              Email
             </Label>
-            <div className="mt-2">
+            <div className="mt-2 space-y-2">
               <Input
                 type="email"
                 className="border-neutral-700"
-                placeholder="Email"
+                placeholder="2*bq1a****@vvit.net"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._-]+@vvit.net$/,
+                    message: "Invalid email",
+                  },
+                })}
               />
-            </div>
-          </div>
-          <div>
-            <Label htmlFor="identity" className="text-base font-medium">
-              Identity Number
-            </Label>
-            <div className="mt-2">
-              <Input
-                type="text"
-                className="border-neutral-700"
-                placeholder="ID Number"
-              />
+              {errors.email && <FormError message={errors.email.message} />}
             </div>
           </div>
           <div>
@@ -59,51 +91,100 @@ const RegisterForm = () => {
                 Password
               </Label>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 space-y-2">
               <Input
                 type="password"
                 className="border-neutral-700"
-                placeholder="Password"
+                placeholder="******"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password should be atleast 6 characters",
+                  },
+                })}
               />
             </div>
           </div>
           <div>
-            <Label htmlFor="picture" className="text-base font-medium">
+            <div>
+              <Label htmlFor="identity" className="text-base font-medium">
+                Identity Number
+              </Label>
+            </div>
+
+            <div className="mt-2 space-y-2">
+              <Input
+                type="text"
+                className="border-neutral-700"
+                placeholder="2*BQ1A****"
+                {...register("identityNumber", {
+                  required: "Identity number is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._-]+$/,
+                    message: "Invalid identity number",
+                  },
+                })}
+              />
+              {errors.identityNumber && (
+                <FormError message={errors.identityNumber.message} />
+              )}
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <Label htmlFor="identity" className="text-base font-medium">
+                Contact Number
+              </Label>
+            </div>
+
+            <div className="mt-2 space-y-2">
+              <Input
+                type="text"
+                className="border-neutral-700"
+                placeholder="1234567890"
+                {...register("contact", {
+                  required: "Contact number is required",
+                  pattern: {
+                    value: /^\d{10}$/,
+                    message: "Invalid contact number",
+                  },
+                })}
+              />
+              {errors.contact && <FormError message={errors.contact.message} />}
+            </div>
+          </div>
+
+          <div>
+            <Label htmlFor="avatar" className="text-base font-medium">
               Avatar
             </Label>
-            <div className="mt-2">
-              <Input id="picture" type="file" className="border-neutral-700" />
+            <div className="mt-2 space-y-2">
+              <Input
+                id="avatar"
+                type="file"
+                className="border-neutral-700"
+                {...register("avatar", {
+                  required: {
+                    value: true,
+                    message: "Avatar is required",
+                  },
+                })}
+              />
+              {errors.avatar && <FormError message={errors.avatar.message} />}
             </div>
           </div>
           <div>
             <div className="flex items-center justify-between mt-2 gap-x-4">
               <div>
-                <Label htmlFor="gender" className="text-base font-medium">
-                  Gender
-                </Label>
-                <div className="mt-2">
-                  <Select>
-                    <SelectTrigger className="w-[180px] border-neutral-700">
-                      <SelectValue placeholder="Select your gender" />
-                    </SelectTrigger>
-                    <SelectContent className="border-neutral-700">
-                      <SelectGroup>
-                        <SelectItem value="apple">Male</SelectItem>
-                        <SelectItem value="banana">Female</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div>
                 <Label htmlFor="branch" className="text-base font-medium">
                   Branch
                 </Label>
                 <div className="mt-2">
-                  <Select>
+                  <Select required={true} onValueChange={(e) => setBranch(e)}>
                     <SelectTrigger className="w-[180px] border-neutral-700">
-                      <SelectValue placeholder="Select your branch" />
+                      <SelectValue placeholder="Choose branch" />
                     </SelectTrigger>
                     <SelectContent className="border-neutral-700">
                       <SelectGroup>
@@ -122,7 +203,7 @@ const RegisterForm = () => {
             </div>
           </div>
           <div>
-            <Button className="w-full font-semibold" type="button">
+            <Button className="w-full font-semibold" type="submit">
               Create Account <ArrowRight className="ml-2" size={16} />
             </Button>
           </div>

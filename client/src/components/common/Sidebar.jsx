@@ -52,7 +52,7 @@ const Sidebar = ({ role }) => {
               Resources
             </h2>
             <div className="space-y-1">
-              {sidebarItems.map((item, index) => (
+              {sidebarItems[role].map((item, index) => (
                 <Link key={index} to={item.link}>
                   <Button variant="ghost" className="justify-start w-full">
                     {item.icon}

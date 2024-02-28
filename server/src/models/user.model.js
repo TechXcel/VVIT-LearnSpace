@@ -35,18 +35,29 @@ const userSchema = new Schema(
       required: [true, "Please enter your password"],
       min: [6, "Your password should be atleast 6 characters long"],
     },
-    gender: {
+    // gender: {
+    //   type: String,
+    //   enum: ["male", "female"],
+    //   required: true,
+    // },
+    contact: {
       type: String,
-      enum: ["male", "female"],
-      required: true,
+      required: [true, "Please enter your contact number"],
+      validate: {
+        validator: function (value) {
+          return /^\d{10}$/.test(value);
+        },
+        message: "Please enter a valid contact number",
+      },
     },
     avatar: {
       type: String,
-      default: function () {
-        return this.gender === "male"
-          ? "https://learnspace.s3.ap-south-1.amazonaws.com/male.png"
-          : "https://learnspace.s3.ap-south-1.amazonaws.com/female.png";
-      },
+      default: "https://learnspace.s3.ap-south-1.amazonaws.com/female.png",
+      // default: function () {
+      //   return this.gender === "male"
+      //     ? "https://learnspace.s3.ap-south-1.amazonaws.com/male.png"
+      //     : "https://learnspace.s3.ap-south-1.amazonaws.com/female.png";
+      // },
       validate: {
         validator: validator.isURL,
         message: "Invalid URL",
@@ -71,7 +82,8 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: ["student", "faculty"],
-      required: true,
+      default: "student",
+      required: [true, "Please select your role"],
     },
     isActive: {
       type: Boolean,

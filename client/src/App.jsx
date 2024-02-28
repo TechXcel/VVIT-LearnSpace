@@ -35,8 +35,10 @@ import FacultyAssignments from "./components/faculty/assignments/FacultyAssignme
 import FacultyProblems from "./components/faculty/assignments/problems/FacultyProblems";
 import StudentsSubmissions from "./components/faculty/assignments/problems/submissions/StudentsSubmissions";
 import SolutionEditor from "./components/faculty/assignments/problems/submissions/SolutionEditor";
+import { Toaster } from "react-hot-toast";
 
 function App() {
+  const role = localStorage.getItem("role");
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <Router>
@@ -79,39 +81,49 @@ function App() {
           </Route>
 
           {/* Admin routes */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="students" element={<Students />} />
-            <Route path="faculty" element={<Faculty />} />
-            <Route path="projects" element={<ProjectsTable />} />
-            <Route path="notes" element={<NotesTable />} />
-          </Route>
+          {role === "admin" && (
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="students" element={<Students />} />
+              <Route path="faculty" element={<Faculty />} />
+              <Route path="projects" element={<ProjectsTable />} />
+              <Route path="notes" element={<NotesTable />} />
+            </Route>
+          )}
 
           {/* Student routes */}
-          <Route path="/student" element={<StudentLayout />}>
-            <Route path="projects" element={<StudentProjectsTable />} />
-            <Route path="notes" element={<StudentNotesTable />} />
-          </Route>
+          {role === "student" && (
+            <Route path="/student" element={<StudentLayout />}>
+              <Route path="projects" element={<StudentProjectsTable />} />
+              <Route path="notes" element={<StudentNotesTable />} />
+            </Route>
+          )}
 
           {/* Faculty routes */}
-          <Route path="/faculty" element={<FacultyLayout />}>
-            <Route path="notes" element={<FacultyNotesTable />} />
-            <Route path="projects" element={<FacultyProjectsTable />} />
-            <Route path="assignments" element={<FacultyAssignments />}></Route>
-            <Route
-              path="assignments/:assignmentId"
-              element={<FacultyProblems />}
-            />
-            <Route
-              path="assignments/:assignmentId/:problemId"
-              element={<StudentsSubmissions />}
-            />
-            <Route
-              path="assignments/:assignmentId/:problemId/:submissionId"
-              element={<SolutionEditor />}
-            />
-          </Route>
+          {role === "faculty" && (
+            <Route path="/faculty" element={<FacultyLayout />}>
+              <Route path="notes" element={<FacultyNotesTable />} />
+              <Route path="projects" element={<FacultyProjectsTable />} />
+              <Route
+                path="assignments"
+                element={<FacultyAssignments />}
+              ></Route>
+              <Route
+                path="assignments/:assignmentId"
+                element={<FacultyProblems />}
+              />
+              <Route
+                path="assignments/:assignmentId/:problemId"
+                element={<StudentsSubmissions />}
+              />
+              <Route
+                path="assignments/:assignmentId/:problemId/:submissionId"
+                element={<SolutionEditor />}
+              />
+            </Route>
+          )}
         </Routes>
         <Footer />
+        <Toaster position="top-right" reverseOrder={false} />
       </Router>
     </ThemeProvider>
   );

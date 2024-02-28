@@ -6,10 +6,10 @@ import { uploadFile } from "../utils/s3.js";
 
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, identityNumber, password, gender, branch } = req.body;
+  const { name, email, identityNumber, password, branch } = req.body;
 
   // Check if all required fields are present
-  if (!name || !email || !identityNumber || !password || !gender || !branch) {
+  if (!name || !email || !identityNumber || !password || !branch) {
     throw new ApiError(400, "Please enter all the required fields");
   }
 
@@ -162,7 +162,6 @@ const getUserDetails = asyncHandler(async (req, res) => {
     "notifications",
     "reviews",
     "assignments",
-   
   ]);
 
   if (!user) {
