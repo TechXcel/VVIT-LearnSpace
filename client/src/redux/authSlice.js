@@ -56,6 +56,7 @@ export const userRegister = createAsyncThunk(
 );
 
 const token = localStorage.getItem("token");
+const role = localStorage.getItem("role");
 
 const authSlice = createSlice({
   name: "auth",
@@ -63,13 +64,15 @@ const authSlice = createSlice({
     user: {},
     token: token,
     isLoading: false,
-    role: "",
+    role: role,
   },
   reducers: {
     logout: (state) => {
-      state.user = null;
+      state.user = {};
       state.token = null;
+      state.role = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("role");
     },
   },
   extraReducers: (builder) => {

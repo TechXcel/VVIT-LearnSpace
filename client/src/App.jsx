@@ -36,9 +36,10 @@ import FacultyProblems from "./components/faculty/assignments/problems/FacultyPr
 import StudentsSubmissions from "./components/faculty/assignments/problems/submissions/StudentsSubmissions";
 import SolutionEditor from "./components/faculty/assignments/problems/submissions/SolutionEditor";
 import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 function App() {
-  const role = localStorage.getItem("role");
+  const role = useSelector((state) => state.auth.role);
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <Router>
