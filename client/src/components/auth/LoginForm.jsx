@@ -80,7 +80,7 @@ const LoginForm = () => {
               <Input
                 type="password"
                 className="border-neutral-700"
-                placeholder="********"
+                placeholder="******"
                 {...register("password", {
                   required: "Password is required",
                 })}

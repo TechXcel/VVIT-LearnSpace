@@ -19,7 +19,7 @@ const Register = () => {
               Sign Up
             </h2>
             <p className="mt-2 text-sm">
-              ALready have an account?{" "}
+              Already have an account?{" "}
               <Link
                 to="/auth/signin"
                 className="font-semibold transition-all duration-200 hover:underline"

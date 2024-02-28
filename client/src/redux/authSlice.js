@@ -40,6 +40,21 @@ export const userLogin = createAsyncThunk(
   }
 );
 
+export const userRegister = createAsyncThunk(
+  "/api/v1/users/register",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/api/v1/users/register", payload);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 const token = localStorage.getItem("token");
 
 const authSlice = createSlice({
@@ -81,6 +96,18 @@ const authSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(userLogin.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload?.message || "Something went wrong");
+    });
+
+    builder.addCase(userRegister.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(userRegister.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      toast.success(payload.message);
+    });
+    builder.addCase(userRegister.rejected, (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload?.message || "Something went wrong");
     });
