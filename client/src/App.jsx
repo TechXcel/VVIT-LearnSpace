@@ -41,7 +41,7 @@ import { useSelector } from "react-redux";
 function App() {
   const role = useSelector((state) => state.auth.role);
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Router>
         <Header />
         <Routes>

@@ -25,7 +25,7 @@ const Header = () => {
               </Button>
             ) : (
               <Link to="/auth/signin">
-                <Button className="font-semibold">Sign In</Button>
+                <Button>Sign In</Button>
               </Link>
             )}
 
