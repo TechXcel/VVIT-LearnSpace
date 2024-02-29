@@ -9,11 +9,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  //DropdownMenuSeparator,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const FacultyNoteColumns = [
+export const PaperColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -38,7 +38,19 @@ export const FacultyNoteColumns = [
     enableSorting: false,
     enableHiding: false,
   },
-
+  {
+    accessorKey: "uploader",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Uploader
+        <ArrowUpDown />
+      </Button>
+    ),
+  },
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -79,20 +91,39 @@ export const FacultyNoteColumns = [
     header: "Tags",
     cell: ({ row }) => row.original.tags.join(", "),
   },
-
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Status
+        <ArrowUpDown />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <span
+        className={`capitalize ${row.original.status === "approved" ? "text-green-500" : "text-yellow-500"}`}
+      >
+        {row.original.status}
+      </span>
+    ),
+  },
   {
     id: "actions",
     cell: ({ row }) => {
       const project = row.original;
 
-      //const toggleStatus = () => {
+      const toggleStatus = () => {
         // Toggle the status
-        // const newStatus =
-        project.status === "approved" ? "pending" : "approved";
+       // const newStatus =
+          project.status === "approved" ? "pending" : "approved";
 
         // You would normally call an API or update the status in your data source here
         // For example: updateProjectStatus(project.id, newStatus);
-     // };
+      };
 
       return (
         <DropdownMenu>
@@ -107,6 +138,10 @@ export const FacultyNoteColumns = [
 
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={toggleStatus}>
+              {project.status === "approved" ? "Make Pending" : "Approve"}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

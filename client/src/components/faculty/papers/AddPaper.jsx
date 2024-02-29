@@ -1,7 +1,7 @@
 
-
-import Plus from "@/components/icons/Plus";
+import Plus from "../../icons/Plus";
 import { Button } from "../../ui/button";
+
 import {
   Dialog,
   DialogContent,
@@ -14,26 +14,22 @@ import {
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 
-import { Textarea } from "../../ui/textarea";
 
-
-
-const AddNotes = () => {
-  
+const AddPaper = () => {
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="default">
             <Plus />
-            New Notes
+            New Paper
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>New Notes</DialogTitle>
+            <DialogTitle>New paper</DialogTitle>
             <DialogDescription>
-              Enter new notes details here.
+              Enter new paper details here.
             </DialogDescription>
           </DialogHeader>
   
@@ -42,15 +38,15 @@ const AddNotes = () => {
               <Label htmlFor="name">Title</Label>
               <Input
                 id="name"
-                placeholder="Notes name"
+                placeholder="paper name"
                 className="col-span-3"
               />
             </div>
             <div className="grid items-center gap-4">
               <Label htmlFor="description">Tags</Label>
-              <Textarea
+              <Input
                 id="tags"
-                placeholder="Write some tags about the notes"
+                placeholder="Paper tags"
                 className="col-span-3"
               />
             </div>
@@ -58,20 +54,22 @@ const AddNotes = () => {
               <Label htmlFor="description">Link</Label>
               <Input
                 id="link"
-                placeholder="Notes link"
+                placeholder="paper link"
                 className="col-span-3"
               />
             </div>
           </div>
   
           <DialogFooter>
-            <Button type="submit">Save Notes</Button>
+            <Button type="submit">Save Paper</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
   );
   
+
+ 
 };
 
-export default AddNotes;
+export default AddPaper;

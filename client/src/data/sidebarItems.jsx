@@ -17,11 +17,13 @@ export const sidebarItems = {
     { icon: <Note />, text: "Notes", link: "/student/notes" },
     { icon: <Paper />, text: "Papers", link: "/student/papers" },
     { icon: <Assignment />, text: "Assignments", link: "/student/assignments" },
+    { icon: <Research />, text: "Research", link: "/student/research" },
   ],
   faculty: [
     { icon: <Project />, text: "Projects", link: "/faculty/projects" },
     { icon: <Note />, text: "Notes", link: "/faculty/notes" },
     { icon: <Paper />, text: "Papers", link: "/faculty/papers" },
     { icon: <Assignment />, text: "Assignments", link: "/faculty/assignments" },
+    { icon: <Research />, text: "Research", link: "/faculty/research" },
   ],
 };
