@@ -30,13 +30,20 @@ import PapersSemesters from "./components/resources/papers/PapersSemesters";
 import Subjects from "./components/resources/notes/Subjects";
 import FacultyLayout from "./layouts/FacultyLayout";
 import FacultyNotesTable from "./components/faculty/notes/FacultyNotesTable";
-import FacultyProjectsTable from "./components/faculty/papers/FacultyProjectsTable";
+
+import FacultyProjectsTable from "./components/faculty/projects/FacultyProjectsTable";
 import FacultyAssignments from "./components/faculty/assignments/FacultyAssignments";
 import FacultyProblems from "./components/faculty/assignments/problems/FacultyProblems";
 import StudentsSubmissions from "./components/faculty/assignments/problems/submissions/StudentsSubmissions";
 import SolutionEditor from "./components/faculty/assignments/problems/submissions/SolutionEditor";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import FacultyPapersTable from "./components/faculty/papers/FacultyPapersTable";
+import FacultyResearchTable from "./components/faculty/research/FacultyResearchTable";
+import StudentPaperTable from "./components/student/papers/StudentPaperTable";
+import StudentResearchTable from "./components/student/research/StudentResearchTable";
+import PaperTable from "./components/admin/papers/PaperTable";
+import ResearchTable from "./components/admin/research/ResearchTable";
 
 function App() {
   const role = useSelector((state) => state.auth.role);
@@ -88,6 +95,17 @@ function App() {
               <Route path="faculty" element={<Faculty />} />
               <Route path="projects" element={<ProjectsTable />} />
               <Route path="notes" element={<NotesTable />} />
+              <Route path="papers" element={<PaperTable/>}/>
+              <Route path="research" element={<ResearchTable/>}/>
+             
+              <Route
+                path="assignments"
+                element={<StudentsSubmissions />}
+              />
+              <Route
+                path="assignments/:assignmentId"
+                element={<SolutionEditor />}
+              />
             </Route>
           )}
 
@@ -96,6 +114,11 @@ function App() {
             <Route path="/student" element={<StudentLayout />}>
               <Route path="projects" element={<StudentProjectsTable />} />
               <Route path="notes" element={<StudentNotesTable />} />
+              <Route path="papers" element={<StudentPaperTable />} />
+              <Route path="research" element={<StudentResearchTable />} />
+              <Route path="assignments" element={<Problems />} />
+              <Route path=":assignmentId/:problemId" element={<Editor />} />
+
             </Route>
           )}
 
@@ -104,6 +127,8 @@ function App() {
             <Route path="/faculty" element={<FacultyLayout />}>
               <Route path="notes" element={<FacultyNotesTable />} />
               <Route path="projects" element={<FacultyProjectsTable />} />
+              <Route path="papers" element={<FacultyPapersTable />} />
+              <Route path="research" element={<FacultyResearchTable/>} />
               <Route
                 path="assignments"
                 element={<FacultyAssignments />}

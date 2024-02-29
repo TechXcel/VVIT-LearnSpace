@@ -1,5 +1,5 @@
 import ArrowUpDown from "@/components/icons/ArrowUpDown";
-//import GitHub from "@/components/icons/GitHub";
+import GitHub from "@/components/icons/GitHub";
 import LiveLink from "@/components/icons/LiveLink";
 import MoreVertical from "@/components/icons/MoreVertical";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const FacultyNoteColumns = [
+export const FacultyProjectColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -53,10 +53,27 @@ export const FacultyNoteColumns = [
     ),
   },
   {
-    accessorKey: "fileUrl",
-    header: () => "Notes",
+    accessorKey: "repositoryUrl",
+    header: () => "GitHub",
     cell: ({ row }) => (
-      <a href={row.original.fileUrl} target="_blank" rel="noopener noreferrer">
+      <a
+        href={row.original.repositoryUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <GitHub />
+      </a>
+    ),
+  },
+  {
+    accessorKey: "liveDemoUrl",
+    header: () => "Live",
+    cell: ({ row }) => (
+      <a
+        href={row.original.liveDemoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <LiveLink />
       </a>
     ),
@@ -85,9 +102,9 @@ export const FacultyNoteColumns = [
     cell: ({ row }) => {
       const project = row.original;
 
-      //const toggleStatus = () => {
+     // const toggleStatus = () => {
         // Toggle the status
-        // const newStatus =
+        //const newStatus =
         project.status === "approved" ? "pending" : "approved";
 
         // You would normally call an API or update the status in your data source here
