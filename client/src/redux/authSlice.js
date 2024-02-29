@@ -82,6 +82,8 @@ const authSlice = createSlice({
     builder.addCase(adminLogin.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.user = payload.data.admin;
+      state.token = payload.data.accessToken;
+      state.role = payload.data.admin.role;
       localStorage.setItem("token", payload.data.accessToken);
       localStorage.setItem("role", payload.data.admin.role);
       toast.success(payload.message);
@@ -97,6 +99,8 @@ const authSlice = createSlice({
     builder.addCase(userLogin.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.user = payload.data.user;
+      state.token = payload.data.accessToken;
+      state.role = payload.data.user.role;
       localStorage.setItem("token", payload.data.accessToken);
       localStorage.setItem("role", payload.data.user.role);
       toast.success(payload.message);
