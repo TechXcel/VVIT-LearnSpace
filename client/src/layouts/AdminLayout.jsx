@@ -15,7 +15,9 @@ const AdminLayout = () => {
         className="min-h-[200px] max-w-screen-2xl rounded-lg border"
       >
         <ResizablePanel defaultSize={20}>
-          <Sidebar role="admin" />
+          <ScrollArea className="h-[90vh]">
+            <Sidebar role="admin" />
+          </ScrollArea>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={80}>
