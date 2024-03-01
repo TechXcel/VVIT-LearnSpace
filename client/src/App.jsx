@@ -47,6 +47,8 @@ import ResearchTable from "./components/admin/research/ResearchTable";
 import Dashboard from "./components/admin/Dashboard";
 import { Dashboard as FacultyDashboard } from "./components/faculty/Dashboard";
 import { Dashboard as StudentDashboard } from "./components/student/Dashboard";
+import Roadmaps from "./components/resources/roadmaps/Roadmaps";
+import Frontend from "./components/resources/roadmaps/Frontend";
 function App() {
   const role = useSelector((state) => state.auth.role);
   return (
@@ -88,6 +90,12 @@ function App() {
             <Route index element={<Assignments />} />
             <Route path=":assignmentId" element={<Problems />} />
             <Route path=":assignmentId/:problemId" element={<Editor />} />
+          </Route>
+
+          {/* Roadmap routes */}
+          <Route path="/roadmaps">
+            <Route index element={<Roadmaps />} />
+            <Route path="frontend" element={<Frontend />} />
           </Route>
 
           {/* Admin routes */}
