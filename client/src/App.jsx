@@ -44,7 +44,9 @@ import StudentPaperTable from "./components/student/papers/StudentPaperTable";
 import StudentResearchTable from "./components/student/research/StudentResearchTable";
 import PaperTable from "./components/admin/papers/PaperTable";
 import ResearchTable from "./components/admin/research/ResearchTable";
-
+import Dashboard from "./components/admin/Dashboard";
+import { Dashboard as FacultyDashboard } from "./components/faculty/Dashboard";
+import { Dashboard as StudentDashboard } from "./components/student/Dashboard";
 function App() {
   const role = useSelector((state) => state.auth.role);
   return (
@@ -91,17 +93,15 @@ function App() {
           {/* Admin routes */}
           {role === "admin" && (
             <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Dashboard />} />
               <Route path="students" element={<Students />} />
               <Route path="faculty" element={<Faculty />} />
               <Route path="projects" element={<ProjectsTable />} />
               <Route path="notes" element={<NotesTable />} />
-              <Route path="papers" element={<PaperTable/>}/>
-              <Route path="research" element={<ResearchTable/>}/>
-             
-              <Route
-                path="assignments"
-                element={<StudentsSubmissions />}
-              />
+              <Route path="papers" element={<PaperTable />} />
+              <Route path="research" element={<ResearchTable />} />
+
+              <Route path="assignments" element={<StudentsSubmissions />} />
               <Route
                 path="assignments/:assignmentId"
                 element={<SolutionEditor />}
@@ -112,23 +112,24 @@ function App() {
           {/* Student routes */}
           {role === "student" && (
             <Route path="/student" element={<StudentLayout />}>
+              <Route index element={<StudentDashboard />} />
               <Route path="projects" element={<StudentProjectsTable />} />
               <Route path="notes" element={<StudentNotesTable />} />
               <Route path="papers" element={<StudentPaperTable />} />
               <Route path="research" element={<StudentResearchTable />} />
               <Route path="assignments" element={<Problems />} />
               <Route path=":assignmentId/:problemId" element={<Editor />} />
-
             </Route>
           )}
 
           {/* Faculty routes */}
           {role === "faculty" && (
             <Route path="/faculty" element={<FacultyLayout />}>
+              <Route index element={<FacultyDashboard />} />
               <Route path="notes" element={<FacultyNotesTable />} />
               <Route path="projects" element={<FacultyProjectsTable />} />
               <Route path="papers" element={<FacultyPapersTable />} />
-              <Route path="research" element={<FacultyResearchTable/>} />
+              <Route path="research" element={<FacultyResearchTable />} />
               <Route
                 path="assignments"
                 element={<FacultyAssignments />}

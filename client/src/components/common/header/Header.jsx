@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainNav from "./MainNav";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -7,10 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/redux/authSlice";
 
 const Header = () => {
+  const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   const handleSignout = () => {
     dispatch(logout());
+    navigate("/auth/signin");
   };
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

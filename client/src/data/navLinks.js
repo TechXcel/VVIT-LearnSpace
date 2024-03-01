@@ -20,7 +20,7 @@ export const navLinks = [
     url: "/research",
   },
   {
-    title: "Resources",
-    url: "/resources",
+    title: "Roadmaps",
+    url: "/roadmaps",
   },
 ];
