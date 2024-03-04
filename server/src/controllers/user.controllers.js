@@ -173,9 +173,65 @@ const getUserDetails = asyncHandler(async (req, res) => {
 });
 
 // Get details of all users
-const getAllUsers = asyncHandler(async (req, res) => {
+const getAllStudents = asyncHandler(async (req, res) => {
+  var students = [];
   // Find all users excluding the password field
-  const users = await User.find().select("-password");
+  students = await User.find({ role: "student" })
+    .select("-password")
+    .sort({ createdAt: -1 })
+    .populate([
+      "resources",
+      "projects",
+      "assignments",
+      "submissions",
+      "reviews",
+    ]);
+
+  if (!students || students.length === 0) {
+    throw new ApiError(404, "Students do not exist");
+  }
+
+  // Respond with a success message and all user details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { students }, "Student details"));
+});
+
+// Delete a student by ID
+const deleteStudent = asyncHandler(async (req, res) => {
+  const { studentId } = req.params;
+  console.log(studentId);
+
+  if (!studentId) {
+    throw new ApiError(400, "Student ID is required");
+  }
+
+  // Find the student by ID and delete it
+  const student = await User.findByIdAndDelete(studentId);
+
+  if (!student) {
+    throw new ApiError(404, "Student does not exist");
+  }
+
+  // Respond with a success message
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, "Student deleted successfully"));
+});
+
+const getAllFaculty = asyncHandler(async (req, res) => {
+  var users = [];
+  // Find all users excluding the password field
+  users = await User.find({})
+    .select("-password")
+    .sort({ createdAt: -1 })
+    .populate([
+      "resources",
+      "projects",
+      "assignments",
+      "submissions",
+      "reviews",
+    ]);
 
   if (!users) {
     throw new ApiError(404, "Users do not exist");
@@ -190,6 +246,7 @@ export {
   registerUser,
   loginUser,
   getUserDetails,
-  getAllUsers,
+  getAllStudents,
+  deleteStudent,
   userPasswordUpdate,
 };

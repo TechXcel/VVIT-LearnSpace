@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import DeleteAlert from "@/components/common/DeleteAlert";
+import { deleteStudent } from "@/redux/userSlice";
 
 export const StudentColumns = [
   {
@@ -93,6 +95,22 @@ export const StudentColumns = [
   },
 
   {
+    accessorKey: "contact",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0 hover:bg-transparent"
+        >
+          Contact No
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+  },
+
+  {
     accessorKey: "branch",
     header: ({ column }) => {
       return (
@@ -131,36 +149,21 @@ export const StudentColumns = [
     },
   },
   {
+    header: "Delete",
     id: "actions",
+    enableHiding: false,
     cell: ({ row }) => {
-      const user = row.original;
-
-      const toggleStatus = () => {
-       // const updatedStatus = user.isActive ? false : true;
-
-        // Now, update the user status using your update function
-        // For example: updateUserStatus(user.id, updatedStatus);
-      };
-
+      const studentId = row.original._id;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-8 h-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreVertical />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={toggleStatus}>
-              {user.isActive ? "Make Inactive" : "Make Active"}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex justify-center ">
+          <DeleteAlert
+            name="user"
+            alertTitle="Are you sure?"
+            alertDescription="This action cannot be undone. This will permanently delete the student and remove their data from our servers."
+            id={studentId}
+            handleDelete={deleteStudent}
+          />
+        </div>
       );
     },
   },

@@ -2,7 +2,13 @@ import { Router } from "express";
 
 import { upload } from "../middlewares/upload.middleware.js";
 import { verifyUserJWT } from "../middlewares/auth.middleware.js";
-import { createSubmission, deleteSubmissionById, getAllSubmissions, getSubmissionById, updateSubmissionById } from "../controllers/submit.controllers.js";
+import {
+  createSubmission,
+  deleteSubmissionById,
+  getAllSubmissions,
+  getSubmissionById,
+  updateSubmissionById,
+} from "../controllers/submission.controllers.js";
 
 const router = Router();
 
