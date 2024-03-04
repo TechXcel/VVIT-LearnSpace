@@ -206,17 +206,33 @@ const deleteStudent = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Student ID is required");
   }
 
-  // Find the student by ID and delete it
-  const student = await User.findByIdAndDelete(studentId);
+  const student = await User.findById(studentId);
 
   if (!student) {
     throw new ApiError(404, "Student does not exist");
   }
 
+  // Find the student by ID and delete it
+  const response = await User.findByIdAndDelete(studentId);
+
+  if (!response) {
+    throw new ApiError(500, "Something went wrong while deleting the student");
+  }
+
+  const students = await User.find({ role: "student" })
+    .select("-password")
+    .sort({ createdAt: -1 });
+
   // Respond with a success message
   return res
     .status(200)
-    .json(new ApiResponse(200, null, "Student deleted successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { students },
+        `Student with ${student.identityNumber} deleted successfully`
+      )
+    );
 });
 
 const getAllFaculty = asyncHandler(async (req, res) => {
