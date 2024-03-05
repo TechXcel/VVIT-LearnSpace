@@ -19,6 +19,8 @@ const resourceSchema = new mongoose.Schema(
     fileUrl: {
       type: String,
       required: [true, "Please provide a valid file URL for this resource."],
+      default:
+        "https://learnspace.s3.ap-south-1.amazonaws.com/project/project-cover.png",
       validate: {
         validator: validator.isURL,
         message: "Invalid URL",
@@ -34,7 +36,7 @@ const resourceSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["lectureNote", "previousPaper"],
+      enum: ["lectureNote", "previousPaper","researchPaper"],
       required: [true, "Please select a type for this resource."],
     },
     status: {

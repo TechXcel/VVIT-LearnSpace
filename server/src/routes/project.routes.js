@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   createProject,
-  deleteProjectById,
+  deleteProject,
   getAllProjects,
   getProjectById,
   updateProjectById,
@@ -16,6 +16,6 @@ router
   .route("/:projectId")
   .get(getProjectById)
   .patch(updateProjectById)
-  .delete(deleteProjectById);
+  .delete(deleteProject);
 
 export default router;

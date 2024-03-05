@@ -1,6 +1,8 @@
 import { Router } from "express";
 import {
+  deleteFaculty,
   deleteStudent,
+  getAllFaculty,
   getAllStudents,
   getUserDetails,
   loginUser,
@@ -20,5 +22,10 @@ router.route("/login").post(loginUser);
 router.route("/register").post(upload.single("avatar"), registerUser);
 router.route("/updatePassword").post(userPasswordUpdate);
 router.route("/:userId").delete(getUserDetails);
+
+//faculty routes
+router.route("/faculty").get(verifyAdminJWT, getAllFaculty);
+router.route("/:facultyId").delete(verifyAdminJWT, deleteFaculty);
+
 
 export default router;

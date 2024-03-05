@@ -2,6 +2,9 @@ import { Router } from "express";
 import {
   createResource,
   deleteResourceById,
+  getAllNotes,
+  getAllPapers,
+  getAllResearchPapers,
   getAllResources,
   getResourceById,
   updateResourceById,
@@ -15,6 +18,19 @@ router
   .route("/")
   .get(getAllResources)
   .post(verifyUserJWT, upload.single("resource"), createResource);
+
+router
+  .route("/notes")
+  .get(getAllNotes)
+
+router
+  .route("/papers")
+  .get(getAllPapers)
+
+router
+  .route("/research")
+  .get(getAllResearchPapers)
+
 router
   .route("/:resourceId")
   .get(getResourceById)

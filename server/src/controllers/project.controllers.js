@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
+
 const createProject = asyncHandler(async (req, res) => {
   const { title, description, repositoryUrl, liveDemoUrl, tags } = req.body;
 
@@ -126,25 +127,50 @@ const updateProjectById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { project }, "Project updated successfully"));
 });
 
-// Delete a project by ID
-const deleteProjectById = asyncHandler(async (req, res) => {
+
+const deleteProject = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
+  console.log(projectId);
 
-  const project = await Project.findByIdAndDelete(projectId);
-
-  if (!project) {
-    throw new ApiError(404, "Project not found");
+  if (!projectId) {
+    throw new ApiError(400, "Project ID is required");
   }
 
+  const project = await Project.findById(projectId);
+
+
+  if (!project) {
+    throw new ApiError(404, "project does not exist");
+  }
+
+  // Find the faculty by ID and delete it
+  const response = await Project.findByIdAndDelete(projectId);
+
+  if (!response) {
+    throw new ApiError(500, "Something went wrong while deleting the student");
+  }
+
+  const projects = await Project.find({ })
+    .select("-password")
+    .sort({ createdAt: -1 });
+
+  // Respond with a success message
   return res
     .status(200)
-    .json(new ApiResponse(200, null, "Project deleted successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { projects },
+        `Student with ${project.title} deleted successfully`
+      )
+    );
 });
+
 
 export {
   createProject,
   getAllProjects,
   getProjectById,
   updateProjectById,
-  deleteProjectById,
+  deleteProject,
 };

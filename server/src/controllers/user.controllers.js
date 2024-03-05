@@ -235,10 +235,11 @@ const deleteStudent = asyncHandler(async (req, res) => {
     );
 });
 
-const getAllFaculty = asyncHandler(async (req, res) => {
-  var users = [];
+//get all faculty
+export const getAllFaculty = asyncHandler(async (req, res) => {
+  var faculty = [];
   // Find all users excluding the password field
-  users = await User.find({})
+  faculty = await User.find({ role: "faculty" })
     .select("-password")
     .sort({ createdAt: -1 })
     .populate([
@@ -249,12 +250,52 @@ const getAllFaculty = asyncHandler(async (req, res) => {
       "reviews",
     ]);
 
-  if (!users) {
-    throw new ApiError(404, "Users do not exist");
+  if (!faculty || faculty.length === 0) {
+    throw new ApiError(404, "faculty do not exist");
   }
 
   // Respond with a success message and all user details
-  return res.status(200).json(new ApiResponse(200, { users }, "Users details"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { faculty }, "faculty details"));
+});
+
+//delete faculty
+export const deleteFaculty = asyncHandler(async (req, res) => {
+  const { facultyId } = req.params;
+  console.log(facultyId);
+
+  if (!facultyId) {
+    throw new ApiError(400, "Faculty ID is required");
+  }
+
+  const faculty = await User.findById(facultyId);
+
+  if (!faculty) {
+    throw new ApiError(404, "faculty does not exist");
+  }
+
+  // Find the faculty by ID and delete it
+  const response = await User.findByIdAndDelete(facultyId);
+
+  if (!response) {
+    throw new ApiError(500, "Something went wrong while deleting the student");
+  }
+
+  const faculties = await User.find({ role: "faculty" })
+    .select("-password")
+    .sort({ createdAt: -1 });
+
+  // Respond with a success message
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { faculties },
+        `Student with ${faculty.identityNumber} deleted successfully`
+      )
+    );
 });
 
 // Export all user-related controllers
