@@ -4,23 +4,16 @@ import { ProjectColumns } from "./ProjectColumns";
 //import { adminProjectsData } from "@/data/projects";
 
 import { useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllProjects } from "@/redux/projectSlice";
 
-
 const ProjectsTable = () => {
+  const dispatch = useDispatch();
+  const { projects } = useSelector((state) => state.project);
 
-  const dispatch=useDispatch();
-  const {projects}=useSelector((state)=>state.projects);
- 
-  
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getAllProjects());
-  },[dispatch])
-
-
-
-
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col space-y-8">

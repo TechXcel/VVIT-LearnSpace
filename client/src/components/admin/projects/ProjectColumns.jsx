@@ -31,8 +31,7 @@ export const ProjectColumns = [
     enableSorting: false,
     enableHiding: false,
   },
-  
-  
+
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -91,6 +90,26 @@ export const ProjectColumns = [
     cell: ({ row }) => row.original.tags.join(", "),
   },
   {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Status
+        <ArrowUpDown />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <span
+        className={`capitalize ${row.original.status === "approved" ? "text-green-500" : "text-yellow-500"}`}
+      >
+        {row.original.status}
+      </span>
+    ),
+  },
+  {
     header: "Delete",
     id: "actions",
     enableHiding: false,
@@ -99,7 +118,7 @@ export const ProjectColumns = [
       return (
         <div className="flex justify-center ">
           <DeleteAlert
-            name="projects"
+            name="project"
             alertTitle="Are you sure?"
             alertDescription="This action cannot be undone. This will permanently delete the student and remove their data from our servers."
             id={projectId}
@@ -109,6 +128,4 @@ export const ProjectColumns = [
       );
     },
   },
- 
-  
 ];

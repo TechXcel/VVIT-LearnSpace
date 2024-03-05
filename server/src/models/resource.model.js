@@ -19,8 +19,8 @@ const resourceSchema = new mongoose.Schema(
     fileUrl: {
       type: String,
       required: [true, "Please provide a valid file URL for this resource."],
-      default:
-        "https://learnspace.s3.ap-south-1.amazonaws.com/project/project-cover.png",
+      // default:
+      //   "https://learnspace.s3.ap-south-1.amazonaws.com/project/project-cover.png",
       validate: {
         validator: validator.isURL,
         message: "Invalid URL",
@@ -28,15 +28,13 @@ const resourceSchema = new mongoose.Schema(
     },
     subject: {
       type: String,
-      required: [true, "Please specify the subject of this resource."],
     },
     semester: {
       type: Number,
-      required: [true, "Semester is required"],
     },
     type: {
       type: String,
-      enum: ["lectureNote", "previousPaper","researchPaper"],
+      enum: ["lectureNote", "previousPaper", "researchPaper"],
       required: [true, "Please select a type for this resource."],
     },
     status: {
@@ -48,7 +46,7 @@ const resourceSchema = new mongoose.Schema(
     tags: [
       {
         type: String,
-        required: [true, "Please provide at least one tag for this resource."],
+        // required: [true, "Please provide at least one tag for this resource."],
       },
     ],
     viewCount: {

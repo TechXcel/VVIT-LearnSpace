@@ -8,7 +8,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const createResource = asyncHandler(async (req, res) => {
   // Destructuring values from the request body
   const { title, description, subject, semester, type, tags } = req.body;
-  
+
   // Checking if all required fields are present
   if (
     !title ||
@@ -76,7 +76,6 @@ const getAllResources = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { resources }, "All resources"));
 });
 
-
 // Get a single resource by ID
 const getResourceById = asyncHandler(async (req, res) => {
   const { resourceId } = req.params;
@@ -139,26 +138,21 @@ const deleteResourceById = asyncHandler(async (req, res) => {
 
 const getAllNotes = asyncHandler(async (req, res) => {
   var notes = [];
- 
-  notes = await Resource.find({ type: "lectureNote" })
-   
+
+  notes = await Resource.find({ type: "lectureNote" });
 
   if (!notes || notes.length === 0) {
     throw new ApiError(404, "Notes do not exist");
   }
 
   // Respond with a success message and all user details
-  return res
-    .status(200)
-    .json(new ApiResponse(200, { notes }, "Notes details"));
+  return res.status(200).json(new ApiResponse(200, { notes }, "Notes details"));
 });
-
 
 const getAllPapers = asyncHandler(async (req, res) => {
   var papers = [];
- 
-  papers = await Resource.find({ type: "previousPaper" })
-   
+
+  papers = await Resource.find({ type: "previousPaper" });
 
   if (!papers || papers.length === 0) {
     throw new ApiError(404, "Papers not exist");
@@ -170,24 +164,20 @@ const getAllPapers = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { papers }, "Papers details"));
 });
 
-
 const getAllResearchPapers = asyncHandler(async (req, res) => {
-  var papers = [];
- 
-  papers = await Resource.find({ type: "researchPaper" })
-   
+  var research = [];
 
-  if (!papers || papers.length === 0) {
+  research = await Resource.find({ type: "researchPaper" });
+
+  if (!research || research.length === 0) {
     throw new ApiError(404, "Notes do not exist");
   }
 
   // Respond with a success message and all user details
   return res
     .status(200)
-    .json(new ApiResponse(200, { papers }, "Research Papers details"));
+    .json(new ApiResponse(200, { research }, "Research Papers details"));
 });
-
-
 
 // Export all the resource-related controllers
 export {

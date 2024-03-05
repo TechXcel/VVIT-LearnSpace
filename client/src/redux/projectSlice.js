@@ -2,10 +2,6 @@ import axios from "@/utils/api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
-
-
-
-
 export const getAllProjects = createAsyncThunk(
   "/api/v1/projects",
   async (_, { rejectWithValue }) => {
@@ -46,19 +42,15 @@ export const deleteProject = createAsyncThunk(
   }
 );
 
-
-
-
 export const projectSlice = createSlice({
-  name: "projects",
+  name: "project",
   initialState: {
-    projects:[],
+    projects: [],
     isLoading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
-    
     builder.addCase(getAllProjects.pending, (state) => {
       state.isLoading = true;
       state.error = null;
@@ -88,10 +80,7 @@ export const projectSlice = createSlice({
       state.error = payload;
       toast.error(payload.message);
     });
-
   },
 });
-
-
 
 export default projectSlice.reducer;

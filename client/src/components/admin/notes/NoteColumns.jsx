@@ -118,8 +118,8 @@ export const NoteColumns = [
 
       const toggleStatus = () => {
         // Toggle the status
-       // const newStatus =
-          project.status === "approved" ? "pending" : "approved";
+        // const newStatus =
+        project.status === "approved" ? "pending" : "approved";
 
         // You would normally call an API or update the status in your data source here
         // For example: updateProjectStatus(project.id, newStatus);
