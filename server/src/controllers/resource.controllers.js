@@ -29,6 +29,7 @@ const createResource = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Resource already exists");
   }
 
+  if(req.file){
   // Upload the file to AWS S3
   await uploadFile(
     req.file,
@@ -43,7 +44,7 @@ const createResource = asyncHandler(async (req, res) => {
 
   // Create the file URL based on the AWS S3 bucket structure
   req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.user.identityNumber}/resource/${req.file.originalname}`;
-
+  }
   // Set the uploader ID based on the authenticated user
   req.body.uploader = req.user._id;
 
@@ -178,6 +179,119 @@ const getAllResearchPapers = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, { research }, "Research Papers details"));
 });
+
+
+export const deleteNotes = asyncHandler(async (req, res) => {
+  const { notesId } = req.params;
+  console.log(notesId);
+
+  if (!notesId) {
+    throw new ApiError(400, "Notes ID is required");
+  }
+
+  const note = await Resource.findById(notesId);
+
+  if (!note) {
+    throw new ApiError(404, "notes does not exist");
+  }
+
+  // Find the student by ID and delete it
+  const response = await Resource.findByIdAndDelete(notesId);
+
+  if (!response) {
+    throw new ApiError(500, "Something went wrong while deleting the student");
+  }
+
+  const notes = await Resource.find({ type:"lectureNote" })
+    .sort({ createdAt: -1 });
+
+  // Respond with a success message
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { notes },
+        `${note.title} deleted successfully`
+      )
+    );
+});
+
+
+export const deletePapers = asyncHandler(async (req, res) => {
+  const { paperId } = req.params;
+  console.log(paperId);
+
+  if (!paperId) {
+    throw new ApiError(400, "Paper ID is required");
+  }
+
+  const paper = await Resource.findById(paperId);
+
+  if (!paper) {
+    throw new ApiError(404, "paper does not exist");
+  }
+
+  // Find the student by ID and delete it
+  const response = await Resource.findByIdAndDelete(paperId);
+
+  if (!response) {
+    throw new ApiError(500, "Something went wrong while deleting the student");
+  }
+
+  const papers = await Resource.find({ type:"previousPaper" })
+    .sort({ createdAt: -1 });
+
+  // Respond with a success message
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { papers },
+        `${paper.title} deleted successfully`
+      )
+    );
+});
+
+
+
+export const deleteResearch = asyncHandler(async (req, res) => {
+  const { researchId } = req.params;
+  console.log(researchId);
+
+  if (!researchId) {
+    throw new ApiError(400, "research ID is required");
+  }
+
+  const researchPaper = await Resource.findById(researchId);
+
+  if (!researchPaper) {
+    throw new ApiError(404, "paper does not exist");
+  }
+
+  // Find the student by ID and delete it
+  const response = await Resource.findByIdAndDelete(researchId);
+
+  if (!response) {
+    throw new ApiError(500, "Something went wrong while deleting the student");
+  }
+
+  const research = await Resource.find({ type:"researchPaper" })
+    .sort({ createdAt: -1 });
+
+  // Respond with a success message
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { research },
+        `${researchPaper.title} deleted successfully`
+      )
+    );
+});
+
 
 // Export all the resource-related controllers
 export {

@@ -1,17 +1,12 @@
 import ArrowUpDown from "@/components/icons/ArrowUpDown";
 //import GitHub from "@/components/icons/GitHub";
 import LiveLink from "@/components/icons/LiveLink";
-import MoreVertical from "@/components/icons/MoreVertical";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import DeleteAlert from "@/components/common/DeleteAlert";
+import { deleteNotes } from "@/redux/resourceSlice";
+
+
 
 export const NoteColumns = [
   {
@@ -111,40 +106,26 @@ export const NoteColumns = [
       </span>
     ),
   },
+
   {
+    header: "Delete",
     id: "actions",
+    enableHiding: false,
     cell: ({ row }) => {
-      const project = row.original;
-
-      const toggleStatus = () => {
-        // Toggle the status
-        // const newStatus =
-        project.status === "approved" ? "pending" : "approved";
-
-        // You would normally call an API or update the status in your data source here
-        // For example: updateProjectStatus(project.id, newStatus);
-      };
-
+      const facultyId = row.original._id;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-8 h-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreVertical />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={toggleStatus}>
-              {project.status === "approved" ? "Make Pending" : "Approve"}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex justify-center ">
+          <DeleteAlert
+            name="user"
+            alertTitle="Are you sure?"
+            alertDescription="This action cannot be undone. This will permanently delete the student and remove their data from our servers."
+            id={facultyId}
+            handleDelete={deleteNotes}
+          />
+        </div>
       );
     },
   },
+  
+  
 ];

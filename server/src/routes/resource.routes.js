@@ -1,6 +1,9 @@
 import { Router } from "express";
 import {
   createResource,
+  deleteNotes,
+  deletePapers,
+  deleteResearch,
   deleteResourceById,
   getAllNotes,
   getAllPapers,
@@ -22,14 +25,31 @@ router
 router
   .route("/notes")
   .get(getAllNotes)
+  
+router
+  .route("/notes/:notesId")
+  .delete(deleteNotes);
+
+
+
 
 router
   .route("/papers")
   .get(getAllPapers)
 
+
+router
+  .route("/papers/:paperId")
+  .delete(deletePapers)
+
 router
   .route("/research")
   .get(getAllResearchPapers)
+
+router
+  .route("/research/:researchId")
+  .delete(deleteResearch)
+
 
 router
   .route("/:resourceId")
