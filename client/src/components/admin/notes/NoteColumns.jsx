@@ -6,8 +6,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import DeleteAlert from "@/components/common/DeleteAlert";
 import { deleteNotes } from "@/redux/resourceSlice";
 
-
-
 export const NoteColumns = [
   {
     id: "select",
@@ -34,7 +32,7 @@ export const NoteColumns = [
     enableHiding: false,
   },
   {
-    accessorKey: "uploader",
+    accessorKey: "uploader.name",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -126,6 +124,4 @@ export const NoteColumns = [
       );
     },
   },
-  
-  
 ];

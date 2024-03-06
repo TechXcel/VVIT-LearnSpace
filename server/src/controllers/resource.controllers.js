@@ -29,21 +29,21 @@ const createResource = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Resource already exists");
   }
 
-  if(req.file){
-  // Upload the file to AWS S3
-  await uploadFile(
-    req.file,
-    "resource",
-    req.body.title,
-    req.user.identityNumber
-  );
+  if (req.file) {
+    // Upload the file to AWS S3
+    await uploadFile(
+      req.file,
+      "resource",
+      req.body.title,
+      req.user.identityNumber
+    );
 
-  // Modify the file name to replace spaces with hyphens
-  const perfectName = req.body.title.split(/\s+/).join("-");
-  req.file.originalname = perfectName;
+    // Modify the file name to replace spaces with hyphens
+    const perfectName = req.body.title.split(/\s+/).join("-");
+    req.file.originalname = perfectName;
 
-  // Create the file URL based on the AWS S3 bucket structure
-  req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.user.identityNumber}/resource/${req.file.originalname}`;
+    // Create the file URL based on the AWS S3 bucket structure
+    req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.user.identityNumber}/resource/${req.file.originalname}`;
   }
   // Set the uploader ID based on the authenticated user
   req.body.uploader = req.user._id;
@@ -140,7 +140,9 @@ const deleteResourceById = asyncHandler(async (req, res) => {
 const getAllNotes = asyncHandler(async (req, res) => {
   var notes = [];
 
-  notes = await Resource.find({ type: "lectureNote" });
+  notes = await Resource.find({ type: "lectureNote" })
+    .sort({ createdAt: -1 })
+    .populate({ path: "uploader" });
 
   if (!notes || notes.length === 0) {
     throw new ApiError(404, "Notes do not exist");
@@ -153,7 +155,9 @@ const getAllNotes = asyncHandler(async (req, res) => {
 const getAllPapers = asyncHandler(async (req, res) => {
   var papers = [];
 
-  papers = await Resource.find({ type: "previousPaper" });
+  papers = await Resource.find({ type: "previousPaper" })
+    .sort({ createdAt: -1 })
+    .populate({ path: "uploader" });
 
   if (!papers || papers.length === 0) {
     throw new ApiError(404, "Papers not exist");
@@ -168,7 +172,9 @@ const getAllPapers = asyncHandler(async (req, res) => {
 const getAllResearchPapers = asyncHandler(async (req, res) => {
   var research = [];
 
-  research = await Resource.find({ type: "researchPaper" });
+  research = await Resource.find({ type: "researchPaper" })
+    .sort({ createdAt: -1 })
+    .populate({ path: "uploader" });
 
   if (!research || research.length === 0) {
     throw new ApiError(404, "Notes do not exist");
@@ -179,7 +185,6 @@ const getAllResearchPapers = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, { research }, "Research Papers details"));
 });
-
 
 export const deleteNotes = asyncHandler(async (req, res) => {
   const { notesId } = req.params;
@@ -202,21 +207,17 @@ export const deleteNotes = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while deleting the student");
   }
 
-  const notes = await Resource.find({ type:"lectureNote" })
-    .sort({ createdAt: -1 });
+  const notes = await Resource.find({ type: "lectureNote" }).sort({
+    createdAt: -1,
+  });
 
   // Respond with a success message
   return res
     .status(200)
     .json(
-      new ApiResponse(
-        200,
-        { notes },
-        `${note.title} deleted successfully`
-      )
+      new ApiResponse(200, { notes }, `${note.title} deleted successfully`)
     );
 });
-
 
 export const deletePapers = asyncHandler(async (req, res) => {
   const { paperId } = req.params;
@@ -239,22 +240,17 @@ export const deletePapers = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while deleting the student");
   }
 
-  const papers = await Resource.find({ type:"previousPaper" })
-    .sort({ createdAt: -1 });
+  const papers = await Resource.find({ type: "previousPaper" }).sort({
+    createdAt: -1,
+  });
 
   // Respond with a success message
   return res
     .status(200)
     .json(
-      new ApiResponse(
-        200,
-        { papers },
-        `${paper.title} deleted successfully`
-      )
+      new ApiResponse(200, { papers }, `${paper.title} deleted successfully`)
     );
 });
-
-
 
 export const deleteResearch = asyncHandler(async (req, res) => {
   const { researchId } = req.params;
@@ -277,8 +273,9 @@ export const deleteResearch = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while deleting the student");
   }
 
-  const research = await Resource.find({ type:"researchPaper" })
-    .sort({ createdAt: -1 });
+  const research = await Resource.find({ type: "researchPaper" }).sort({
+    createdAt: -1,
+  });
 
   // Respond with a success message
   return res
@@ -291,7 +288,6 @@ export const deleteResearch = asyncHandler(async (req, res) => {
       )
     );
 });
-
 
 // Export all the resource-related controllers
 export {

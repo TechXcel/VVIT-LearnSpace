@@ -7,7 +7,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import DeleteAlert from "@/components/common/DeleteAlert";
 import { deletePapers } from "@/redux/resourceSlice";
 
-
 export const PaperColumns = [
   {
     id: "select",
@@ -34,7 +33,7 @@ export const PaperColumns = [
     enableHiding: false,
   },
   {
-    accessorKey: "uploader",
+    accessorKey: "uploader.name",
     header: ({ column }) => (
       <Button
         variant="ghost"

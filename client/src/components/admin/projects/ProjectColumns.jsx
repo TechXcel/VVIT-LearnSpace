@@ -31,7 +31,19 @@ export const ProjectColumns = [
     enableSorting: false,
     enableHiding: false,
   },
-
+  {
+    accessorKey: "owner.name",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Uploader
+        <ArrowUpDown />
+      </Button>
+    ),
+  },
   {
     accessorKey: "title",
     header: ({ column }) => (

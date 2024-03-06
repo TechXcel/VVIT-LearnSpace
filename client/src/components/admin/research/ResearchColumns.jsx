@@ -35,7 +35,7 @@ export const ResearchColumns = [
     enableHiding: false,
   },
   {
-    accessorKey: "uploader",
+    accessorKey: "uploader.name",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -87,7 +87,7 @@ export const ResearchColumns = [
     header: "Tags",
     cell: ({ row }) => row.original.tags.join(", "),
   },
-  
+
   {
     header: "Delete",
     id: "actions",
@@ -107,5 +107,4 @@ export const ResearchColumns = [
       );
     },
   },
-  
 ];
