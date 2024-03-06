@@ -1,12 +1,21 @@
-import Plus from "@/components/icons/Plus";
-
-import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
-import { assignments, problems } from "@/data/assignments";
+import { assignments } from "@/data/assignments";
 import { FacultyProblemColumns } from "./FacultyProblemColumns";
 import AddProblem from "./AddProblem";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProblemsByAssignment } from "@/redux/problemSlice";
+import { useParams } from "react-router-dom";
 
 const FacultyProblems = () => {
+  const { assignmentId } = useParams();
+  console.log(assignmentId);
+  const dispatch = useDispatch();
+  const { problems } = useSelector((state) => state.problem);
+
+  useEffect(() => {
+    dispatch(getProblemsByAssignment(assignmentId));
+  }, [dispatch, assignmentId]);
   return (
     <div className="flex flex-col items-center w-full max-w-screen-2xl">
       <div className="flex flex-col justify-between w-full gap-y-8">
@@ -19,7 +28,7 @@ const FacultyProblems = () => {
               {assignments[0].description}
             </p>
           </div>
-          <AddProblem />
+          <AddProblem assignmentId={assignmentId} />
         </div>
 
         <DataTable columns={FacultyProblemColumns} data={problems} />

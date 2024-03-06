@@ -45,6 +45,7 @@ export const deleteAssignment = createAsyncThunk(
 export const addAssignment = createAsyncThunk(
   "/api/v1/assignments (post)",
   async (payload, { rejectWithValue }) => {
+    console.log(payload);
     try {
       const response = await axios.post("/api/v1/assignments", payload, {
         headers: {

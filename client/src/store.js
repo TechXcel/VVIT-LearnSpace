@@ -4,6 +4,7 @@ import userReducer from "@/redux/userSlice";
 import projectReducer from "@/redux/projectSlice";
 import resourceReducer from "@/redux/resourceSlice";
 import assignmentReducer from "@/redux/assignmentSlice";
+import problemReducer from "@/redux/problemSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     project: projectReducer,
     resource: resourceReducer,
     assignment: assignmentReducer,
+    problem: problemReducer,
   },
 });
 

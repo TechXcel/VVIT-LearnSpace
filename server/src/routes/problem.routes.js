@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { isAuthenticated } from "../middlewares/auth.middleware.js";
-import { upload } from "../middlewares/upload.middleware.js";
 import {
   createProblem,
   deleteProblemById,
@@ -12,10 +11,8 @@ const router = Router();
 
 router.use(isAuthenticated);
 
-router
-  .route("/")
-  .get(getAllProblems)
-  .post(upload.single("problem"), createProblem);
+router.route("/").post(createProblem);
+router.route("/:assignmentId").get(getAllProblems);
 
 router
   .route("/:problemId")
