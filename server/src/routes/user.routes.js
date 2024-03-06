@@ -10,22 +10,24 @@ import {
   userPasswordUpdate,
 } from "../controllers/user.controllers.js";
 import { upload } from "../middlewares/upload.middleware.js";
-import { verifyAdminJWT } from "../middlewares/auth.middleware.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-// students routes
-router.route("/students").get(verifyAdminJWT, getAllStudents);
-router.route("/:studentId").delete(verifyAdminJWT, deleteStudent);
-
 router.route("/login").post(loginUser);
 router.route("/register").post(upload.single("avatar"), registerUser);
+
+router.use(isAuthenticated);
+
+// students routes
+router.route("/students").get(getAllStudents);
+router.route("/:studentId").delete(deleteStudent);
+
 router.route("/updatePassword").post(userPasswordUpdate);
 router.route("/:userId").delete(getUserDetails);
 
 //faculty routes
-router.route("/faculty").get(verifyAdminJWT, getAllFaculty);
-router.route("/:facultyId").delete(verifyAdminJWT, deleteFaculty);
-
+router.route("/faculty").get(getAllFaculty);
+router.route("/:facultyId").delete(deleteFaculty);
 
 export default router;

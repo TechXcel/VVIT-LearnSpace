@@ -53,9 +53,9 @@ adminSchema.methods.generateAccessToken = function () {
       _id: this._id,
       role: "admin",
     },
-    process.env.ADMIN_ACCESS_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: process.env.ADMIN_ACCESS_TOKEN_EXPIRY,
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
     }
   );
 };

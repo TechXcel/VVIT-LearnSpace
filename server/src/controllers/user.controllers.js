@@ -293,7 +293,7 @@ export const deleteFaculty = asyncHandler(async (req, res) => {
       new ApiResponse(
         200,
         { faculties },
-        `Student with ${faculty.identityNumber} deleted successfully`
+        `Faculty with ${faculty.identityNumber} deleted successfully`
       )
     );
 });

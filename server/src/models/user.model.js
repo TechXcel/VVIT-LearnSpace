@@ -150,11 +150,10 @@ userSchema.methods.generateAccessToken = async function () {
     {
       _id: this._id,
       role: this.role,
-      branch: this.branch,
     },
-    process.env.USER_ACCESS_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: process.env.USER_ACCESS_TOKEN_EXPIRY,
+      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
     }
   );
 };

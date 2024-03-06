@@ -7,14 +7,13 @@ import {
   projectApproval,
   updateProjectById,
 } from "../controllers/project.controllers.js";
-import {
-  verifyAdminJWT,
-  verifyUserJWT,
-} from "../middlewares/auth.middleware.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/").post(verifyUserJWT, createProject).get(getAllProjects);
+router.use(isAuthenticated);
+
+router.route("/").post(createProject).get(getAllProjects);
 
 router
   .route("/:projectId")

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyUserJWT } from "../middlewares/auth.middleware.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
 import {
   createNotification,
   getNotification,
@@ -9,9 +9,11 @@ import {
 
 const router = Router();
 
+router.use(isAuthenticated);
+
 router
   .route("/")
-  .post(verifyUserJWT, createNotification)
+  .post(createNotification)
   .get(getNotification)
   .patch(updateNotification)
   .delete(deleteNotification);

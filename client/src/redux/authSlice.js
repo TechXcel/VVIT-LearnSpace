@@ -55,13 +55,14 @@ export const userRegister = createAsyncThunk(
   }
 );
 
+const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: {},
+    user: user ? JSON.parse(user) : {},
     token: token,
     isLoading: false,
     role: role,
@@ -71,6 +72,7 @@ const authSlice = createSlice({
       state.user = {};
       state.token = null;
       state.role = null;
+      localStorage.removeItem("user");
       localStorage.removeItem("token");
       localStorage.removeItem("role");
     },
@@ -84,6 +86,7 @@ const authSlice = createSlice({
       state.user = payload.data.admin;
       state.token = payload.data.accessToken;
       state.role = payload.data.admin.role;
+      localStorage.setItem("user", JSON.stringify(payload.data.admin));
       localStorage.setItem("token", payload.data.accessToken);
       localStorage.setItem("role", payload.data.admin.role);
       toast.success(payload.message);
@@ -101,6 +104,7 @@ const authSlice = createSlice({
       state.user = payload.data.user;
       state.token = payload.data.accessToken;
       state.role = payload.data.user.role;
+      localStorage.setItem("user", JSON.stringify(payload.data.user));
       localStorage.setItem("token", payload.data.accessToken);
       localStorage.setItem("role", payload.data.user.role);
       toast.success(payload.message);
