@@ -4,7 +4,8 @@ import LiveLink from "@/components/icons/LiveLink";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import DeleteAlert from "@/components/common/DeleteAlert";
-import { deleteProject } from "@/redux/projectSlice";
+import { approveProject, deleteProject } from "@/redux/projectSlice";
+import ApprovalAlert from "@/components/common/ApprovalAlert";
 
 export const ProjectColumns = [
   {
@@ -102,7 +103,6 @@ export const ProjectColumns = [
     cell: ({ row }) => row.original.tags.join(", "),
   },
   {
-    accessorKey: "status",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -113,13 +113,23 @@ export const ProjectColumns = [
         <ArrowUpDown />
       </Button>
     ),
-    cell: ({ row }) => (
-      <span
-        className={`capitalize ${row.original.status === "approved" ? "text-green-500" : "text-yellow-500"}`}
-      >
-        {row.original.status}
-      </span>
-    ),
+    id: "status",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const projectId = row.original._id;
+      return (
+        <div className="flex justify-center ">
+          <ApprovalAlert
+            name="project"
+            id={projectId}
+            status={row.original.status}
+            alertTitle={`Are you sure you want to ${row.original.status === "approved" ? "pending" : "approve"} this project?`}
+            alertDescription={`This action will ${row.original.status === "approved" ? "pending" : "approve"} the project and notify the student.`}
+            handleApprove={approveProject}
+          />
+        </div>
+      );
+    },
   },
   {
     header: "Delete",

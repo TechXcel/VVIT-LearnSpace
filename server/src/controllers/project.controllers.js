@@ -150,7 +150,7 @@ const deleteProject = asyncHandler(async (req, res) => {
   }
 
   const projects = await Project.find({})
-    .select("-password")
+    .populate({ path: "owner" })
     .sort({ createdAt: -1 });
 
   // Respond with a success message
@@ -165,10 +165,44 @@ const deleteProject = asyncHandler(async (req, res) => {
     );
 });
 
+const projectApproval = asyncHandler(async (req, res) => {
+  const { projectId } = req.params;
+
+  const project = await Project.findById(projectId);
+
+  if (!project) {
+    throw new ApiError(404, "Project not found");
+  }
+
+  if (project.status === "approved") {
+    project.status = "pending";
+  } else {
+    project.status = "approved";
+  }
+
+  await project.save();
+
+  console.log(project);
+  const projects = await Project.find({})
+    .populate({ path: "owner" })
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { projects },
+        `Project ${project.status === "approved" ? "approved" : "pending"}`
+      )
+    );
+});
+
 export {
   createProject,
   getAllProjects,
   getProjectById,
   updateProjectById,
   deleteProject,
+  projectApproval,
 };

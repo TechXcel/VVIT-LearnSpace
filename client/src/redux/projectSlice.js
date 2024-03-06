@@ -42,6 +42,26 @@ export const deleteProject = createAsyncThunk(
   }
 );
 
+export const approveProject = createAsyncThunk(
+  "/api/v1/projects/:projectId(approval)",
+  async (payload, { rejectWithValue }) => {
+    console.log(payload);
+    try {
+      const response = await axios.patch(`/api/v1/projects/${payload}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const projectSlice = createSlice({
   name: "project",
   initialState: {
@@ -76,6 +96,21 @@ export const projectSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(deleteProject.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+
+    builder.addCase(approveProject.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(approveProject.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.projects = payload.data.projects;
+      toast.success(payload.message);
+    });
+    builder.addCase(approveProject.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
