@@ -45,7 +45,9 @@ export const getProblemsByAssignment = createAsyncThunk(
 export const addProblem = createAsyncThunk(
   "/api/v1/problems",
   async (payload, { rejectWithValue }) => {
-    console.log(payload);
+    // for (const [key, value] of payload.entries()) {
+    //   console.log(key, value);
+    // }
     try {
       const response = await axios.post("/api/v1/problems", payload, {
         headers: {

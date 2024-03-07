@@ -40,15 +40,15 @@ const AddProblem = ({ assignmentId }) => {
     const problemData = new FormData();
     data.assignmentId = assignmentId;
     data.difficulty = level;
-    Object.keys(data).forEach((key) => {
-      problemData.append(key, data[key]);
-    });
+    // Object.keys(data).forEach((key) => {
+    //   problemData.append(key, data[key]);
+    // });
 
-    for (const [key, value] of problemData.entries()) {
-      console.log(key, value);
-    }
+    // for (const [key, value] of problemData.entries()) {
+    //   console.log(key, value);
+    // }
 
-    const response = await dispatch(addProblem(problemData));
+    const response = await dispatch(addProblem(data));
     setOpen(false);
   };
 

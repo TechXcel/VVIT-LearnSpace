@@ -32,11 +32,11 @@ const AddAssignment = () => {
   const handleAssignmentCreation = async (data) => {
     const assignmentData = new FormData();
     data.tags = selected;
-    Object.keys(data).forEach((key) => {
-      assignmentData.append(key, data[key]);
-    });
+    // Object.keys(data).forEach((key) => {
+    //   assignmentData.append(key, data[key]);
+    // });
 
-    const response = await dispatch(addAssignment(assignmentData));
+    const response = await dispatch(addAssignment(data));
     setOpen(false);
   };
 
