@@ -137,38 +137,7 @@ const deleteResourceById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, null, "Resource deleted successfully"));
 });
 
-const noteApproval = asyncHandler(async (req, res) => {
-  const { resourceId } = req.params;
-  const { status } = req.body;
 
-  if (!resourceId || !status) {
-    throw new ApiError(400, "Resource ID and status are required");
-  }
-
-  const resource = await Resource.findById(resourceId);
-
-  if (!resource) {
-    throw new ApiError(404, "Resource does not exist");
-  }
-
-  resource.status = status;
-
-  const updatedResource = await resource.save();
-
-  if (!updatedResource) {
-    throw new ApiError(500, "Something went wrong while updating the resource");
-  }
-
-  return res
-    .status(200)
-    .json(
-      new ApiResponse(
-        200,
-        { resource: updatedResource },
-        "Resource status updated successfully"
-      )
-    );
-});
 
 const getAllNotes = asyncHandler(async (req, res) => {
   var notes = [];
@@ -321,6 +290,41 @@ export const deleteResearch = asyncHandler(async (req, res) => {
       )
     );
 });
+
+export const noteApproval = asyncHandler(async (req, res) => {
+  const { notesId } = req.params;
+
+  const note = await Resource.findById(notesId);
+
+  if (!note) {
+    throw new ApiError(404, "Notes not found");
+  }
+
+  if (note.status === "approved") {
+    note.status = "pending";
+  } else {
+    note.status = "approved";
+  }
+
+  await note.save();
+
+  console.log(note);
+  const notes = await Resource.find({type: "lectureNote"})
+    
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { notes },
+        `Note ${note.status === "approved" ? "approved" : "pending"}`
+      )
+    );
+});
+
+
 
 // Export all the resource-related controllers
 export {

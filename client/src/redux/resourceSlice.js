@@ -124,6 +124,29 @@ export const deleteResearch = createAsyncThunk(
   }
 );
 
+export const approveNotes = createAsyncThunk(
+  "/api/v1/resources/notes/:notesId(approval)",
+  async (payload, { rejectWithValue }) => {
+    console.log("payload is", payload);
+    try {
+      const response = await axios.patch(`/api/v1/resources/notes/${payload}`,null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        console.log(error)
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+
 export const resourceSlice = createSlice({
   name: "resource",
   initialState: {
@@ -218,6 +241,20 @@ export const resourceSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(deleteResearch.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(approveNotes.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(approveNotes.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.notes = payload.data.notes;
+      toast.success(payload.message);
+    });
+    builder.addCase(approveNotes.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
