@@ -28,7 +28,7 @@ const StudentEditor = () => {
   const { submissionId } = useParams();
   const dispatch = useDispatch();
   const { submission } = useSelector((state) => state.submission);
-  const javascriptDefault = `// start practicing your code here!`;
+  const javascriptDefault = `${submission?.providedSolution || `// start practicing your code here!`}`;
   const [code, setCode] = useState(javascriptDefault);
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
@@ -183,6 +183,8 @@ const StudentEditor = () => {
     // Add logic to save the code to your backend or storage if needed
   };
 
+  console.log("submission", submission.providedSolution);
+
   return (
     <section className="flex flex-col w-full max-w-screen-2xl">
       <ToastContainer
@@ -201,9 +203,11 @@ const StudentEditor = () => {
         <div className="flex items-center gap-x-5">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">
-              {problems[0].title}
+              {submission?.problemId?.title}
             </h2>
-            <p className="text-muted-foreground">{problems[0].description}</p>
+            <p className="text-muted-foreground">
+              {submission?.problemId?.description}
+            </p>
           </div>
         </div>
 
