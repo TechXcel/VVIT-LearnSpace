@@ -234,18 +234,6 @@ const SolutionEditor = () => {
                 </>
               )}
             </Button>
-            <Button
-              onClick={handleSave}
-              disabled={!code || processing}
-              className={classnames(
-                "",
-                !code || processing ? "opacity-50" : ""
-              )}
-            >
-              <>
-                <Save /> Save
-              </>
-            </Button>
           </div>
           <div>
             {outputDetails && <OutputDetails outputDetails={outputDetails} />}

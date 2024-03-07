@@ -1,5 +1,4 @@
 import Submission from "../models/submission.model.js";
-
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -44,12 +43,14 @@ export const createSubmission = asyncHandler(async (req, res) => {
 });
 
 export const getAllSubmissions = asyncHandler(async (req, res) => {
-  const submission = await Submission.find({});
+  const { problemId } = req.params;
+
+  const submissions = await Submission.find({ problemId });
 
   // Respond with a success message and all resources
   return res
     .status(200)
-    .json(new ApiResponse(200, { submission }, "All submits"));
+    .json(new ApiResponse(200, { submissions }, "All submits"));
 });
 
 export const getSubmissionById = asyncHandler(async (req, res) => {

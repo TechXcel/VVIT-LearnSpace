@@ -1,6 +1,4 @@
 import { Router } from "express";
-
-import { upload } from "../middlewares/upload.middleware.js";
 import { isAuthenticated } from "../middlewares/auth.middleware.js";
 import {
   createSubmission,
@@ -14,10 +12,10 @@ const router = Router();
 
 router.use(isAuthenticated);
 
-router
-  .route("/")
-  .get(getAllSubmissions)
-  .post(upload.single("submission"), createSubmission);
+router.route("/").post(createSubmission);
+
+router.route("/:problemId").get(getAllSubmissions);
+
 router
   .route("/:submissionId")
   .get(getSubmissionById)
