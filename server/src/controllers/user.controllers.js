@@ -37,6 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     // Set the avatar URL based on the AWS S3 bucket structure
     req.body.avatar = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.identityNumber}/avatar/${req.file.originalname}`;
+    console.log(req.body.avatar)
   }
 
   // Create a new user in the database

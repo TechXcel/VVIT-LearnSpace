@@ -62,10 +62,34 @@ export const approveProject = createAsyncThunk(
   }
 );
 
+export const addProject = createAsyncThunk(
+  "/api/v1/projects/add",
+  async (payload, { rejectWithValue }) => {
+    console.log(payload);
+    try {
+      const response = await axios.post("/api/v1/projects/add", payload,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(payload)
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        console.log("slice error",error)
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const projectSlice = createSlice({
   name: "project",
   initialState: {
     projects: [],
+    
     isLoading: false,
     error: null,
   },
@@ -114,6 +138,17 @@ export const projectSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
+    });
+    builder.addCase(addProject.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(addProject.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      toast.success(payload.message);
+    });
+    builder.addCase(addProject.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload?.message || "Something went wrong");
     });
   },
 });

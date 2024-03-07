@@ -11,9 +11,14 @@ import { isAuthenticated } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
+
+
+
 router.use(isAuthenticated);
 
-router.route("/").post(createProject).get(getAllProjects);
+router.route("/").get(getAllProjects);
+router.route("/add").post(createProject)
+
 
 router
   .route("/:projectId")

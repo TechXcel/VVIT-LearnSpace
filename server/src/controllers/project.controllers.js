@@ -4,15 +4,14 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 const createProject = asyncHandler(async (req, res) => {
-  const { title, description, repositoryUrl, liveDemoUrl, tags } = req.body;
+  const { title, description, repositoryUrl, liveDemoUrl} = req.body;
 
   if (
     !title ||
     !description ||
     !repositoryUrl ||
-    !liveDemoUrl ||
-    !tags ||
-    tags.length === 0
+    !liveDemoUrl 
+    
   ) {
     throw new ApiError(400, "Please enter all the required fields");
   }
@@ -30,9 +29,9 @@ const createProject = asyncHandler(async (req, res) => {
     // Upload the file to AWS S3
     await uploadFile(
       req.file,
-      "project",
+      "coverImage",
       req.body.title,
-      req.user.identityNumber
+      req.body.owner
     );
 
     // Modify the file name to replace spaces with hyphens
@@ -40,7 +39,8 @@ const createProject = asyncHandler(async (req, res) => {
     req.file.originalname = perfectName;
 
     // Create the file URL based on the AWS S3 bucket structure
-    req.body.coverImage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.identityNumber}/project/${req.file.originalname}`;
+    req.body.coverImage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.owner}/project/${req.file.originalname}`;
+    console.log("url image",req.body.coverImage)
   }
 
   // Handle additional files
@@ -51,18 +51,19 @@ const createProject = asyncHandler(async (req, res) => {
       const additionalFileName = file.originalname.split(/\s+/).join("-");
       await uploadFile(
         file,
-        "project",
+        "coverImage",
         additionalFileName,
-        req.user.identityNumber
+        req.body.owner
       );
 
       // Create the file URL for each additional file
-      const additionalFileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.identityNumber}/project/${additionalFileName}`;
+      const additionalFileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.owner}/project/${additionalFileName}`;
       req.body.additionalFiles.push(additionalFileUrl);
     }
   }
 
   const newProject = await Project.create(req.body);
+  console.log(newProject)
 
   if (!newProject) {
     throw new ApiError(500, "Something went wrong while creating the project");
