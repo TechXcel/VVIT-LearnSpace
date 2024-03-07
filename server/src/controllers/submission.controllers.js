@@ -53,11 +53,28 @@ export const getAllSubmissions = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { submissions }, "All submits"));
 });
 
+export const getStudentSubmissions = asyncHandler(async (req, res) => {
+  const submissions = await Submission.find({
+    submittedBy: req.user._id,
+  }).populate([
+    { path: "problemId", select: "title difficulty" },
+    { path: "assignmentId", select: "title" },
+  ]);
+
+  // Respond with a success message and all resources
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { submissions }, "All submits"));
+});
+
 export const getSubmissionById = asyncHandler(async (req, res) => {
   const { submissionId } = req.params;
 
   // Find the resource by ID
-  const submission = await Submission.findById(submissionId);
+  const submission = await Submission.findById(submissionId).populate({
+    path: "problemId",
+    select: "title description",
+  });
 
   if (!submission) {
     throw new ApiError(404, "submission not found");

@@ -7,7 +7,7 @@ import ProblemsColumns from "./ProblemsColumns";
 
 const Problems = () => {
   return (
-    <div className="container flex flex-col items-center w-full py-8 max-w-screen-2xl">
+    <div className="flex flex-col items-center w-full max-w-screen-2xl">
       <div className="flex flex-col justify-between w-full gap-y-8">
         <div className="flex flex-col justify-center">
           <h2 className="text-2xl font-bold tracking-tight">

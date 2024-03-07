@@ -2,34 +2,45 @@ import { useEffect, useState } from "react";
 import { problems } from "@/data/assignments";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
-import { classnames } from "./general";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import EditorWindow from "./EditorWindow";
-import LanguagesDropdown from "./LanguageDropdown";
 // import ThemeDropdown from "./editor/ThemeDropdown";
-import { defineTheme } from "./defineTheme";
 import { languageOptions } from "@/data/languageOptions";
-import useKeyPress from "./useKeyPress";
-import OutputWindow from "./OutputWindow";
-import CustomInput from "./CustomInput";
-import OutputDetails from "./OutputDetails";
+
 import { Button } from "@/components/ui/button";
-import ChevronLeft from "@/components/icons/ChevronLeft";
-import { Link } from "react-router-dom";
+
 import Play from "@/components/icons/Play";
 import Save from "@/components/icons/Save";
+import useKeyPress from "@/components/resources/assignments/editor/useKeyPress";
+import { defineTheme } from "@/components/resources/assignments/editor/defineTheme";
+import LanguagesDropdown from "@/components/resources/assignments/editor/LanguageDropdown";
+import EditorWindow from "@/components/resources/assignments/editor/EditorWindow";
+import OutputWindow from "@/components/resources/assignments/editor/OutputWindow";
+import { classnames } from "@/components/resources/assignments/editor/general";
+import OutputDetails from "@/components/resources/assignments/editor/OutputDetails";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getSubmissionById } from "@/redux/submissionSlice";
 
-const javascriptDefault = `// start practicing your code here!`;
-
-const Editor = () => {
+const StudentEditor = () => {
+  const { submissionId } = useParams();
+  const dispatch = useDispatch();
+  const { submission } = useSelector((state) => state.submission);
+  const javascriptDefault = `// start practicing your code here!`;
   const [code, setCode] = useState(javascriptDefault);
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
   const [theme, setTheme] = useState("cobalt");
   const [language, setLanguage] = useState(languageOptions[0]);
+
+  useEffect(() => {
+    dispatch(getSubmissionById(submissionId));
+  }, [dispatch, submissionId]);
+
+  console.log("submission", submission);
 
   const enterPress = useKeyPress("Enter");
   const ctrlPress = useKeyPress("Control");
@@ -259,4 +270,4 @@ const Editor = () => {
     </section>
   );
 };
-export default Editor;
+export default StudentEditor;

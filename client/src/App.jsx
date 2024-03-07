@@ -49,6 +49,9 @@ import { Dashboard as FacultyDashboard } from "./components/faculty/Dashboard";
 import { Dashboard as StudentDashboard } from "./components/student/Dashboard";
 import Roadmaps from "./components/resources/roadmaps/Roadmaps";
 import Frontend from "./components/resources/roadmaps/Frontend";
+import MySubmissions from "./components/student/submissions/MySubmissions";
+import StudentEditor from "./components/student/submissions/StudentEditor";
+
 function App() {
   const role = useSelector((state) => state.auth.role);
   return (
@@ -125,8 +128,11 @@ function App() {
               <Route path="notes" element={<StudentNotesTable />} />
               <Route path="papers" element={<StudentPaperTable />} />
               <Route path="research" element={<StudentResearchTable />} />
-              <Route path="assignments" element={<Problems />} />
-              <Route path=":assignmentId/:problemId" element={<Editor />} />
+              <Route path="submissions" element={<MySubmissions />} />
+              <Route
+                path="submissions/:submissionId"
+                element={<StudentEditor />}
+              />
             </Route>
           )}
 
