@@ -116,7 +116,7 @@ export const FacultyProblemColumns = [
     accessorKey: "submissions",
     header: () => "Submissions",
     cell: ({ row }) => (
-      <Link to={String(row.original.objectId)}>
+      <Link to={String(row.original._id)}>
         <Button variant="secondary">
           <Code /> Check
         </Button>

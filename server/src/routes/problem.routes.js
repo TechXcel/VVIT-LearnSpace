@@ -1,20 +1,23 @@
 import { Router } from "express";
-import { verifyUserJWT } from "../middlewares/auth.middleware.js";
-import { upload } from "../middlewares/upload.middleware.js";
-import { createProblem, deleteProblemById, getAllProblems, getProblemById, updateProblemById } from "../controllers/problem.controllers.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
+import {
+  createProblem,
+  deleteProblemById,
+  getAllProblems,
+  getProblemById,
+  updateProblemById,
+} from "../controllers/problem.controllers.js";
 const router = Router();
 
+router.use(isAuthenticated);
+
+router.route("/").post(createProblem);
+router.route("/:assignmentId").get(getAllProblems);
+
 router
-  .route("/")
-  .get(getAllProblems)
-  .post(verifyUserJWT, upload.single("problem"),createProblem);
-
-
-  router
   .route("/:problemId")
   .get(getProblemById)
   .patch(updateProblemById)
   .delete(deleteProblemById);
 
-
-  export default router;
+export default router;

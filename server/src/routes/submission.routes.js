@@ -1,7 +1,5 @@
 import { Router } from "express";
-
-import { upload } from "../middlewares/upload.middleware.js";
-import { verifyUserJWT } from "../middlewares/auth.middleware.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
 import {
   createSubmission,
   deleteSubmissionById,
@@ -12,10 +10,12 @@ import {
 
 const router = Router();
 
-router
-  .route("/")
-  .get(getAllSubmissions)
-  .post(verifyUserJWT, upload.single("submission"), createSubmission);
+router.use(isAuthenticated);
+
+router.route("/").post(createSubmission);
+
+router.route("/:problemId").get(getAllSubmissions);
+
 router
   .route("/:submissionId")
   .get(getSubmissionById)

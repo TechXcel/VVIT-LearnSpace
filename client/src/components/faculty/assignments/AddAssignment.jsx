@@ -1,3 +1,4 @@
+import { FormError } from "@/components/common/FormError";
 import Plus from "@/components/icons/Plus";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,14 +14,40 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
+import { addAssignment } from "@/redux/assignmentSlice";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader2 } from "lucide-react";
 
 const AddAssignment = () => {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state["assignment"]);
+  const form = useForm();
+  const { register, handleSubmit, clearErrors, reset, formState } = form;
+  const { errors } = formState;
   const [selected, setSelected] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const handleAssignmentCreation = async (data) => {
+    const assignmentData = new FormData();
+    data.tags = selected;
+    // Object.keys(data).forEach((key) => {
+    //   assignmentData.append(key, data[key]);
+    // });
+
+    const response = await dispatch(addAssignment(data));
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    reset();
+    clearErrors();
+  }, [open]);
 
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="default">
             <Plus />
@@ -35,67 +62,80 @@ const AddAssignment = () => {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid gap-4 py-4">
-            <div className="grid items-center gap-4">
-              <Label htmlFor="name">Title</Label>
-              <Input
-                id="name"
-                placeholder="Assignment name"
-                className="col-span-3"
-              />
+          <form onSubmit={handleSubmit(handleAssignmentCreation)}>
+            <div className="grid gap-6 py-4">
+              <div className="grid items-center gap-3">
+                <Label htmlFor="name">Title</Label>
+                <Input
+                  id="title"
+                  placeholder="Assignment name"
+                  {...register("title", {
+                    required: "Assignment name is required",
+                  })}
+                  className="col-span-3"
+                />
+                {errors.title && <FormError message={errors.title.message} />}
+              </div>
+              <div className="grid items-center gap-3">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  placeholder="Write some description about the assignment"
+                  {...register("description", {
+                    required: "Assignment description is required",
+                  })}
+                  className="col-span-3"
+                />
+                {errors.description && (
+                  <FormError message={errors.description.message} />
+                )}
+              </div>
+              <div className="grid items-center gap-3">
+                <Label htmlFor="name">Categories</Label>
+                <MultiSelect
+                  options={[
+                    {
+                      value: "Programming",
+                      label: "Programming",
+                    },
+                    {
+                      value: "JavaScript",
+                      label: "JavaScript",
+                    },
+                    {
+                      value: "Java",
+                      label: "Java",
+                    },
+                    {
+                      value: "Python",
+                      label: "Python",
+                    },
+                    {
+                      value: "React",
+                      label: "React",
+                    },
+                  ]}
+                  selected={selected}
+                  onChange={setSelected}
+                  className="col-span-3"
+                  title="Select tags"
+                />
+              </div>
             </div>
-            <div className="grid items-center gap-4">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                placeholder="Write some description about the assignment"
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid items-center gap-4">
-              <Label htmlFor="name">Categories</Label>
-              <MultiSelect
-                options={[
-                  {
-                    value: "next.js",
-                    label: "Next.js",
-                  },
-                  {
-                    value: "sveltekit",
-                    label: "SvelteKit",
-                  },
-                  {
-                    value: "nuxt.js",
-                    label: "Nuxt.js",
-                  },
-                  {
-                    value: "remix",
-                    label: "Remix",
-                  },
-                  {
-                    value: "astro",
-                    label: "Astro",
-                  },
-                  {
-                    value: "wordpress",
-                    label: "WordPress",
-                  },
-                  {
-                    value: "express.js",
-                    label: "Express.js",
-                  },
-                ]}
-                selected={selected}
-                onChange={setSelected}
-                className="col-span-3"
-                title="Select tags"
-              />
-            </div>
-          </div>
 
-          <DialogFooter>
-            <Button type="submit">Save Assignment</Button>
-          </DialogFooter>
+            <DialogFooter>
+              <Button className="w-full" type="submit">
+                {isLoading ? (
+                  <>
+                    Adding Assignment
+                    <Loader2 className="w-4 h-4 ml-2 font-semibold animate-spin" />
+                  </>
+                ) : (
+                  "Add Assignment"
+                )}
+              </Button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </>

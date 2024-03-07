@@ -2,11 +2,11 @@ import axios from "@/utils/api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
-export const getAllProjects = createAsyncThunk(
-  "/api/v1/projects",
+export const getAllAssignments = createAsyncThunk(
+  "/api/v1/assignments",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/api/v1/projects", {
+      const response = await axios.get("/api/v1/assignments", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -22,12 +22,12 @@ export const getAllProjects = createAsyncThunk(
   }
 );
 
-export const deleteProject = createAsyncThunk(
-  "/api/v1/projects/:projectId",
+export const deleteAssignment = createAsyncThunk(
+  "/api/v1/assignments/:assignmentId",
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.delete(`/api/v1/projects/${payload}`, {
+      const response = await axios.delete(`/api/v1/assignments/${payload}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -42,12 +42,12 @@ export const deleteProject = createAsyncThunk(
   }
 );
 
-export const approveProject = createAsyncThunk(
-  "/api/v1/projects/:projectId(approval)",
+export const addAssignment = createAsyncThunk(
+  "/api/v1/assignments (post)",
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.patch(`/api/v1/projects/${payload}`, {
+      const response = await axios.post("/api/v1/assignments", payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -62,55 +62,54 @@ export const approveProject = createAsyncThunk(
   }
 );
 
-export const projectSlice = createSlice({
-  name: "project",
+export const assignmentSlice = createSlice({
+  name: "assignment",
   initialState: {
-    projects: [],
+    assignments: [],
     isLoading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllProjects.pending, (state) => {
+    builder.addCase(getAllAssignments.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(getAllProjects.fulfilled, (state, { payload }) => {
+    builder.addCase(getAllAssignments.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.projects = payload.data.projects;
-      console.log(state.projects);
+      state.assignments = payload.data.assignments;
+      console.log(state.assignments);
       toast.success(payload.message);
     });
-    builder.addCase(getAllProjects.rejected, (state, { payload }) => {
+    builder.addCase(getAllAssignments.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
     });
-    builder.addCase(deleteProject.pending, (state) => {
+    builder.addCase(deleteAssignment.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(deleteProject.fulfilled, (state, { payload }) => {
+    builder.addCase(deleteAssignment.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.projects = payload.data.projects;
+      state.assignments = payload.data.assignments;
       toast.success(payload.message);
     });
-    builder.addCase(deleteProject.rejected, (state, { payload }) => {
+    builder.addCase(deleteAssignment.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
     });
-
-    builder.addCase(approveProject.pending, (state) => {
+    builder.addCase(addAssignment.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(approveProject.fulfilled, (state, { payload }) => {
+    builder.addCase(addAssignment.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.projects = payload.data.projects;
+      state.assignments = payload.data.assignments;
       toast.success(payload.message);
     });
-    builder.addCase(approveProject.rejected, (state, { payload }) => {
+    builder.addCase(addAssignment.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
@@ -118,4 +117,4 @@ export const projectSlice = createSlice({
   },
 });
 
-export default projectSlice.reducer;
+export default assignmentSlice.reducer;

@@ -45,8 +45,8 @@ app.use("/api/v1/projects", projectRouter);
 app.use("/api/v1/review", reviewRouter);
 app.use("/api/v1/resources", resourceRouter);
 app.use("/api/v1/notification", notificationRouter);
-app.use("/api/v1/assignment", assignmentRouter);
-app.use("/api/v1/problem", problemRouter);
-app.use("/api/v1/submission", submissionRouter);
+app.use("/api/v1/assignments", assignmentRouter);
+app.use("/api/v1/problems", problemRouter);
+app.use("/api/v1/submissions", submissionRouter);
 
 export default app;

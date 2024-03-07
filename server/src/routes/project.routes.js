@@ -1,21 +1,24 @@
 import { Router } from "express";
 import {
   createProject,
-  deleteProjectById,
+  deleteProject,
   getAllProjects,
   getProjectById,
+  projectApproval,
   updateProjectById,
 } from "../controllers/project.controllers.js";
-import { verifyUserJWT } from "../middlewares/auth.middleware.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/").post(verifyUserJWT, createProject).get(getAllProjects);
+router.use(isAuthenticated);
+
+router.route("/").post(createProject).get(getAllProjects);
 
 router
   .route("/:projectId")
   .get(getProjectById)
-  .patch(updateProjectById)
-  .delete(deleteProjectById);
+  .patch(projectApproval)
+  .delete(deleteProject);
 
 export default router;

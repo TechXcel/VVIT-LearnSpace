@@ -1,8 +1,17 @@
 import DataTable from "@/components/ui/data-table";
-import { adminNotesData } from "@/data/notes";
+// import { adminNotesData } from "@/data/notes";
 import { NoteColumns } from "./NoteColumns";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllNotes } from "@/redux/resourceSlice";
 
 const NotesTable = () => {
+  const dispatch = useDispatch();
+  const { notes } = useSelector((state) => state.resource);
+
+  useEffect(() => {
+    dispatch(getAllNotes());
+  }, [dispatch]);
   return (
     <div className="flex flex-col space-y-8">
       <div>
@@ -10,7 +19,7 @@ const NotesTable = () => {
         <p className="text-muted-foreground">Here&apos;s the list of notes!</p>
       </div>
 
-      <DataTable data={adminNotesData} columns={NoteColumns} />
+      <DataTable data={notes} columns={NoteColumns} />
     </div>
   );
 };

@@ -39,7 +39,7 @@ const Header = () => {
             {token ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Avatar>
+                  <Avatar className="cursor-pointer">
                     <AvatarImage
                       src="https://github.com/shaikahmadnawaz.png"
                       alt="avatar"
@@ -79,7 +79,10 @@ const Header = () => {
                   </DropdownMenuGroup>
 
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignout}>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={handleSignout}
+                  >
                     Log out
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                   </DropdownMenuItem>

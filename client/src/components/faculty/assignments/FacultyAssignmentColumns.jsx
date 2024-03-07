@@ -94,9 +94,9 @@ export const FacultyAssignmentColumns = [
     accessorKey: "problems",
     header: () => "Problems",
     cell: ({ row }) => {
-      const slug = row.original.title.toLowerCase().replace(/\s+/g, "-");
+      // const slug = row.original.title.toLowerCase().replace(/\s+/g, "-");
       return (
-        <Link to={`${slug}`}>
+        <Link to={row.original._id}>
           <Button variant="secondary">
             <Code /> View
           </Button>

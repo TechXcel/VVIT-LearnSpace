@@ -80,7 +80,9 @@ const createProject = asyncHandler(async (req, res) => {
 });
 
 const getAllProjects = asyncHandler(async (req, res) => {
-  const projects = await Project.find({});
+  const projects = await Project.find({})
+    .sort({ createdAt: -1 })
+    .populate({ path: "owner" });
 
   // Respond with a success message and all resources
   return res
@@ -126,19 +128,74 @@ const updateProjectById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { project }, "Project updated successfully"));
 });
 
-// Delete a project by ID
-const deleteProjectById = asyncHandler(async (req, res) => {
+const deleteProject = asyncHandler(async (req, res) => {
+  const { projectId } = req.params;
+  console.log(projectId);
+
+  if (!projectId) {
+    throw new ApiError(400, "Project ID is required");
+  }
+
+  const project = await Project.findById(projectId);
+
+  if (!project) {
+    throw new ApiError(404, "project does not exist");
+  }
+
+  // Find the faculty by ID and delete it
+  const response = await Project.findByIdAndDelete(projectId);
+
+  if (!response) {
+    throw new ApiError(500, "Something went wrong while deleting the student");
+  }
+
+  const projects = await Project.find({})
+    .populate({ path: "owner" })
+    .sort({ createdAt: -1 });
+
+  // Respond with a success message
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { projects },
+        `Student with ${project.title} deleted successfully`
+      )
+    );
+});
+
+const projectApproval = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
 
-  const project = await Project.findByIdAndDelete(projectId);
+  const project = await Project.findById(projectId);
 
   if (!project) {
     throw new ApiError(404, "Project not found");
   }
 
+  if (project.status === "approved") {
+    project.status = "pending";
+  } else {
+    project.status = "approved";
+  }
+
+  await project.save();
+
+  console.log(project);
+  const projects = await Project.find({})
+    .populate({ path: "owner" })
+    .sort({ createdAt: -1 });
+
   return res
     .status(200)
-    .json(new ApiResponse(200, null, "Project deleted successfully"));
+    .json(
+      new ApiResponse(
+        200,
+        { projects },
+        `Project ${project.status === "approved" ? "approved" : "pending"}`
+      )
+    );
 });
 
 export {
@@ -146,5 +203,6 @@ export {
   getAllProjects,
   getProjectById,
   updateProjectById,
-  deleteProjectById,
+  deleteProject,
+  projectApproval,
 };

@@ -1,9 +1,20 @@
 import DataTable from "@/components/ui/data-table";
 
 import { ProjectColumns } from "./ProjectColumns";
-import { adminProjectsData } from "@/data/projects";
+//import { adminProjectsData } from "@/data/projects";
+
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProjects } from "@/redux/projectSlice";
 
 const ProjectsTable = () => {
+  const dispatch = useDispatch();
+  const { projects } = useSelector((state) => state.project);
+
+  useEffect(() => {
+    dispatch(getAllProjects());
+  }, [dispatch]);
+
   return (
     <div className="flex flex-col space-y-8">
       <div>
@@ -13,7 +24,7 @@ const ProjectsTable = () => {
         </p>
       </div>
 
-      <DataTable data={adminProjectsData} columns={ProjectColumns} />
+      <DataTable data={projects} columns={ProjectColumns} />
     </div>
   );
 };

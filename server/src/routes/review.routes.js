@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyUserJWT } from "../middlewares/auth.middleware.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
 import {
   createProjectReview,
   deleteReviewByProjectId,
@@ -13,9 +13,11 @@ import {
 
 const router = Router();
 
-router.route("/project").post(verifyUserJWT, createProjectReview);
+router.use(isAuthenticated);
 
-router.route("/resource").post(verifyUserJWT, createResourceReview);
+router.route("/project").post(createProjectReview);
+
+router.route("/resource").post(createResourceReview);
 
 router
   .route("/project/:reviewId")

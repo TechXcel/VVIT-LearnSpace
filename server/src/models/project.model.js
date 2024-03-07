@@ -48,6 +48,12 @@ const projectSchema = new mongoose.Schema(
         message: "Invalid URL",
       },
     },
+    status: {
+      type: String,
+      default: "pending",
+      enum: ["pending", "approved", "rejected"],
+      required: [true, "Please provide a status for this resource."],
+    },
     viewCount: {
       type: Number,
       default: 0,

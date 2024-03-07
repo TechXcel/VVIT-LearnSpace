@@ -5,7 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 
 // Middleware to verify user's JSON Web Token (JWT)
-export const verifyUserJWT = asyncHandler(async (req, res, next) => {
+export const isAuthenticated = asyncHandler(async (req, res, next) => {
   // Get the token from cookies or authorization header
   const token =
     req.cookies?.accessToken ||
@@ -17,54 +17,53 @@ export const verifyUserJWT = asyncHandler(async (req, res, next) => {
 
   try {
     // Verify the user token and extract user information
-    const decodedUserToken = jwt.verify(
-      token,
-      process.env.USER_ACCESS_TOKEN_SECRET
-    );
-    // Find the user by ID and exclude the password field
-    const user = await User.findById(decodedUserToken?._id).select("-password");
-    if (!user) {
-      throw new ApiError(401, "Invalid access token");
-    }
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    // // Find the user by ID and exclude the password field
+    // const user = await User.findById(decodedToken?._id).select("-password");
+    // if (!user) {
+    //   throw new ApiError(401, "Invalid access token");
+    // }
     // Attach the user to the request for further processing
-    req.user = user;
+    console.log(decodedToken);
+    req.user = decodedToken;
+
     next();
   } catch (error) {
     throw new ApiError(401, error?.message || "Invalid access token");
   }
 });
 
-// Middleware to verify admin's JSON Web Token (JWT)
-export const verifyAdminJWT = asyncHandler(async (req, res, next) => {
-  // Get the token from cookies or authorization header
-  const token =
-    req.cookies?.accessToken ||
-    req.header("Authorization")?.replace("Bearer ", "");
+// // Middleware to verify admin's JSON Web Token (JWT)
+// export const verifyAdminJWT = asyncHandler(async (req, res, next) => {
+//   // Get the token from cookies or authorization header
+//   const token =
+//     req.cookies?.accessToken ||
+//     req.header("Authorization")?.replace("Bearer ", "");
 
-  if (!token) {
-    throw new ApiError(401, "Unauthorized request");
-  }
+//   if (!token) {
+//     throw new ApiError(401, "Unauthorized request");
+//   }
 
-  try {
-    // Verify the admin token and extract admin information
-    const decodedAdminToken = jwt.verify(
-      token,
-      process.env.ADMIN_ACCESS_TOKEN_SECRET
-    );
-    // Find the admin by ID and exclude the password field
-    const admin = await Admin.findById(decodedAdminToken?._id).select(
-      "-password"
-    );
-    if (!admin) {
-      throw new ApiError(401, "Invalid access token");
-    }
-    // Attach the admin to the request for further processing
-    req.user = admin;
-    next();
-  } catch (error) {
-    throw new ApiError(401, error?.message || "Invalid access token");
-  }
-});
+//   try {
+//     // Verify the admin token and extract admin information
+//     const decodedAdminToken = jwt.verify(
+//       token,
+//       process.env.ADMIN_ACCESS_TOKEN_SECRET
+//     );
+//     // Find the admin by ID and exclude the password field
+//     const admin = await Admin.findById(decodedAdminToken?._id).select(
+//       "-password"
+//     );
+//     if (!admin) {
+//       throw new ApiError(401, "Invalid access token");
+//     }
+//     // Attach the admin to the request for further processing
+//     req.user = admin;
+//     next();
+//   } catch (error) {
+//     throw new ApiError(401, error?.message || "Invalid access token");
+//   }
+// });
 
 // Middleware to get logged-in user or ignore if no valid token
 export const getLoggedInUserOrIgnore = asyncHandler(async (req, res, next) => {
@@ -75,10 +74,7 @@ export const getLoggedInUserOrIgnore = asyncHandler(async (req, res, next) => {
 
   try {
     // Verify the token and extract user information
-    const decodedToken = jwt.verify(
-      token,
-      process.env.USER_ACCESS_TOKEN_SECRET
-    );
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     // Find the user by ID and exclude the password field
     const user = await User.findById(decodedToken?._id).select("-password");
     // Attach the user to the request for further processing
