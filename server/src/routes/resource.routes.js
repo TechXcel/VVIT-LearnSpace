@@ -10,10 +10,12 @@ import {
   getAllResearchPapers,
   getAllResources,
   getResourceById,
+  noteApproval,
   updateResourceById,
 } from "../controllers/resource.controllers.js";
 import { upload } from "../middlewares/upload.middleware.js";
 import { isAuthenticated } from "../middlewares/auth.middleware.js";
+
 
 const router = Router();
 
@@ -27,6 +29,8 @@ router
 router.route("/notes").get(getAllNotes);
 
 router.route("/notes/:notesId").delete(deleteNotes);
+
+router.route("/notes/:notesId").patch(noteApproval)
 
 router.route("/papers").get(getAllPapers);
 

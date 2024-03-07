@@ -47,7 +47,7 @@ export const approveProject = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.patch(`/api/v1/projects/${payload}`, {
+      const response = await axios.patch(`/api/v1/projects/${payload}`, null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
