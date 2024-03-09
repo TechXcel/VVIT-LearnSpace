@@ -54,21 +54,21 @@ export const StudentSubmissionsColumns = [
       </Button>
     ),
   },
-  {
-    accessorKey: "language",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0 hover:bg-transparent"
-        >
-          Language
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "language",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //         className="p-0 hover:bg-transparent"
+  //       >
+  //         Language
+  //         <ArrowUpDown />
+  //       </Button>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "providedSolution",
     header: ({ column }) => {
@@ -89,7 +89,7 @@ export const StudentSubmissionsColumns = [
     accessorKey: "submissions",
     header: () => "Editor",
     cell: ({ row }) => (
-      <Link to={String(row.original.id)}>
+      <Link to={String(row.original._id)}>
         <Button variant="secondary">
           <Code /> View
         </Button>

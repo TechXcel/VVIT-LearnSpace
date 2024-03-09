@@ -16,10 +16,18 @@ import LanguagesDropdown from "@/components/resources/assignments/editor/Languag
 import { problems } from "@/data/assignments";
 import { Loader2 } from "lucide-react";
 import { submissions } from "@/data/assignments";
+import { getSubmissionById } from "@/redux/submissionSlice";
 
-const javascriptDefault = `${submissions[0].providedSolution}`;
-
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 const SolutionEditor = () => {
+  const dispatch = useDispatch();
+  const { submissionId } = useParams();
+  const { submission } = useSelector((state) => state.submission);
+  useEffect(() => {
+    dispatch(getSubmissionById(submissionId));
+  }, [dispatch, submissionId]);
+  const javascriptDefault = `${submission?.providedSolution}`;
   const [code, setCode] = useState(javascriptDefault);
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
@@ -186,9 +194,11 @@ const SolutionEditor = () => {
         <div className="flex items-center py-4 gap-x-5">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">
-              {problems[0].title}
+              {submission?.problemId?.title}
             </h2>
-            <p className="text-muted-foreground">{problems[0].description}</p>
+            <p className="text-muted-foreground">
+              {submission?.problemId?.description}
+            </p>
           </div>
         </div>
 
