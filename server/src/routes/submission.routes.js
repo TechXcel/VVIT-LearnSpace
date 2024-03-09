@@ -4,6 +4,7 @@ import {
   createSubmission,
   deleteSubmissionById,
   getAllSubmissions,
+  getEverySubmission,
   getStudentSubmissionByProblemId,
   getStudentSubmissions,
   getSubmissionById,
@@ -13,6 +14,8 @@ import {
 const router = Router();
 
 router.use(isAuthenticated);
+
+router.route("/all").get(getEverySubmission);
 
 router.route("/").post(createSubmission).get(getStudentSubmissions);
 router.route("/submission/:problemId").get(getStudentSubmissionByProblemId);

@@ -55,6 +55,7 @@ import Researches from "./components/resources/research/Researches";
 import NotFound from "./components/common/NotFound";
 import Unauthorized from "./components/common/Unauthorized";
 import NotAuthenticated from "./components/common/NotAuthenticated";
+import AdminSubmissions from "./components/admin/submissions/AdminSubmissions";
 
 function App() {
   const role = useSelector((state) => state.auth.role);
@@ -122,12 +123,7 @@ function App() {
               <Route path="notes" element={<NotesTable />} />
               <Route path="papers" element={<PaperTable />} />
               <Route path="research" element={<ResearchTable />} />
-
-              <Route path="assignments" element={<StudentsSubmissions />} />
-              <Route
-                path="assignments/:assignmentId"
-                element={<SolutionEditor />}
-              />
+              <Route path="assignments" element={<AdminSubmissions />} />
             </Route>
           )}
 

@@ -1,20 +1,19 @@
 import DataTable from "@/components/ui/data-table";
-import { StudentSubmissionsColumns } from "./StudentSubmissionsColumns";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getSubmissionsByProblem } from "@/redux/submissionSlice";
 
-const StudentsSubmissions = () => {
-  const { problemId } = useParams();
-  console.log(problemId);
+import { getEverySubmission } from "@/redux/submissionSlice";
+import { AdminSubmissionColumns } from "./AdminSubmissionColumns";
+
+const AdminSubmissions = () => {
   const dispatch = useDispatch();
   const { submissions } = useSelector((state) => state.submission);
   console.log(submissions);
 
   useEffect(() => {
-    dispatch(getSubmissionsByProblem(problemId));
-  }, [dispatch, problemId]);
+    dispatch(getEverySubmission());
+  }, [dispatch]);
   return (
     <div className="flex flex-col space-y-8">
       <div className="flex flex-col">
@@ -24,9 +23,9 @@ const StudentsSubmissions = () => {
         </p>
       </div>
 
-      <DataTable data={submissions} columns={StudentSubmissionsColumns} />
+      <DataTable data={submissions} columns={AdminSubmissionColumns} />
     </div>
   );
 };
 
-export default StudentsSubmissions;
+export default AdminSubmissions;

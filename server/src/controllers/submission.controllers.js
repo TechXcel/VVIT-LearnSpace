@@ -50,7 +50,36 @@ export const createSubmission = asyncHandler(async (req, res) => {
 export const getAllSubmissions = asyncHandler(async (req, res) => {
   const { problemId } = req.params;
 
-  const submissions = await Submission.find({ problemId });
+  const submissions = await Submission.find({ problemId }).populate({
+    path: "submittedBy",
+    select: "name email",
+  });
+
+  // Respond with a success message and all resources
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { submissions }, "All submits"));
+});
+
+export const getEverySubmission = asyncHandler(async (req, res) => {
+  const submissions = await Submission.find({}).populate([
+    {
+      path: "submittedBy",
+      select: "name email",
+    },
+    {
+      path: "problemId",
+      select: "title difficulty viewCount",
+    },
+    {
+      path: "assignmentId",
+      select: "title createdBy",
+      populate: {
+        path: "createdBy",
+        select: "name",
+      },
+    },
+  ]);
 
   // Respond with a success message and all resources
   return res

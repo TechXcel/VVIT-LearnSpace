@@ -108,6 +108,26 @@ export const createSubmission = createAsyncThunk(
   }
 );
 
+export const getEverySubmission = createAsyncThunk(
+  "/api/v1/submissions/all",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/submissions/all", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // export const deletesubmission = createAsyncThunk(
 //   "/api/v1/submissions/:submissionId",
 //   async (payload, { rejectWithValue }) => {
@@ -232,6 +252,20 @@ export const submissionSlice = createSlice({
       state.submission = payload.data.submission;
     });
     builder.addCase(createSubmission.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getEverySubmission.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getEverySubmission.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.submissions = payload.data.submissions;
+      toast.success(payload.message);
+    });
+    builder.addCase(getEverySubmission.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);

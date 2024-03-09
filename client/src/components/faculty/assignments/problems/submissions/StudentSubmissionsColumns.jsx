@@ -42,7 +42,7 @@ export const StudentSubmissionsColumns = [
     enableHiding: false,
   },
   {
-    accessorKey: "userEmail",
+    accessorKey: "submittedBy.name",
     header: ({ column }) => (
       <Button
         variant="ghost"
