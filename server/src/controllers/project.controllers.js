@@ -117,7 +117,8 @@ export const getUserProjects = asyncHandler(async (req, res) => {
   
   const userId = req.user.id;
   // Find the resource by ID
-  const projects = await Project.find(userId);
+  const projects = await Project.find(userId)
+                                .sort({ createdAt: -1 });
 
   if (!projects) {
     throw new ApiError(404, "Projects not found");
@@ -182,10 +183,12 @@ const deleteProject = asyncHandler(async (req, res) => {
       new ApiResponse(
         200,
         { projects },
-        `Student with ${project.title} deleted successfully`
+        ` ${project.title} deleted successfully`
       )
     );
 });
+
+
 
 const projectApproval = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
