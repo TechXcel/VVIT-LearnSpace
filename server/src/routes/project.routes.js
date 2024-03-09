@@ -4,6 +4,7 @@ import {
   deleteProject,
   getAllProjects,
   getProjectById,
+  getUserProjects,
   projectApproval,
   updateProjectById,
 } from "../controllers/project.controllers.js";
@@ -16,7 +17,12 @@ const router = Router();
 
 router.use(isAuthenticated);
 
-router.route("/").get(getAllProjects);
+router.route("/")
+  .get(getAllProjects)
+
+router.route("/student")
+  .get(getUserProjects);
+
 router.route("/add").post(createProject)
 
 
