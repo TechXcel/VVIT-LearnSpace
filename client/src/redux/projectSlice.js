@@ -22,6 +22,27 @@ export const getAllProjects = createAsyncThunk(
   }
 );
 
+
+export const getUserProjects = createAsyncThunk(
+  "/api/v1/projects/student",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/projects/student", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log("data from fun",response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const deleteProject = createAsyncThunk(
   "/api/v1/projects/:projectId",
   async (payload, { rejectWithValue }) => {
@@ -89,7 +110,6 @@ export const projectSlice = createSlice({
   name: "project",
   initialState: {
     projects: [],
-    
     isLoading: false,
     error: null,
   },
@@ -149,6 +169,21 @@ export const projectSlice = createSlice({
     builder.addCase(addProject.rejected, (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload?.message || "Something went wrong");
+    });
+    builder.addCase(getUserProjects.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getUserProjects.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.projects = payload.data.projects;
+      console.log("inside builder",state.projects);
+      toast.success(payload.message);
+    });
+    builder.addCase(getUserProjects.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
     });
   },
 });

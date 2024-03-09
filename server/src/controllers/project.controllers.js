@@ -111,6 +111,27 @@ const getProjectById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { project }, "Project details"));
 });
 
+//projects added by login user
+
+export const getUserProjects = asyncHandler(async (req, res) => {
+  
+  const userId = req.user.id;
+  // Find the resource by ID
+  const projects = await Project.find(userId);
+
+  if (!projects) {
+    throw new ApiError(404, "Projects not found");
+  }
+
+
+  // Respond with a success message and the resource details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { projects }, "Projects details"));
+});
+
+
+
 // Update a project by id
 const updateProjectById = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
@@ -198,6 +219,8 @@ const projectApproval = asyncHandler(async (req, res) => {
       )
     );
 });
+
+
 
 export {
   createProject,
