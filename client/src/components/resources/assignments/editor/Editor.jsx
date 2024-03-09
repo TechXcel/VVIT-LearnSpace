@@ -17,7 +17,7 @@ import CustomInput from "./CustomInput";
 import OutputDetails from "./OutputDetails";
 import { Button } from "@/components/ui/button";
 import ChevronLeft from "@/components/icons/ChevronLeft";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Play from "@/components/icons/Play";
 import Save from "@/components/icons/Save";
 import { useSelector, useDispatch } from "react-redux";
@@ -30,6 +30,13 @@ import {
 } from "@/redux/submissionSlice";
 
 const Editor = () => {
+  const token = useSelector((state) => state.auth.token);
+
+  // Check for the presence of a token
+  if (!token) {
+    // Redirect to the unauthenticated route
+    return <Navigate to="/unauthenticated" />;
+  }
   const { problemId } = useParams();
   const dispatch = useDispatch();
   const { problem } = useSelector((state) => state.problem);

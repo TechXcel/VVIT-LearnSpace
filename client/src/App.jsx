@@ -52,6 +52,9 @@ import Frontend from "./components/resources/roadmaps/Frontend";
 import MySubmissions from "./components/student/submissions/MySubmissions";
 import StudentEditor from "./components/student/submissions/StudentEditor";
 import Researches from "./components/resources/research/Researches";
+import NotFound from "./components/common/NotFound";
+import Unauthorized from "./components/common/Unauthorized";
+import NotAuthenticated from "./components/common/NotAuthenticated";
 
 function App() {
   const role = useSelector((state) => state.auth.role);
@@ -170,6 +173,9 @@ function App() {
               />
             </Route>
           )}
+          <Route path="*" element={<NotFound />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/unauthenticated" element={<NotAuthenticated />} />
         </Routes>
         <Footer />
         <Toaster position="top-right" reverseOrder={false} />
