@@ -30,7 +30,7 @@ const AddAssignment = () => {
   const [open, setOpen] = useState(false);
 
   const handleAssignmentCreation = async (data) => {
-    const assignmentData = new FormData();
+    // const assignmentData = new FormData();
     data.tags = selected;
     // Object.keys(data).forEach((key) => {
     //   assignmentData.append(key, data[key]);

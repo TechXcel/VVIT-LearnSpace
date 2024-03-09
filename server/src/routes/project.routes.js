@@ -12,19 +12,13 @@ import { isAuthenticated } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-
-
+router.route("/").get(getAllProjects);
 
 router.use(isAuthenticated);
 
-router.route("/")
-  .get(getAllProjects)
+router.route("/student").get(getUserProjects);
 
-router.route("/student")
-  .get(getUserProjects);
-
-router.route("/add").post(createProject)
-
+router.route("/add").post(createProject);
 
 router
   .route("/:projectId")

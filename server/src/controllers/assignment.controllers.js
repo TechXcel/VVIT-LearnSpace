@@ -69,7 +69,9 @@ export const getAllAssignments = asyncHandler(async (req, res) => {
 });
 
 export const getEveryAssignment = asyncHandler(async (req, res) => {
-  const assignments = await Assignment.find({}).populate("problems");
+  const assignments = await Assignment.find({})
+    .sort({ createdAt: -1 })
+    .populate("problems");
   // Respond with a success message and all resources
   console.log(assignments);
   return res

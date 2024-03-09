@@ -4,15 +4,9 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 const createProject = asyncHandler(async (req, res) => {
-  const { title, description, repositoryUrl, liveDemoUrl} = req.body;
+  const { title, description, repositoryUrl, liveDemoUrl } = req.body;
 
-  if (
-    !title ||
-    !description ||
-    !repositoryUrl ||
-    !liveDemoUrl 
-    
-  ) {
+  if (!title || !description || !repositoryUrl || !liveDemoUrl) {
     throw new ApiError(400, "Please enter all the required fields");
   }
 
@@ -27,12 +21,7 @@ const createProject = asyncHandler(async (req, res) => {
 
   if (req.file) {
     // Upload the file to AWS S3
-    await uploadFile(
-      req.file,
-      "coverImage",
-      req.body.title,
-      req.body.owner
-    );
+    await uploadFile(req.file, "coverImage", req.body.title, req.body.owner);
 
     // Modify the file name to replace spaces with hyphens
     const perfectName = req.body.title.split(/\s+/).join("-");
@@ -40,7 +29,7 @@ const createProject = asyncHandler(async (req, res) => {
 
     // Create the file URL based on the AWS S3 bucket structure
     req.body.coverImage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.owner}/project/${req.file.originalname}`;
-    console.log("url image",req.body.coverImage)
+    console.log("url image", req.body.coverImage);
   }
 
   // Handle additional files
@@ -49,12 +38,7 @@ const createProject = asyncHandler(async (req, res) => {
     for (const file of req.files) {
       // Upload each additional file to AWS S3
       const additionalFileName = file.originalname.split(/\s+/).join("-");
-      await uploadFile(
-        file,
-        "coverImage",
-        additionalFileName,
-        req.body.owner
-      );
+      await uploadFile(file, "coverImage", additionalFileName, req.body.owner);
 
       // Create the file URL for each additional file
       const additionalFileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.owner}/project/${additionalFileName}`;
@@ -63,7 +47,7 @@ const createProject = asyncHandler(async (req, res) => {
   }
 
   const newProject = await Project.create(req.body);
-  console.log(newProject)
+  console.log(newProject);
 
   if (!newProject) {
     throw new ApiError(500, "Something went wrong while creating the project");
@@ -114,24 +98,19 @@ const getProjectById = asyncHandler(async (req, res) => {
 //projects added by login user
 
 export const getUserProjects = asyncHandler(async (req, res) => {
-  
   const userId = req.user.id;
   // Find the resource by ID
-  const projects = await Project.find(userId)
-                                .sort({ createdAt: -1 });
+  const projects = await Project.find(userId).sort({ createdAt: -1 });
 
   if (!projects) {
     throw new ApiError(404, "Projects not found");
   }
-
 
   // Respond with a success message and the resource details
   return res
     .status(200)
     .json(new ApiResponse(200, { projects }, "Projects details"));
 });
-
-
 
 // Update a project by id
 const updateProjectById = asyncHandler(async (req, res) => {
@@ -188,8 +167,6 @@ const deleteProject = asyncHandler(async (req, res) => {
     );
 });
 
-
-
 const projectApproval = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
 
@@ -222,8 +199,6 @@ const projectApproval = asyncHandler(async (req, res) => {
       )
     );
 });
-
-
 
 export {
   createProject,

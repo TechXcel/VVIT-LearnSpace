@@ -22,7 +22,6 @@ export const getAllProjects = createAsyncThunk(
   }
 );
 
-
 export const getUserProjects = createAsyncThunk(
   "/api/v1/projects/student",
   async (_, { rejectWithValue }) => {
@@ -32,7 +31,7 @@ export const getUserProjects = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log("data from fun",response.data);
+      console.log("data from fun", response.data);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -88,17 +87,17 @@ export const addProject = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.post("/api/v1/projects/add", payload,{
+      const response = await axios.post("/api/v1/projects/add", payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(payload)
-      console.log(response.data)
+      console.log(payload);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       if (!error.response) {
-        console.log("slice error",error)
+        console.log("slice error", error);
         return error;
       }
       return rejectWithValue(error?.response?.data);
@@ -177,7 +176,7 @@ export const projectSlice = createSlice({
     builder.addCase(getUserProjects.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.projects = payload.data.projects;
-      console.log("inside builder",state.projects);
+      console.log("inside builder", state.projects);
       toast.success(payload.message);
     });
     builder.addCase(getUserProjects.rejected, (state, { payload }) => {
