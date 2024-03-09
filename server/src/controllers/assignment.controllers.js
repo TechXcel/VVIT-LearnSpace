@@ -68,6 +68,15 @@ export const getAllAssignments = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { assignments }, "All assignments"));
 });
 
+export const getEveryAssignment = asyncHandler(async (req, res) => {
+  const assignments = await Assignment.find({}).populate("problems");
+  // Respond with a success message and all resources
+  console.log(assignments);
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { assignments }, "All assignments"));
+});
+
 export const getAssignmentById = asyncHandler(async (req, res) => {
   const { assignmentId } = req.params;
 

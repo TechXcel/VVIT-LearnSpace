@@ -14,23 +14,23 @@ import { Link } from "react-router-dom";
 // get assignments from server
 
 const AssignmentCard = ({ assignment }) => {
-  const slug = assignment.title.toLowerCase().replace(/\s+/g, "-");
+  // const slug = assignment.title.toLowerCase().replace(/\s+/g, "-");
   return (
     <Card className="w-full h-full transition-all duration-500 ease-in-out border shadow-sm hover:scale-105">
-      <Link to={`/assignments/${slug}`}>
+      <Link to={`/assignments/${assignment?._id}`}>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <span>{assignment.title}</span>
+            <span>{assignment?.title}</span>
             <Badge variant="secondary" className="ml-2">
-              {assignment.viewCount}
+              {assignment?.problems?.length}
             </Badge>
           </CardTitle>
-          <CardDescription>{assignment.description}</CardDescription>
+          <CardDescription>{assignment?.description}</CardDescription>
         </CardHeader>
 
         <CardContent className="flex flex-col gap-y-3">
           <div className="flex flex-wrap">
-            {assignment.tags.map((tag, index) => (
+            {assignment?.tags?.map((tag, index) => (
               <Badge variant="outline" key={index} className="mr-2">
                 {tag}
               </Badge>

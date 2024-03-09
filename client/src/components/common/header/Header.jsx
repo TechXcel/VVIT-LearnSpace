@@ -5,7 +5,14 @@ import { Button } from "@/components/ui/button";
 import MobileNav from "./MobileNav";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/redux/authSlice";
+import {
+  SquaresPlusIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+  ArrowUturnRightIcon,
+} from "@heroicons/react/24/outline";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,10 +27,11 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Dashboard from "@/components/icons/Dashboard";
 
 const Header = () => {
   const navigate = useNavigate();
-  const token = useSelector((state) => state.auth.token);
+  const { token, role } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const handleSignout = () => {
     dispatch(logout());
@@ -52,30 +60,39 @@ const Header = () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem>
-                      Profile
-                      <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                      <Link
+                        className="flex items-center justify-between w-full"
+                        to={`${role}`}
+                      >
+                        <span>Dashboard</span>
+                        <DropdownMenuShortcut>
+                          <SquaresPlusIcon className="w-4 h-4" />
+                        </DropdownMenuShortcut>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link
+                        className="flex items-center justify-between w-full"
+                        to={`${role}`}
+                      >
+                        <span>Profile</span>
+                        <DropdownMenuShortcut>
+                          <UserCircleIcon className="w-4 h-4" />
+                        </DropdownMenuShortcut>
+                      </Link>
                     </DropdownMenuItem>
 
                     <DropdownMenuItem>
-                      Settings
-                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                      <Link
+                        className="flex items-center justify-between w-full"
+                        to={`${role}`}
+                      >
+                        <span>Settings</span>
+                        <DropdownMenuShortcut>
+                          <Cog6ToothIcon className="w-4 h-4" />
+                        </DropdownMenuShortcut>
+                      </Link>
                     </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuSub>
-                      <DropdownMenuSubTrigger>
-                        Invite users
-                      </DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent>
-                          <DropdownMenuItem>Email</DropdownMenuItem>
-                          <DropdownMenuItem>Message</DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>More...</DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub>
                   </DropdownMenuGroup>
 
                   <DropdownMenuSeparator />
@@ -83,8 +100,10 @@ const Header = () => {
                     className="cursor-pointer"
                     onClick={handleSignout}
                   >
-                    Log out
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                    <span>Log out</span>
+                    <DropdownMenuShortcut>
+                      <ArrowUturnRightIcon className="w-4 h-4" />
+                    </DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

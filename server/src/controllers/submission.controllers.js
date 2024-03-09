@@ -6,10 +6,10 @@ import Problem from "../models/problem.model.js";
 
 export const createSubmission = asyncHandler(async (req, res) => {
   // Destructuring values from the request body
-  const { assignmentId, problemId, providedSolution, language } = req.body;
+  const { assignmentId, problemId, providedSolution } = req.body;
 
   // Checking if all required fields are present
-  if (!assignmentId || !problemId || !providedSolution || !language) {
+  if (!assignmentId || !problemId || !providedSolution) {
     throw new ApiError(400, "Please enter all the required fields");
   }
 
@@ -19,12 +19,17 @@ export const createSubmission = asyncHandler(async (req, res) => {
   // Create a new resource in the database
   const newSubmission = await Submission.create(req.body);
 
-  const prob = await Problem.findByIdAndUpdate(problemId, {
-    status: "Completed",
-    new: true,
-  });
+  const updatedProblem = await Problem.findByIdAndUpdate(
+    problemId,
+    {
+      status: "Completed",
+    },
+    {
+      new: true,
+    }
+  );
 
-  console.log({ prob });
+  console.log(updatedProblem);
 
   if (!newSubmission) {
     throw new ApiError(500, "Something went wrong while adding submission");
@@ -85,6 +90,22 @@ export const getSubmissionById = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, { submission }, "submission details"));
 });
+
+export const getStudentSubmissionByProblemId = asyncHandler(
+  async (req, res) => {
+    const { problemId } = req.params;
+
+    const submission = await Submission.findOne({
+      problemId: problemId,
+      submittedBy: req.user._id,
+    }).populate({ path: "problemId", select: "title description difficulty" });
+
+    // Respond with a success message and all resources
+    return res
+      .status(200)
+      .json(new ApiResponse(200, { submission }, "Submission details"));
+  }
+);
 
 export const updateSubmissionById = asyncHandler(async (req, res) => {
   const { submissionId } = req.params;

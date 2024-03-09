@@ -22,6 +22,42 @@ export const getProblemsByAssignment = createAsyncThunk(
   }
 );
 
+export const getEachProblemByAssignment = createAsyncThunk(
+  "/api/v1/problems/:assignmentId/all",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/api/v1/problems/${payload}/all`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getProblemById = createAsyncThunk(
+  "/api/v1/problems/problem/:problemId",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/api/v1/problems/problem/${payload}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // export const deleteProblem = createAsyncThunk(
 //   "/api/v1/problems/:problemId",
 //   async (payload, { rejectWithValue }) => {
@@ -69,6 +105,7 @@ export const problemSlice = createSlice({
   name: "problem",
   initialState: {
     problems: [],
+    problem: {},
     isLoading: false,
     error: null,
   },
@@ -85,6 +122,40 @@ export const problemSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(getProblemsByAssignment.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getEachProblemByAssignment.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      getEachProblemByAssignment.fulfilled,
+      (state, { payload }) => {
+        state.isLoading = false;
+        state.problems = payload.data.problems;
+        toast.success(payload.message);
+      }
+    );
+    builder.addCase(
+      getEachProblemByAssignment.rejected,
+      (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+        toast.error(payload.message);
+      }
+    );
+    builder.addCase(getProblemById.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getProblemById.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.problem = payload.data.problem;
+      toast.success(payload.message);
+    });
+    builder.addCase(getProblemById.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);

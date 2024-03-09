@@ -38,7 +38,21 @@ export const createProblem = asyncHandler(async (req, res) => {
 // Get all resources
 export const getAllProblems = asyncHandler(async (req, res) => {
   const { assignmentId } = req.params;
-  const problems = await Problem.find({ assignmentId });
+  const problems = await Problem.find({ assignmentId }).populate(
+    "assignmentId"
+  );
+
+  // Respond with a success message and all resources
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { problems }, "All Problems"));
+});
+
+export const getEachProblem = asyncHandler(async (req, res) => {
+  const { assignmentId } = req.params;
+  const problems = await Problem.find({ assignmentId }).populate(
+    "assignmentId"
+  );
 
   // Respond with a success message and all resources
   return res

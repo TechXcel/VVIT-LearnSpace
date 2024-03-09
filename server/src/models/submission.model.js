@@ -23,7 +23,7 @@ const submissionSchema = new mongoose.Schema(
     },
     language: {
       type: String,
-      required: [true, "Please select the language"],
+      // required: [true, "Please select the language"],
     },
   },
   {

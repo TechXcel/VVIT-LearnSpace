@@ -65,6 +65,49 @@ export const getSubmissionById = createAsyncThunk(
   }
 );
 
+export const getStudentSubmissionByProblemId = createAsyncThunk(
+  "/api/v1/submissions/submission/:problemId",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        `/api/v1/submissions/submission/${payload}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const createSubmission = createAsyncThunk(
+  "/api/v1/submissions/create",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/api/v1/submissions", payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 // export const deletesubmission = createAsyncThunk(
 //   "/api/v1/submissions/:submissionId",
 //   async (payload, { rejectWithValue }) => {
@@ -160,6 +203,38 @@ export const submissionSlice = createSlice({
     builder.addCase(getSubmissionById.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
+    });
+    builder.addCase(getStudentSubmissionByProblemId.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      getStudentSubmissionByProblemId.fulfilled,
+      (state, { payload }) => {
+        state.isLoading = false;
+        state.submission = payload.data.submission;
+        toast.success(payload.message);
+      }
+    );
+    builder.addCase(
+      getStudentSubmissionByProblemId.rejected,
+      (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload;
+      }
+    );
+    builder.addCase(createSubmission.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(createSubmission.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.submission = payload.data.submission;
+    });
+    builder.addCase(createSubmission.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
     });
     // builder.addCase(deletesubmission.pending, (state) => {
     //   state.isLoading = true;

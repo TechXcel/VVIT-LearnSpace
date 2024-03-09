@@ -22,10 +22,10 @@ const FacultyProblems = () => {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">
-              {assignments[0].title}
+              {problems[0]?.assignmentId?.title}
             </h2>
             <p className="text-muted-foreground">
-              {assignments[0].description}
+              {problems[0]?.assignmentId?.description}
             </p>
           </div>
           <AddProblem assignmentId={assignmentId} />

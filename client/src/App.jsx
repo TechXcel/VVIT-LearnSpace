@@ -51,6 +51,7 @@ import Roadmaps from "./components/resources/roadmaps/Roadmaps";
 import Frontend from "./components/resources/roadmaps/Frontend";
 import MySubmissions from "./components/student/submissions/MySubmissions";
 import StudentEditor from "./components/student/submissions/StudentEditor";
+import Researches from "./components/resources/research/Researches";
 
 function App() {
   const role = useSelector((state) => state.auth.role);
@@ -92,7 +93,14 @@ function App() {
           <Route path="/assignments">
             <Route index element={<Assignments />} />
             <Route path=":assignmentId" element={<Problems />} />
-            <Route path=":assignmentId/:problemId" element={<Editor />} />
+            {role === "student" && (
+              <Route path=":assignmentId/:problemId" element={<Editor />} />
+            )}
+          </Route>
+
+          {/* Research routes */}
+          <Route path="/research">
+            <Route index element={<Researches />} />
           </Route>
 
           {/* Roadmap routes */}
