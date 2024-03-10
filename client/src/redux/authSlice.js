@@ -6,11 +6,7 @@ export const adminLogin = createAsyncThunk(
   "/api/v1/admin/login",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/v1/admin/login", payload, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post("/api/v1/admin/login", payload);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -25,11 +21,7 @@ export const userLogin = createAsyncThunk(
   "/api/v1/users/login",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/api/v1/users/login", payload, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post("/api/v1/users/login", payload);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -54,7 +46,6 @@ export const userRegister = createAsyncThunk(
     }
   }
 );
-
 
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");

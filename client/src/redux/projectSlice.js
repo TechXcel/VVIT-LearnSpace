@@ -193,7 +193,7 @@ export const projectSlice = createSlice({
     });
     builder.addCase(addProject.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.projects=payload.data.projects;
+      state.projects = payload.data.projects;
       toast.success(payload.message);
     });
     builder.addCase(addProject.rejected, (state, { payload }) => {

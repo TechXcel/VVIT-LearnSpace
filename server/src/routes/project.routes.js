@@ -12,7 +12,6 @@ import {
 import { isAuthenticated } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/upload.middleware.js";
 
-
 const router = Router();
 
 router.route("/approved").get(getApprovedProjects);
@@ -21,13 +20,9 @@ router.use(isAuthenticated);
 
 router.route("/").get(getAllProjects);
 
-
 router.route("/student").get(getUserProjects);
 
-router.route("/add").post(upload.single("coverImage"),createProject);
-
-
-
+router.route("/add").post(upload.single("coverImage"), createProject);
 
 router
   .route("/:projectId")
