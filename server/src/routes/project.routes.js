@@ -3,6 +3,7 @@ import {
   createProject,
   deleteProject,
   getAllProjects,
+  getApprovedProjects,
   getProjectById,
   getUserProjects,
   projectApproval,
@@ -12,9 +13,11 @@ import { isAuthenticated } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/").get(getAllProjects);
+router.route("/approved").get(getApprovedProjects);
 
 router.use(isAuthenticated);
+
+router.route("/").get(getAllProjects);
 
 router.route("/student").get(getUserProjects);
 

@@ -75,6 +75,17 @@ const getAllProjects = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { projects }, "All projects"));
 });
 
+const getApprovedProjects = asyncHandler(async (req, res) => {
+  const projects = await Project.find({ status: "approved" })
+    .sort({ createdAt: -1 })
+    .populate({ path: "owner" });
+
+  // Respond with a success message and all resources
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { projects }, "All projects"));
+});
+
 const getProjectById = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
 
@@ -207,4 +218,5 @@ export {
   updateProjectById,
   deleteProject,
   projectApproval,
+  getApprovedProjects,
 };

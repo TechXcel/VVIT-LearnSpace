@@ -22,6 +22,22 @@ export const getAllProjects = createAsyncThunk(
   }
 );
 
+export const getApprovedProjects = createAsyncThunk(
+  "/api/v1/projects/approved",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/projects/approved");
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const getUserProjects = createAsyncThunk(
   "/api/v1/projects/student",
   async (_, { rejectWithValue }) => {
@@ -125,6 +141,20 @@ export const projectSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(getAllProjects.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getApprovedProjects.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getApprovedProjects.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.projects = payload.data.projects;
+      toast.success(payload.message);
+    });
+    builder.addCase(getApprovedProjects.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
