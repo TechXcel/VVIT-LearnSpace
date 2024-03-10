@@ -142,7 +142,7 @@ const getAllNotes = asyncHandler(async (req, res) => {
   // Respond with a success message and all user details
   return res
     .status(200)
-    .json(new ApiResponse(200, { resources }, "Notes details"));
+    .json(new ApiResponse(200, { resources }, "All Notes details"));
 });
 
 export const getUserNotes = asyncHandler(async (req, res) => {

@@ -11,7 +11,7 @@ export const getAllNotes = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response.data);
+      console.log("in notes function",response.data);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -259,7 +259,7 @@ export const resourceSlice = createSlice({
     builder.addCase(getAllNotes.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.resources = payload.data.resources;
-      //console.log(state.notes);
+      console.log("builder",state.resources);
       toast.success(payload.message);
     });
     builder.addCase(getAllNotes.rejected, (state, { payload }) => {

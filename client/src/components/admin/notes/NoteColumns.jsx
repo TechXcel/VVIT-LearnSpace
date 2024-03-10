@@ -83,11 +83,11 @@ export const NoteColumns = [
       </Button>
     ),
   },
-  {
-    accessorKey: "tags",
-    header: "Tags",
-    cell: ({ row }) => row.original.tags.join(", "),
-  },
+  // {
+  //   accessorKey: "tags",
+  //   header: "Tags",
+  //   cell: ({ row }) => row.original.tags.join(", "),
+  // },
   {
     header: ({ column }) => (
       <Button
