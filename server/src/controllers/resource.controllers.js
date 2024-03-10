@@ -12,9 +12,6 @@ const createResource = asyncHandler(async (req, res) => {
   // Checking if all required fields are present
   if (
     !title ||
-    !description ||
-    !subject ||
-    !semester ||
     !type ||
     !tags ||
     tags.length === 0
@@ -29,13 +26,16 @@ const createResource = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Resource already exists");
   }
 
+  req.body.uploader = req.user._id;
+  console.log(req.user);
+  console.log(req.file)
+
   if (req.file) {
     // Upload the file to AWS S3
     await uploadFile(
       req.file,
-      "resource",
-      req.body.title,
-      req.user.identityNumber
+      "fileUrl",
+      req.body.title
     );
 
     // Modify the file name to replace spaces with hyphens
@@ -43,13 +43,14 @@ const createResource = asyncHandler(async (req, res) => {
     req.file.originalname = perfectName;
 
     // Create the file URL based on the AWS S3 bucket structure
-    req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.user.identityNumber}/resource/${req.file.originalname}`;
+    req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/resource/${req.file.originalname}`;
+    console.log(req.body.fileUrl);
   }
-  // Set the uploader ID based on the authenticated user
-  req.body.uploader = req.user._id;
-
+ 
   // Create a new resource in the database
   const newResource = await Resource.create(req.body);
+  const resource=await Resource.find({type,uploader:req.user._id}).sort({createdAt:-1})
+  console.log(resource);
 
   if (!newResource) {
     throw new ApiError(500, "Something went wrong while creating the resource");
@@ -61,7 +62,7 @@ const createResource = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        { resource: newResource },
+        { resource },
         "Resource created successfully"
       )
     );
@@ -152,6 +153,62 @@ const getAllNotes = asyncHandler(async (req, res) => {
 
   // Respond with a success message and all user details
   return res.status(200).json(new ApiResponse(200, { notes }, "Notes details"));
+});
+
+export const getUserNotes = asyncHandler(async (req, res) => {
+  
+  const userId = req.user._id;
+  // Find the resource by ID
+  console.log(req.user._id)
+  const notes = await Resource.find({ uploader:userId, type: "lectureNote" })
+                                .sort({ createdAt: -1 });
+
+  if (!notes) {
+    throw new ApiError(404, "notes not found");
+  }
+
+  // Respond with a success message and the resource details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { notes }, "Notes details"));
+});
+
+
+export const getUserPaper = asyncHandler(async (req, res) => {
+  
+  const userId = req.user._id;
+  // Find the resource by ID
+  console.log(req.user._id)
+  const papers = await Resource.find({ uploader:userId, type: "previousPaper" })
+                                .sort({ createdAt: -1 });
+
+  if (!papers) {
+    throw new ApiError(404, "notes not found");
+  }
+
+  // Respond with a success message and the resource details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { papers }, "Papers details"));
+});
+
+
+export const getUserResearchPapers = asyncHandler(async (req, res) => {
+  
+  const userId = req.user._id;
+  // Find the resource by ID
+  console.log(req.user._id)
+  const research = await Resource.find({ uploader:userId, type: "researchPaper" })
+                                .sort({ createdAt: -1 });
+
+  if (!research) {
+    throw new ApiError(404, "notes not found");
+  }
+
+  // Respond with a success message and the resource details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { research }, "Research Papers details"));
 });
 
 const getAllPapers = asyncHandler(async (req, res) => {

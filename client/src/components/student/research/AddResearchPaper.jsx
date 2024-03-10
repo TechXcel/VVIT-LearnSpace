@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addNotes } from "@/redux/resourceSlice";
 
-const AddNotes = () => {
+const AddResearchPaper = () => {
 
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state["auth"]);
@@ -39,7 +39,7 @@ const AddNotes = () => {
     const notesData = new FormData();
     data.role = "student";
     data.tags = selected;
-    data.type="lectureNote";
+    data.type="researchPaper";
     console.log("fileUrl",data.fileUrl[0])
     notesData.append("fileUrl", data.fileUrl[0]);
     Object.keys(data).forEach((key) => {
@@ -47,7 +47,7 @@ const AddNotes = () => {
         notesData.append(key, data[key]);
       }
     });
-    console.log("this is notes data",notesData.title)
+    //console.log("this is notes data",notesData.title)
     await dispatch(addNotes(notesData));
     setOpen(false);
   };
@@ -64,14 +64,14 @@ const AddNotes = () => {
         <DialogTrigger asChild>
           <Button variant="default">
             <Plus />
-            New Notes
+            New Paper
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>New Notes</DialogTitle>
+            <DialogTitle>Paper</DialogTitle>
             <DialogDescription>
-              Enter new notes details here.
+              Enter new Paper details here.
             </DialogDescription>
           </DialogHeader>
         <form onSubmit={handleSubmit(handleNotes)}>
@@ -80,9 +80,9 @@ const AddNotes = () => {
               <Label htmlFor="name">Title</Label>
               <Input
                 id="title"
-                placeholder="Notes name"
+                placeholder="paper name"
                 {...register("title", {
-                  required: "notes name is required",
+                  required: "paper name is required",
                 })}
                 className="col-span-3"
               />
@@ -92,7 +92,7 @@ const AddNotes = () => {
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
-                placeholder="Write some description about the notes"
+                placeholder="Write some description about the paper"
                 {...register("description", {
                   required: "description is required",
                 })}
@@ -101,57 +101,29 @@ const AddNotes = () => {
                {errors.name && <FormError message={errors.name.message} />}
             </div>
 
-            <div className="grid items-center gap-4">
-              <Label htmlFor="notes">Subject</Label>
-              <Input
-                id="subject"
-                placeholder="subject name"
-                {...register("subject",{
-                  required:"Subject name required"
-                })}
-                className="col-span-3"
-              />
-               {errors.name && <FormError message={errors.name.message} />}
-            </div>
-            <div className="grid items-center gap-4">
-              <Label htmlFor="semester">Semester</Label>
-              <Input
-                id="semester"
-                placeholder="Semester number"
-                {...register("semester",{
-                  required:"Semester number required",
-                  pattern: {
-                    value: /^[1-8]$/,
-                    message: "Semester number must be between 1 and 8",
-                  },
-                })}
-                className="col-span-3"
-              />
-               {errors.name && <FormError message={errors.name.message} />}
-            </div>
             <div className="grid items-center gap-3">
                 <Label htmlFor="name">Tags</Label>
                 <MultiSelect
                   options={[
                     {
-                      value: "CSE",
-                      label: "CSE",
+                      value: "MERN",
+                      label: "MERN",
                     },
                     {
-                      value: "ECE",
-                      label: "ECE",
+                      value: "React",
+                      label: "React",
                     },
                     {
-                      value: "IT",
-                      label: "IT",
+                      value: "Java",
+                      label: "Java",
                     },
                     {
-                      value: "CIVIL",
-                      label: "CIVIL",
+                      value: "ML",
+                      label: "ML",
                     },
                     {
-                      value: "MECH",
-                      label: "MECH",
+                      value: "Django",
+                      label: "Django",
                     },
                   ]}
                   selected={selected}
@@ -160,6 +132,7 @@ const AddNotes = () => {
                   title="Select tags"
                 />
               </div>
+
            
             <div className="grid items-center gap-4">
               <Label htmlFor="notes">File</Label>
@@ -172,6 +145,8 @@ const AddNotes = () => {
               />
                {errors.name && <FormError message={errors.name.message} />}
             </div>
+
+
             
           </div>
   
@@ -179,11 +154,11 @@ const AddNotes = () => {
         <Button className="w-full mt-6" type="submit">
           {isLoading ? (
             <>
-              Adding Notes
+              Adding paper
               <Loader2 className="w-4 h-4 ml-2 font-semibold animate-spin" />
             </>
           ) : (
-            "Add Notes"
+            "Add Paper"
           )}
         </Button>
       </DialogFooter>
@@ -195,4 +170,4 @@ const AddNotes = () => {
   
 };
 
-export default AddNotes;
+export default AddResearchPaper;

@@ -46,7 +46,7 @@ const resourceSchema = new mongoose.Schema(
     tags: [
       {
         type: String,
-        // required: [true, "Please provide at least one tag for this resource."],
+        required: [true, "Please provide at least one tag for this resource."],
       },
     ],
     viewCount: {

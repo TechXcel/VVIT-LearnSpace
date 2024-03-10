@@ -1,9 +1,18 @@
 import DataTable from "@/components/ui/data-table";
 import { StudentNoteColumns } from "./StudentNoteColumns";
-import { userNotesData } from "@/data/notes";
+
 import AddNotes from "./AddNotes";
+import { getUserNotes } from "@/redux/resourceSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const StudentNotesTable = () => {
+  const dispatch = useDispatch();
+  const { notes } = useSelector((state) => state.resource);
+  //console.log("notes data", notes)
+  useEffect(() => {
+    dispatch(getUserNotes());
+  }, [dispatch]);
   return (
     <div className="flex flex-col space-y-8">
       <div className="flex items-center justify-between">
@@ -13,7 +22,7 @@ const StudentNotesTable = () => {
         </div>
         <AddNotes />
       </div>
-      <DataTable data={userNotesData} columns={StudentNoteColumns} />
+      <DataTable data={notes} columns={StudentNoteColumns} />
     </div>
   );
 };

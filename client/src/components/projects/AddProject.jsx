@@ -19,14 +19,7 @@ import { FormError } from "@/components/common/FormError";
 //import { userRegister } from "@/redux/authSlice";
 import { addProject } from "@/redux/projectSlice";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
+import { MultiSelect } from "@/components/ui/multi-select";
 import { Loader2 } from "lucide-react";
 
 const AddProject = () => {
@@ -36,36 +29,27 @@ const AddProject = () => {
   const form = useForm();
   const { register, handleSubmit, clearErrors, reset, formState } = form;
   const { errors } = formState;
-  
+  const [selected, setSelected] = useState([]);
   const [open, setOpen] = useState(false);
 
   const handleProject = async (data) => {
-    try {
-      // Create project data object
-      const projectData = {
-        title: data.title,
-        description: data.description,
-        repositoryUrl: data.repositoryUrl,
-        liveDemoUrl: data.liveDemoUrl,
-      };
-
-      // Check if coverImage field exists and has a value
-      if (data.coverImage && data.coverImage[0]) {
-        projectData.coverImageUrl = data.coverImage[0].url;
+    const projectData = new FormData();
+    //data.branch = department;
+    data.role = "student";
+    data.tags = selected;
+    console.log("cover image in handleProject",data.coverImage[0])
+    projectData.append("coverImage", data.coverImage[0]);
+    Object.keys(data).forEach((key) => {
+      if (key !== "coverImage") {
+        projectData.append(key, data[key]);
       }
-
-      console.log("Project data:", projectData);
-
-      // Dispatch addProject action with projectData
-      const response = await dispatch(addProject(projectData));
-
-      // Close the dialog
-      setOpen(false);
-    } catch (error) {
-      // Handle any errors that might occur during the addProject function call
-      console.error("Error adding project:", error);
-    }
+    });
+    console.log("this is project data",projectData.title)
+    await dispatch(addProject(projectData));
+    setOpen(false);
   };
+
+  
 
   useEffect(() => {
     reset();
@@ -89,7 +73,7 @@ const AddProject = () => {
       </DialogDescription>
     </DialogHeader>
 
-    <form onSubmit={handleSubmit(handleProject)}>
+    <form className="h-[600px] overflow-auto" onSubmit={handleSubmit(handleProject)}>
       <div className="grid gap-4">
         <div className="grid items-center gap-3">
           <Label htmlFor="name">Name</Label>
@@ -159,6 +143,37 @@ const AddProject = () => {
             <FormError message={errors.liveLink.message} />
           )}
         </div>
+        <div className="grid items-center gap-3">
+                <Label htmlFor="name">Tags</Label>
+                <MultiSelect
+                  options={[
+                    {
+                      value: "MERN",
+                      label: "MERN",
+                    },
+                    {
+                      value: "React",
+                      label: "React",
+                    },
+                    {
+                      value: "Java",
+                      label: "Java",
+                    },
+                    {
+                      value: "ML",
+                      label: "ML",
+                    },
+                    {
+                      value: "Django",
+                      label: "Django",
+                    },
+                  ]}
+                  selected={selected}
+                  onChange={setSelected}
+                  className="col-span-3"
+                  title="Select tags"
+                />
+              </div>
 
         <div className="grid items-center gap-3">
           <Label htmlFor="coverImage">Banner</Label>

@@ -193,6 +193,7 @@ export const projectSlice = createSlice({
     });
     builder.addCase(addProject.fulfilled, (state, { payload }) => {
       state.isLoading = false;
+      state.projects=payload.data.projects;
       toast.success(payload.message);
     });
     builder.addCase(addProject.rejected, (state, { payload }) => {
@@ -206,7 +207,9 @@ export const projectSlice = createSlice({
     builder.addCase(getUserProjects.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.projects = payload.data.projects;
-      console.log("inside builder", state.projects);
+
+      //console.log("inside builder",state.projects);
+
       toast.success(payload.message);
     });
     builder.addCase(getUserProjects.rejected, (state, { payload }) => {

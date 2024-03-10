@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addNotes } from "@/redux/resourceSlice";
 
-const AddNotes = () => {
+const AddPaper = () => {
 
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state["auth"]);
@@ -39,7 +39,7 @@ const AddNotes = () => {
     const notesData = new FormData();
     data.role = "student";
     data.tags = selected;
-    data.type="lectureNote";
+    data.type="previousPaper";
     console.log("fileUrl",data.fileUrl[0])
     notesData.append("fileUrl", data.fileUrl[0]);
     Object.keys(data).forEach((key) => {
@@ -64,14 +64,14 @@ const AddNotes = () => {
         <DialogTrigger asChild>
           <Button variant="default">
             <Plus />
-            New Notes
+            New Paper
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>New Notes</DialogTitle>
+            <DialogTitle>Paper</DialogTitle>
             <DialogDescription>
-              Enter new notes details here.
+              Enter new Paper details here.
             </DialogDescription>
           </DialogHeader>
         <form onSubmit={handleSubmit(handleNotes)}>
@@ -80,9 +80,9 @@ const AddNotes = () => {
               <Label htmlFor="name">Title</Label>
               <Input
                 id="title"
-                placeholder="Notes name"
+                placeholder="paper name"
                 {...register("title", {
-                  required: "notes name is required",
+                  required: "paper name is required",
                 })}
                 className="col-span-3"
               />
@@ -92,7 +92,7 @@ const AddNotes = () => {
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
-                placeholder="Write some description about the notes"
+                placeholder="Write some description about the paper"
                 {...register("description", {
                   required: "description is required",
                 })}
@@ -179,11 +179,11 @@ const AddNotes = () => {
         <Button className="w-full mt-6" type="submit">
           {isLoading ? (
             <>
-              Adding Notes
+              Adding paper
               <Loader2 className="w-4 h-4 ml-2 font-semibold animate-spin" />
             </>
           ) : (
-            "Add Notes"
+            "Add Paper"
           )}
         </Button>
       </DialogFooter>
@@ -195,4 +195,4 @@ const AddNotes = () => {
   
 };
 
-export default AddNotes;
+export default AddPaper;

@@ -41,15 +41,15 @@ const AddFaculty = () => {
     const facultyData = new FormData();
     data.branch = department;
     data.role = "faculty";
-    console.log(data.avatar[0])
+    console.log("faculty avatar in handlefaculty",data.avatar[0])
     facultyData.append("avatar", data.avatar[0]);
     Object.keys(data).forEach((key) => {
       if (key !== "avatar") {
         facultyData.append(key, data[key]);
       }
     });
-    console.log("this is faculty",facultyData)
-    const response = await dispatch(userRegister(facultyData));
+    console.log("this is faculty data",facultyData)
+    await dispatch(userRegister(facultyData));
     setOpen(false);
   };
 

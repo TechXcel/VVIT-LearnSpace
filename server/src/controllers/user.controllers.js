@@ -21,7 +21,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ApiError(400, "User already exists");
   }
-
+console.log("req file",req.file)
   if (req.file) {
     // Upload the user's avatar to AWS S3
     await uploadFile(

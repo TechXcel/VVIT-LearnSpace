@@ -1,17 +1,23 @@
 import DataTable from "@/components/ui/data-table";
 
-
-
-import { studentResearchData } from "@/data/researchPaper";
+//import { studentResearchData } from "@/data/researchPaper";
 import { StudentResearchColumns } from "./StudentResearchColumns";
 
+import { getUserResearchPapers } from "@/redux/resourceSlice";
 
 
-import AddResearch from "@/components/faculty/research/AddResearch";
-
+import AddResearchPaper from "./AddResearchPaper";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const StudentResearchTable = () => {
+  const dispatch = useDispatch();
+  const { research } = useSelector((state) => state.resource);
+  console.log(research)
+  useEffect(() => {
+    dispatch(getUserResearchPapers());
+  }, [dispatch]);
   return (
     <div className="flex flex-col space-y-8">
     <div className="flex items-center justify-between">
@@ -22,9 +28,9 @@ const StudentResearchTable = () => {
           Here&apos;s the list of research papers!
         </p>
       </div>
-      <AddResearch/>
+      <AddResearchPaper/>
     </div>
-    <DataTable data={studentResearchData} columns={StudentResearchColumns} />
+    <DataTable data={research} columns={StudentResearchColumns} />
   </div>
   );
 };

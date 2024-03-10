@@ -10,6 +10,9 @@ import {
   getAllResearchPapers,
   getAllResources,
   getResourceById,
+  getUserNotes,
+  getUserPaper,
+  getUserResearchPapers,
   noteApproval,
   updateResourceById,
 } from "../controllers/resource.controllers.js";
@@ -24,9 +27,17 @@ router.use(isAuthenticated);
 router
   .route("/")
   .get(getAllResources)
-  .post(upload.single("resource"), createResource);
+
+router.route("/add")
+  .post(upload.single("fileUrl"), createResource);
 
 router.route("/notes").get(getAllNotes);
+
+router.route("/student/notes").get(getUserNotes);
+
+router.route("/student/papers").get(getUserPaper);
+
+router.route("/student/research").get(getUserResearchPapers);
 
 router.route("/notes/:notesId").delete(deleteNotes);
 
