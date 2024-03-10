@@ -22,6 +22,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addNotes } from "@/redux/resourceSlice";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { notesSelection, semesters } from "@/data/notesSelection";
 
 const AddNotes = () => {
   const dispatch = useDispatch();
@@ -29,25 +38,36 @@ const AddNotes = () => {
   const form = useForm();
   const { register, handleSubmit, clearErrors, reset, formState } = form;
   const { errors } = formState;
-  const [selected, setSelected] = useState([]);
-
+  const [branch, setBranch] = useState("");
+  const [semester, setSemester] = useState("");
+  const [subject, setSubject] = useState("");
   const [open, setOpen] = useState(false);
 
   const handleNotes = async (data) => {
     const notesData = new FormData();
-    data.role = "student";
-    data.tags = selected;
     data.type = "lectureNote";
-    console.log("fileUrl", data.fileUrl[0]);
+    data.branch = branch;
+    data.subject = subject;
+    data.semester = semester;
+
     notesData.append("fileUrl", data.fileUrl[0]);
     Object.keys(data).forEach((key) => {
       if (key !== "fileUrl") {
         notesData.append(key, data[key]);
       }
     });
-    console.log("this is notes data", notesData.title);
     await dispatch(addNotes(notesData));
     setOpen(false);
+  };
+
+  const handleBranchChange = (selectedBranch) => {
+    const selectedBranchData = notesSelection.find(
+      (branchData) => branchData.branch === selectedBranch
+    );
+
+    if (selectedBranchData) {
+      setSubject(selectedBranchData.subjects[0]);
+    }
   };
 
   useEffect(() => {
@@ -80,11 +100,11 @@ const AddNotes = () => {
                     id="title"
                     placeholder="Notes name"
                     {...register("title", {
-                      required: "notes name is required",
+                      required: "Notes name is required",
                     })}
                     className="col-span-3"
                   />
-                  {errors.name && <FormError message={errors.name.message} />}
+                  {errors.title && <FormError message={errors.title.message} />}
                 </div>
                 <div className="grid items-center gap-2">
                   <Label htmlFor="description">Description</Label>
@@ -92,87 +112,87 @@ const AddNotes = () => {
                     id="description"
                     placeholder="Write some description about the notes"
                     {...register("description", {
-                      required: "description is required",
+                      required: "Description is required",
                     })}
                     className="col-span-3"
                   />
-                  {errors.name && <FormError message={errors.name.message} />}
+                  {errors.description && (
+                    <FormError message={errors.description.message} />
+                  )}
                 </div>
                 <div className="grid items-center gap-2">
-                  <Label htmlFor="notes">Branch</Label>
-                  <Input
-                    id="branch"
-                    placeholder="Select the branch of the notes"
-                    {...register("branch", {
-                      required: "Branch is required",
-                    })}
-                    className="col-span-3"
-                  />
-                  {errors.name && <FormError message={errors.name.message} />}
+                  <Label htmlFor="branch">Branch</Label>
+                  <Select
+                    required={true}
+                    onValueChange={(e) => {
+                      setBranch(e);
+                      handleBranchChange(e);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose branch" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {notesSelection.map((branchData, index) => (
+                          <SelectItem key={index} value={branchData.branch}>
+                            {branchData.branch}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {errors.branch && (
+                    <FormError message={errors.branch.message} />
+                  )}
                 </div>
 
                 <div className="grid items-center gap-2">
-                  <Label htmlFor="notes">Subject</Label>
-                  <Input
-                    id="subject"
-                    placeholder="subject name"
-                    {...register("subject", {
-                      required: "Subject name required",
-                    })}
-                    className="col-span-3"
-                  />
-                  {errors.name && <FormError message={errors.name.message} />}
-                </div>
-                <div className="grid items-center gap-2">
-                  <Label htmlFor="semester">Semester</Label>
-                  <Input
-                    id="semester"
-                    placeholder="Semester number"
-                    {...register("semester", {
-                      required: "Semester number required",
-                      pattern: {
-                        value: /^[1-8]$/,
-                        message: "Semester number must be between 1 and 8",
-                      },
-                    })}
-                    className="col-span-3"
-                  />
-                  {errors.name && <FormError message={errors.name.message} />}
-                </div>
-                <div className="grid items-center gap-3">
-                  <Label htmlFor="name">Tags</Label>
-                  <MultiSelect
-                    options={[
-                      {
-                        value: "CSE",
-                        label: "CSE",
-                      },
-                      {
-                        value: "ECE",
-                        label: "ECE",
-                      },
-                      {
-                        value: "IT",
-                        label: "IT",
-                      },
-                      {
-                        value: "CIVIL",
-                        label: "CIVIL",
-                      },
-                      {
-                        value: "MECH",
-                        label: "MECH",
-                      },
-                    ]}
-                    selected={selected}
-                    onChange={setSelected}
-                    className="col-span-3"
-                    title="Select tags"
-                  />
+                  <Label htmlFor="subject">Subject</Label>
+                  <Select required={true} onValueChange={(e) => setSubject(e)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose subject" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {notesSelection
+                          .find((branchData) => branchData.branch === branch)
+                          ?.subjects.map((subjectData, index) => (
+                            <SelectItem key={index} value={subjectData}>
+                              {subjectData}
+                            </SelectItem>
+                          ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {errors.subject && (
+                    <FormError message={errors.subject.message} />
+                  )}
                 </div>
 
                 <div className="grid items-center gap-2">
-                  <Label htmlFor="notes">File</Label>
+                  <Label htmlFor="notes">Semester</Label>
+                  <Select required={true} onValueChange={(e) => setSemester(e)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose semester" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {semesters.map((semester, index) => (
+                          <SelectItem key={index} value={semester}>
+                            {semester}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {errors.semester && (
+                    <FormError message={errors.semester.message} />
+                  )}
+                </div>
+
+                <div className="grid items-center gap-2">
+                  <Label htmlFor="notes">Upload notes</Label>
                   <Input
                     id="link"
                     type="file"
@@ -180,7 +200,9 @@ const AddNotes = () => {
                     {...register("fileUrl")}
                     className="col-span-3"
                   />
-                  {errors.name && <FormError message={errors.name.message} />}
+                  {errors.fileUrl && (
+                    <FormError message={errors.fileUrl.message} />
+                  )}
                 </div>
               </div>
 

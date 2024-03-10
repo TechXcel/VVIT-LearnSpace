@@ -5,7 +5,6 @@ import LiveLink from "@/components/icons/LiveLink";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-
 import DeleteAlert from "@/components/common/DeleteAlert";
 import { deleteNotes } from "@/redux/resourceSlice";
 
@@ -69,11 +68,7 @@ export const StudentNoteColumns = [
       </Button>
     ),
   },
-  {
-    accessorKey: "tags",
-    header: "Tags",
-    cell: ({ row }) => row.original.tags.join(", "),
-  },
+
   {
     accessorKey: "status",
     header: ({ column }) => (
@@ -113,5 +108,4 @@ export const StudentNoteColumns = [
       );
     },
   },
-  
 ];

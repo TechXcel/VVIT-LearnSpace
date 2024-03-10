@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const StudentNotesTable = () => {
   const dispatch = useDispatch();
-  const { notes } = useSelector((state) => state.resource);
+  const { resources } = useSelector((state) => state.resource);
   //console.log("notes data", notes)
   useEffect(() => {
     dispatch(getUserNotes());
@@ -22,7 +22,7 @@ const StudentNotesTable = () => {
         </div>
         <AddNotes />
       </div>
-      <DataTable data={notes} columns={StudentNoteColumns} />
+      <DataTable data={resources} columns={StudentNoteColumns} />
     </div>
   );
 };

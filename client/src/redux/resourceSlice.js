@@ -22,8 +22,6 @@ export const getAllNotes = createAsyncThunk(
   }
 );
 
-
-
 export const getAllPapers = createAsyncThunk(
   "/api/v1/resources/papers",
   async (_, { rejectWithValue }) => {
@@ -69,11 +67,14 @@ export const deleteNotes = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.delete(`/api/v1/resources/notes/${payload}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.delete(
+        `/api/v1/resources/notes/${payload}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -89,11 +90,14 @@ export const deletePapers = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.delete(`/api/v1/resources/papers/${payload}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.delete(
+        `/api/v1/resources/papers/${payload}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -109,11 +113,14 @@ export const deleteResearch = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.delete(`/api/v1/resources/research/${payload}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.delete(
+        `/api/v1/resources/research/${payload}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -129,16 +136,20 @@ export const approveNotes = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log("payload is", payload);
     try {
-      const response = await axios.patch(`/api/v1/resources/notes/${payload}`,null, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      console.log(response.data)
+      const response = await axios.patch(
+        `/api/v1/resources/notes/${payload}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response.data);
       return response.data;
     } catch (error) {
       if (!error.response) {
-        console.log(error)
+        console.log(error);
         return error;
       }
       return rejectWithValue(error?.response?.data);
@@ -211,17 +222,17 @@ export const addNotes = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.post("/api/v1/resources/add", payload,{
+      const response = await axios.post("/api/v1/resources/add", payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log("payload is",payload)
-      console.log("res data",response.data)
+      console.log("payload is", payload);
+      console.log("res data", response.data);
       return response.data;
     } catch (error) {
       if (!error.response) {
-        console.log("slice error",error)
+        console.log("slice error", error);
         return error;
       }
       return rejectWithValue(error?.response?.data);
@@ -229,15 +240,13 @@ export const addNotes = createAsyncThunk(
   }
 );
 
-
-
 export const resourceSlice = createSlice({
   name: "resource",
   initialState: {
     notes: [],
-    papers:[],
-    research:[],
-    resource:[],
+    papers: [],
+    research: [],
+    resources: [],
     isLoading: false,
     error: null,
   },
@@ -249,7 +258,7 @@ export const resourceSlice = createSlice({
     });
     builder.addCase(getAllNotes.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.notes = payload.data.notes;
+      state.resources = payload.data.resources;
       //console.log(state.notes);
       toast.success(payload.message);
     });
@@ -350,7 +359,7 @@ export const resourceSlice = createSlice({
     });
     builder.addCase(getUserNotes.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.notes = payload.data.notes;
+      state.resources = payload.data.resources;
       //console.log("inside builder",state.projects);
       toast.success(payload.message);
     });
@@ -381,7 +390,7 @@ export const resourceSlice = createSlice({
     builder.addCase(getUserResearchPapers.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.research = payload.data.research;
-      console.log("inside builder",state.research);
+      console.log("inside builder", state.research);
       toast.success(payload.message);
     });
     builder.addCase(getUserResearchPapers.rejected, (state, { payload }) => {
@@ -394,7 +403,7 @@ export const resourceSlice = createSlice({
     });
     builder.addCase(addNotes.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.resource=payload.data.resource;
+      state.resources = payload.data.resources;
       toast.success(payload.message);
     });
     builder.addCase(addNotes.rejected, (state, { payload }) => {

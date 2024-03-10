@@ -32,7 +32,7 @@ const resourceSchema = new mongoose.Schema(
       type: String,
     },
     semester: {
-      type: Number,
+      type: String,
     },
     type: {
       type: String,

@@ -6,79 +6,69 @@ import { uploadFile } from "../utils/s3.js";
 
 const createProject = asyncHandler(async (req, res) => {
   const { title, description, repositoryUrl, liveDemoUrl } = req.body;
+  //console.log(title,description,repositoryUrl,liveDemoUrl);
 
   if (!title || !description || !repositoryUrl || !liveDemoUrl) {
-    const { title, description, repositoryUrl, liveDemoUrl } = req.body;
-    //console.log(title,description,repositoryUrl,liveDemoUrl);
-
-    if (!title || !description || !repositoryUrl || !liveDemoUrl) {
-      throw new ApiError(400, "Please enter all the required fields");
-    }
-
-    const existedProject = await Project.findOne({ title });
-
-    if (existedProject) {
-      throw new ApiError(400, "Project already exists");
-    }
-
-    req.body.owner = req.user._id;
-    console.log(req.body.owner);
-    console.log("req file", req.file);
-    if (req.file) {
-      // Upload the file to AWS S3
-
-      await uploadFile(req.file, "coverImage", req.body.title);
-
-      // Modify the file name to replace spaces with hyphens
-      const perfectName = req.body.title.split(/\s+/).join("-");
-      req.file.originalname = perfectName;
-      //console.log("file name in controller",req.file.originalname)
-
-      // Create the file URL based on the AWS S3 bucket structure
-
-      req.body.coverImage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/project/${req.file.originalname}`;
-      console.log("url image", req.body.coverImage);
-    }
-
-    // // Handle additional files
-    if (req.files && req.files.length > 0) {
-      req.body.additionalFiles = [];
-      for (const file of req.files) {
-        // Upload each additional file to AWS S3
-        const additionalFileName = file.originalname.split(/\s+/).join("-");
-        await uploadFile(
-          file,
-          "coverImage",
-          additionalFileName,
-          req.body.owner
-        );
-
-        // Create the file URL for each additional file
-        const additionalFileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.owner}/project/${additionalFileName}`;
-        req.body.additionalFiles.push(additionalFileUrl);
-      }
-    }
-
-    const newProject = await Project.create(req.body);
-
-    const projects = await Project.find({ owner: req.user._id }).sort({
-      createdAt: -1,
-    });
-    console.log(projects);
-
-    if (!newProject) {
-      throw new ApiError(
-        500,
-        "Something went wrong while creating the project"
-      );
-    }
-
-    console.log("new project", newProject);
-
-    return res
-      .status(201)
-      .json(new ApiResponse(200, { projects }, "Project added successfully"));
+    throw new ApiError(400, "Please enter all the required fields");
   }
+
+  const existedProject = await Project.findOne({ title });
+
+  if (existedProject) {
+    throw new ApiError(400, "Project already exists");
+  }
+
+  req.body.owner = req.user._id;
+  console.log(req.body.owner);
+  console.log("req file", req.file);
+  if (req.file) {
+    // Upload the file to AWS S3
+
+    await uploadFile(
+      req.file,
+      "coverImage",
+      req.body.title,
+      req.user.identityNumber
+    );
+
+    // Modify the file name to replace spaces with hyphens
+    const perfectName = req.body.title.split(/\s+/).join("-");
+    req.file.originalname = perfectName;
+    //console.log("file name in controller",req.file.originalname)
+
+    // Create the file URL based on the AWS S3 bucket structure
+
+    req.body.coverImage = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.user.identityNumber}/coverImage/${req.file.originalname}`;
+    console.log("url image", req.body.coverImage);
+  }
+
+  // // Handle additional files
+  if (req.files && req.files.length > 0) {
+    req.body.additionalFiles = [];
+    for (const file of req.files) {
+      // Upload each additional file to AWS S3
+      const additionalFileName = file.originalname.split(/\s+/).join("-");
+      await uploadFile(file, "coverImage", additionalFileName, req.body.owner);
+
+      // Create the file URL for each additional file
+      const additionalFileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.owner}/project/${additionalFileName}`;
+      req.body.additionalFiles.push(additionalFileUrl);
+    }
+  }
+
+  const newProject = await Project.create(req.body);
+
+  const projects = await Project.find({ owner: req.user._id }).sort({
+    createdAt: -1,
+  });
+
+  if (!newProject) {
+    throw new ApiError(500, "Something went wrong while creating the project");
+  }
+
+  return res
+    .status(201)
+    .json(new ApiResponse(200, { projects }, "Project added successfully"));
 });
 
 const getAllProjects = asyncHandler(async (req, res) => {
