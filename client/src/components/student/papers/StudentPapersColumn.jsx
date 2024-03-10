@@ -60,6 +60,7 @@ export const StudentPapersColumns = [
       </a>
     ),
   },
+ 
   {
     accessorKey: "viewCount",
     header: ({ column }) => (
@@ -77,6 +78,26 @@ export const StudentPapersColumns = [
     accessorKey: "tags",
     header: "Tags",
     cell: ({ row }) => row.original.tags.join(", "),
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Status
+        <ArrowUpDown />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <span
+        className={`capitalize ${row.original.status === "approved" ? "text-green-500" : "text-yellow-500"}`}
+      >
+        {row.original.status}
+      </span>
+    ),
   },
 
   {
