@@ -240,13 +240,79 @@ export const addNotes = createAsyncThunk(
   }
 );
 
+
+export const approvePaper = createAsyncThunk(
+  "/api/v1/resources/papers/:paperId(approval)",
+  async (payload, { rejectWithValue }) => {
+    console.log("payload is", payload);
+    try {
+      const response = await axios.patch(`/api/v1/resources/papers/${payload}`,null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        console.log(error)
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const approveResearchPaper = createAsyncThunk(
+  "/api/v1/resources/research/:paperId(approval)",
+  async (payload, { rejectWithValue }) => {
+    console.log("payload is", payload);
+    try {
+      const response = await axios.patch(`/api/v1/resources/research/${payload}`,null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        console.log(error)
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getApprovedResearch = createAsyncThunk(
+  "api/v1/resources/approved",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/resources/approved");
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+
+
+
 export const resourceSlice = createSlice({
   name: "resource",
   initialState: {
     notes: [],
+
     papers: [],
     research: [],
     resources: [],
+
     isLoading: false,
     error: null,
   },
@@ -293,6 +359,20 @@ export const resourceSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(getAllResearchPapers.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getApprovedResearch.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getApprovedResearch.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.research = payload.data.research;
+      toast.success(payload.message);
+    });
+    builder.addCase(getApprovedResearch.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
@@ -349,6 +429,36 @@ export const resourceSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(approveNotes.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+
+    builder.addCase(approvePaper.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(approvePaper.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.papers = payload.data.papers;
+      toast.success(payload.message);
+    });
+    builder.addCase(approvePaper.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+
+    builder.addCase(approveResearchPaper.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(approveResearchPaper.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.research = payload.data.research;
+      toast.success(payload.message);
+    });
+    builder.addCase(approveResearchPaper.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);

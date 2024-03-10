@@ -368,10 +368,92 @@ export const noteApproval = asyncHandler(async (req, res) => {
       new ApiResponse(
         200,
         { notes },
-        `Note ${note.status === "approved" ? "approved" : "pending"}`
+        `${note.title} ${note.status === "approved" ? "approved" : "pending"}`
       )
     );
 });
+
+
+
+export const paperApproval = asyncHandler(async (req, res) => {
+  const { paperId } = req.params;
+
+  const paper = await Resource.findById(paperId);
+
+  if (!paper) {
+    throw new ApiError(404, "paper not found");
+  }
+
+  if (paper.status === "approved") {
+    paper.status = "pending";
+  } else {
+    paper.status = "approved";
+  }
+
+  await paper.save();
+  const type=paper.type;
+  console.log(paper);
+  const papers = await Resource.find({type})
+    .populate({path:"uploader"})
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { papers },
+        `${paper.title} ${paper.status === "approved" ? "approved" : "pending"}`
+      )
+    );
+});
+
+
+export const ResearchpaperApproval = asyncHandler(async (req, res) => {
+  const { paperId } = req.params;
+
+  const paper = await Resource.findById(paperId);
+
+  if (!paper) {
+    throw new ApiError(404, "paper not found");
+  }
+
+  if (paper.status === "approved") {
+    paper.status = "pending";
+  } else {
+    paper.status = "approved";
+  }
+
+  await paper.save();
+  const type=paper.type;
+  console.log(paper);
+  const research = await Resource.find({type})
+    .populate({path:"uploader"})
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { research },
+        `${paper.title} ${paper.status === "approved" ? "approved" : "pending"}`
+      )
+    );
+});
+
+
+export const getApprovedResearch = asyncHandler(async (req, res) => {
+  const research = await Resource.find({ status: "approved", type:"researchPaper" })
+    .sort({ createdAt: -1 })
+    .populate({ path: "uploader" });
+
+  // Respond with a success message and all resources
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { research }, "All Research Papers"));
+});
+
 
 // Export all the resource-related controllers
 export {

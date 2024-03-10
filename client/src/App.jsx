@@ -79,6 +79,13 @@ function App() {
             <Route path="projects/:projectId" element={<ViewProject />} />
           </Route>
 
+          {/*Research routes*/}
+
+          <Route path="/">
+            <Route path="research" element={<Researches/>}/>
+            
+          </Route>
+
           {/* Notes routes */}
           <Route path="/">
             <Route path="notes" element={<Branches />} />
@@ -93,6 +100,8 @@ function App() {
             <Route path="papers/:branchName/:semId" element={<ViewSubject />} />
           </Route>
 
+          
+
           {/* Assignments routes */}
           <Route path="/assignments">
             <Route index element={<Assignments />} />
@@ -102,10 +111,7 @@ function App() {
             )}
           </Route>
 
-          {/* Research routes */}
-          <Route path="/research">
-            <Route index element={<Researches />} />
-          </Route>
+          
 
           {/* Roadmap routes */}
           <Route path="/roadmaps">

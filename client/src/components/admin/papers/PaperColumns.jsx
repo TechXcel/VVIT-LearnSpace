@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import DeleteAlert from "@/components/common/DeleteAlert";
 import { deletePapers } from "@/redux/resourceSlice";
+import ApprovalAlert from "@/components/common/ApprovalAlert";
+import { approvePaper } from "@/redux/resourceSlice";
 
 export const PaperColumns = [
   {
@@ -32,6 +34,7 @@ export const PaperColumns = [
     enableSorting: false,
     enableHiding: false,
   },
+
   {
     accessorKey: "uploader.name",
     header: ({ column }) => (
@@ -86,7 +89,6 @@ export const PaperColumns = [
     cell: ({ row }) => row.original.tags.join(", "),
   },
   {
-    accessorKey: "status",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -97,13 +99,23 @@ export const PaperColumns = [
         <ArrowUpDown />
       </Button>
     ),
-    cell: ({ row }) => (
-      <span
-        className={`capitalize ${row.original.status === "approved" ? "text-green-500" : "text-yellow-500"}`}
-      >
-        {row.original.status}
-      </span>
-    ),
+    id: "status",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const paperId = row.original._id;
+      return (
+        <div className="flex justify-center ">
+          <ApprovalAlert
+            name="resource"
+            id={paperId}
+            status={row.original.status}
+            alertTitle={`Are you sure you want to ${row.original.status === "approved" ? "pending" : "approve"} this notes?`}
+            alertDescription={`This action will ${row.original.status === "approved" ? "pending" : "approve"} the notes and notify the student.`}
+            handleApprove={approvePaper}
+          />
+        </div>
+      );
+    },
   },
   {
     header: "Delete",
