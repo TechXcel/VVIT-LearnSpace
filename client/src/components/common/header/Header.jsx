@@ -8,7 +8,6 @@ import { logout } from "@/redux/authSlice";
 import {
   SquaresPlusIcon,
   UserCircleIcon,
-  Cog6ToothIcon,
   ArrowUturnRightIcon,
 } from "@heroicons/react/24/outline";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -19,19 +18,14 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Dashboard from "@/components/icons/Dashboard";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { token, role } = useSelector((state) => state.auth);
+  const { token, role, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const handleSignout = () => {
     dispatch(logout());
@@ -70,29 +64,20 @@ const Header = () => {
                         </DropdownMenuShortcut>
                       </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link
-                        className="flex items-center justify-between w-full"
-                        to={`${role}`}
-                      >
-                        <span>Profile</span>
-                        <DropdownMenuShortcut>
-                          <UserCircleIcon className="w-4 h-4" />
-                        </DropdownMenuShortcut>
-                      </Link>
-                    </DropdownMenuItem>
 
-                    <DropdownMenuItem>
-                      <Link
-                        className="flex items-center justify-between w-full"
-                        to={`${role}`}
-                      >
-                        <span>Settings</span>
-                        <DropdownMenuShortcut>
-                          <Cog6ToothIcon className="w-4 h-4" />
-                        </DropdownMenuShortcut>
-                      </Link>
-                    </DropdownMenuItem>
+                    {role !== "admin" && (
+                      <DropdownMenuItem>
+                        <Link
+                          className="flex items-center justify-between w-full"
+                          to={`/${role}/${user._id}`}
+                        >
+                          <span>Profile</span>
+                          <DropdownMenuShortcut>
+                            <UserCircleIcon className="w-4 h-4" />
+                          </DropdownMenuShortcut>
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                   </DropdownMenuGroup>
 
                   <DropdownMenuSeparator />

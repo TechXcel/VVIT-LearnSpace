@@ -56,6 +56,7 @@ import NotFound from "./components/common/NotFound";
 import Unauthorized from "./components/common/Unauthorized";
 import NotAuthenticated from "./components/common/NotAuthenticated";
 import AdminSubmissions from "./components/admin/submissions/AdminSubmissions";
+import UserProfile from "./components/common/UserProfile";
 
 function App() {
   const role = useSelector((state) => state.auth.role);
@@ -82,8 +83,7 @@ function App() {
           {/*Research routes*/}
 
           <Route path="/">
-            <Route path="research" element={<Researches/>}/>
-            
+            <Route path="research" element={<Researches />} />
           </Route>
 
           {/* Notes routes */}
@@ -100,8 +100,6 @@ function App() {
             <Route path="papers/:branchName/:semId" element={<ViewSubject />} />
           </Route>
 
-          
-
           {/* Assignments routes */}
           <Route path="/assignments">
             <Route index element={<Assignments />} />
@@ -110,8 +108,6 @@ function App() {
               <Route path=":assignmentId/:problemId" element={<Editor />} />
             )}
           </Route>
-
-          
 
           {/* Roadmap routes */}
           <Route path="/roadmaps">
@@ -146,6 +142,7 @@ function App() {
                 path="submissions/:submissionId"
                 element={<StudentEditor />}
               />
+              <Route path=":userId" element={<UserProfile />} />
             </Route>
           )}
 
@@ -173,6 +170,7 @@ function App() {
                 path="assignments/:assignmentId/:problemId/:submissionId"
                 element={<SolutionEditor />}
               />
+              <Route path=":userId" element={<UserProfile />} />
             </Route>
           )}
           <Route path="*" element={<NotFound />} />
