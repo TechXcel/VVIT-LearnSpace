@@ -152,7 +152,7 @@ export const getUserNotes = asyncHandler(async (req, res) => {
   const resources = await Resource.find({
     uploader: userId,
     type: "lectureNote",
-  }).sort({ createdAt: -1 });
+  }).sort({ createdAt: -1 }).populate({path:"uploader"});
 
   if (!resources) {
     throw new ApiError(404, "notes not found");
@@ -172,7 +172,7 @@ export const getUserPaper = asyncHandler(async (req, res) => {
   const papers = await Resource.find({
     uploader: userId,
     type: "previousPaper",
-  }).sort({ createdAt: -1 });
+  }).sort({ createdAt: -1 }).populate({path:"uploader"});
 
   if (!papers) {
     throw new ApiError(404, "notes not found");
@@ -191,7 +191,7 @@ export const getUserResearchPapers = asyncHandler(async (req, res) => {
   const research = await Resource.find({
     uploader: userId,
     type: "researchPaper",
-  }).sort({ createdAt: -1 });
+  }).sort({ createdAt: -1 }).populate({path:"uploader"});
 
   if (!research) {
     throw new ApiError(404, "notes not found");
