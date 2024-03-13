@@ -1,8 +1,16 @@
-import { projects } from "@/data/projects";
-import AddProject from "./AddProject";
 import ProjectCard from "./ProjectCard";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getApprovedProjects } from "@/redux/projectSlice";
 
 const Projects = () => {
+  const dispatch = useDispatch();
+  const { projects } = useSelector((state) => state.project);
+
+  useEffect(() => {
+    dispatch(getApprovedProjects());
+  }, [dispatch]);
   return (
     <div className="container flex flex-col items-center w-full py-8 gap-y-8 max-w-screen-2xl">
       <div className="flex items-center justify-between w-full">

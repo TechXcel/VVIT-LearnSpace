@@ -150,6 +150,7 @@ userSchema.methods.generateAccessToken = async function () {
     {
       _id: this._id,
       role: this.role,
+      identityNumber: this.identityNumber,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {

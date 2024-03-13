@@ -1,6 +1,7 @@
 import DataTable from "@/components/ui/data-table";
 //import { adminNotesData } from "@/data/notes";
 import { PaperColumns } from "./PaperColumns";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPapers } from "@/redux/resourceSlice";

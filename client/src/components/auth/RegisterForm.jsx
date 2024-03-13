@@ -17,6 +17,8 @@ import {
 } from "../ui/select";
 import { branches } from "@/data/branches";
 import { userRegister } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ const RegisterForm = () => {
   const { register, handleSubmit, formState, clearErrors } = form;
   const { errors } = formState;
   const [branch, setBranch] = useState();
+  const { isLoading } = useSelector((state) => state.auth);
 
   const handleUserRegistration = async (data) => {
     const userData = new FormData();
@@ -38,7 +41,7 @@ const RegisterForm = () => {
 
     const response = await dispatch(userRegister(userData));
     if (response.meta.requestStatus === "fulfilled") {
-      navigate("/auth/login");
+      navigate("/auth/signin");
     }
   };
   return (
@@ -204,7 +207,16 @@ const RegisterForm = () => {
           </div>
           <div>
             <Button className="w-full font-semibold" type="submit">
-              Create Account <ArrowRight className="ml-2" size={16} />
+              {isLoading ? (
+                <>
+                  Registering
+                  <Loader2 className="w-4 h-4 ml-2 font-semibold animate-spin" />
+                </>
+              ) : (
+                <>
+                  Create Account <ArrowRight className="ml-2" size={16} />
+                </>
+              )}
             </Button>
           </div>
         </div>

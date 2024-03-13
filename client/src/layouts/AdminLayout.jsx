@@ -5,9 +5,12 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AdminLayout = () => {
+  const { role } = useSelector((state) => state.auth);
+
   return (
     <div className="container flex flex-col items-center w-full max-w-screen-2xl">
       <ResizablePanelGroup
@@ -23,7 +26,15 @@ const AdminLayout = () => {
         <ResizablePanel defaultSize={80}>
           <ScrollArea className="h-[90vh]">
             <div className="flex flex-col flex-1 h-full p-8 space-y-8">
-              <Outlet />
+              {role === "admin" ? (
+                <Outlet />
+              ) : (
+                <Navigate
+                  to={"/unauthorized"}
+                  state={{ from: location }}
+                  replace
+                />
+              )}
             </div>
           </ScrollArea>
         </ResizablePanel>

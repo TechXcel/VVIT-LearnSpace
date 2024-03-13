@@ -17,13 +17,41 @@ import CustomInput from "./CustomInput";
 import OutputDetails from "./OutputDetails";
 import { Button } from "@/components/ui/button";
 import ChevronLeft from "@/components/icons/ChevronLeft";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Play from "@/components/icons/Play";
 import Save from "@/components/icons/Save";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const javascriptDefault = `// start practicing your code here!`;
+import { getProblemById } from "@/redux/problemSlice";
+import {
+  createSubmission,
+  getStudentSubmissionByProblemId,
+} from "@/redux/submissionSlice";
 
 const Editor = () => {
+  const token = useSelector((state) => state.auth.token);
+
+  // Check for the presence of a token
+  if (!token) {
+    // Redirect to the unauthenticated route
+    return <Navigate to="/unauthenticated" />;
+  }
+  const { problemId } = useParams();
+  const dispatch = useDispatch();
+  const { problem } = useSelector((state) => state.problem);
+  const { isLoading, submission } = useSelector((state) => state.submission);
+  console.log("problem", problem);
+  console.log("submission", submission);
+  useEffect(() => {
+    dispatch(getStudentSubmissionByProblemId(problemId));
+  }, [problemId]);
+
+  useEffect(() => {
+    dispatch(getProblemById(problemId));
+  }, [problemId]);
+  const javascriptDefault =
+    `${submission?.providedSolution}` || `// start practicing your code here!`;
   const [code, setCode] = useState(javascriptDefault);
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
@@ -166,14 +194,28 @@ const Editor = () => {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log(typeof code);
     console.log("Saving code:", code);
+
+    await dispatch(
+      createSubmission({
+        assignmentId: problem.assignmentId,
+        problemId,
+        providedSolution: code,
+      })
+    );
+
+    if (!isLoading) {
+      showSuccessToast("Saved Successfully!");
+    } else {
+      showErrorToast();
+    }
     // Add logic to save the code to your backend or storage if needed
   };
 
   return (
-    <section className="container flex flex-col w-full max-w-screen-2xl">
+    <section className="container flex flex-col w-full py-8 max-w-screen-2xl">
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -186,13 +228,13 @@ const Editor = () => {
         pauseOnHover
       />
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center py-4 gap-x-5">
+      <div className="flex items-center justify-between ">
+        <div className="flex items-center gap-x-5">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">
-              {problems[0].title}
+              {problem?.title}
             </h2>
-            <p className="text-muted-foreground">{problems[0].description}</p>
+            <p className="text-muted-foreground">{problem?.description}</p>
           </div>
         </div>
 
@@ -201,11 +243,6 @@ const Editor = () => {
         </div>
       </div>
 
-      <div className="flex flex-row gap-x-4">
-        {/* <div className="py-2 ">
-          <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-        </div> */}
-      </div>
       <div className="flex flex-row items-start py-4 space-x-4">
         <div className="flex flex-col items-end justify-start w-full h-full border rounded-md">
           <EditorWindow

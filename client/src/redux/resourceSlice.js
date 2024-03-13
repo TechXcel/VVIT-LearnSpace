@@ -11,7 +11,7 @@ export const getAllNotes = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response.data);
+      console.log("in notes function",response.data);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -21,8 +21,6 @@ export const getAllNotes = createAsyncThunk(
     }
   }
 );
-
-
 
 export const getAllPapers = createAsyncThunk(
   "/api/v1/resources/papers",
@@ -69,11 +67,14 @@ export const deleteNotes = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.delete(`/api/v1/resources/notes/${payload}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.delete(
+        `/api/v1/resources/notes/${payload}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -89,11 +90,14 @@ export const deletePapers = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.delete(`/api/v1/resources/papers/${payload}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.delete(
+        `/api/v1/resources/papers/${payload}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -109,11 +113,14 @@ export const deleteResearch = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
-      const response = await axios.delete(`/api/v1/resources/research/${payload}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.delete(
+        `/api/v1/resources/research/${payload}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -129,7 +136,117 @@ export const approveNotes = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     console.log("payload is", payload);
     try {
-      const response = await axios.patch(`/api/v1/resources/notes/${payload}`,null, {
+      const response = await axios.patch(
+        `/api/v1/resources/notes/${payload}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        console.log(error);
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getUserNotes = createAsyncThunk(
+  "/api/v1/resources/student/notes",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/resources/student/notes", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      //console.log("data from fun",response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getUserPaper = createAsyncThunk(
+  "/api/v1/resources/student/papers",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/resources/student/papers", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      //console.log("data from fun",response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getUserResearchPapers = createAsyncThunk(
+  "/api/v1/resources/student/research",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/resources/student/research", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      //console.log("data from fun",response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const addNotes = createAsyncThunk(
+  "/api/v1/resources/add",
+  async (payload, { rejectWithValue }) => {
+    console.log(payload);
+    try {
+      const response = await axios.post("/api/v1/resources/add", payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log("payload is", payload);
+      console.log("res data", response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        console.log("slice error", error);
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+
+export const approvePaper = createAsyncThunk(
+  "/api/v1/resources/papers/:paperId(approval)",
+  async (payload, { rejectWithValue }) => {
+    console.log("payload is", payload);
+    try {
+      const response = await axios.patch(`/api/v1/resources/papers/${payload}`,null, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -146,13 +263,56 @@ export const approveNotes = createAsyncThunk(
   }
 );
 
+export const approveResearchPaper = createAsyncThunk(
+  "/api/v1/resources/research/:paperId(approval)",
+  async (payload, { rejectWithValue }) => {
+    console.log("payload is", payload);
+    try {
+      const response = await axios.patch(`/api/v1/resources/research/${payload}`,null, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        console.log(error)
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getApprovedResearch = createAsyncThunk(
+  "api/v1/resources/approved",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/resources/approved");
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+
+
 
 export const resourceSlice = createSlice({
   name: "resource",
   initialState: {
     notes: [],
-    papers:[],
-    research:[],
+
+    papers: [],
+    research: [],
+    resources: [],
+
     isLoading: false,
     error: null,
   },
@@ -164,8 +324,8 @@ export const resourceSlice = createSlice({
     });
     builder.addCase(getAllNotes.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.notes = payload.data.notes;
-      //console.log(state.notes);
+      state.resources = payload.data.resources;
+      console.log("builder",state.resources);
       toast.success(payload.message);
     });
     builder.addCase(getAllNotes.rejected, (state, { payload }) => {
@@ -199,6 +359,20 @@ export const resourceSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(getAllResearchPapers.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getApprovedResearch.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getApprovedResearch.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.research = payload.data.research;
+      toast.success(payload.message);
+    });
+    builder.addCase(getApprovedResearch.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
@@ -258,6 +432,93 @@ export const resourceSlice = createSlice({
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);
+    });
+
+    builder.addCase(approvePaper.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(approvePaper.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.papers = payload.data.papers;
+      toast.success(payload.message);
+    });
+    builder.addCase(approvePaper.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+
+    builder.addCase(approveResearchPaper.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(approveResearchPaper.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.research = payload.data.research;
+      toast.success(payload.message);
+    });
+    builder.addCase(approveResearchPaper.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getUserNotes.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getUserNotes.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.resources = payload.data.resources;
+      //console.log("inside builder",state.projects);
+      toast.success(payload.message);
+    });
+    builder.addCase(getUserNotes.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getUserPaper.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getUserPaper.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.papers = payload.data.papers;
+      //console.log("inside builder",state.projects);
+      toast.success(payload.message);
+    });
+    builder.addCase(getUserPaper.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getUserResearchPapers.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getUserResearchPapers.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.research = payload.data.research;
+      console.log("inside builder", state.research);
+      toast.success(payload.message);
+    });
+    builder.addCase(getUserResearchPapers.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(addNotes.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(addNotes.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.resources = payload.data.resources;
+      toast.success(payload.message);
+    });
+    builder.addCase(addNotes.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload?.message || "Something went wrong");
     });
   },
 });

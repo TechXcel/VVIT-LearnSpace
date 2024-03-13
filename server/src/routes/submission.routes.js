@@ -4,6 +4,9 @@ import {
   createSubmission,
   deleteSubmissionById,
   getAllSubmissions,
+  getEverySubmission,
+  getStudentSubmissionByProblemId,
+  getStudentSubmissions,
   getSubmissionById,
   updateSubmissionById,
 } from "../controllers/submission.controllers.js";
@@ -12,9 +15,11 @@ const router = Router();
 
 router.use(isAuthenticated);
 
-router.route("/").post(createSubmission);
+router.route("/all").get(getEverySubmission);
 
-router.route("/:problemId").get(getAllSubmissions);
+router.route("/").post(createSubmission).get(getStudentSubmissions);
+router.route("/submission/:problemId").get(getStudentSubmissionByProblemId);
+router.route("/problem/:problemId").get(getAllSubmissions);
 
 router
   .route("/:submissionId")

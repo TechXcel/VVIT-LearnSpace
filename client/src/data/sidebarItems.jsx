@@ -16,7 +16,7 @@ export const sidebarItems = {
     { icon: <Project />, text: "Projects", link: "/student/projects" },
     { icon: <Note />, text: "Notes", link: "/student/notes" },
     { icon: <Paper />, text: "Papers", link: "/student/papers" },
-    { icon: <Assignment />, text: "Assignments", link: "/student/assignments" },
+    { icon: <Assignment />, text: "Submissions", link: "/student/submissions" },
     { icon: <Research />, text: "Research", link: "/student/research" },
   ],
   faculty: [

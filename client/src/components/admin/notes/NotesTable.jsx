@@ -7,8 +7,8 @@ import { getAllNotes } from "@/redux/resourceSlice";
 
 const NotesTable = () => {
   const dispatch = useDispatch();
-  const { notes } = useSelector((state) => state.resource);
-
+  const { resources } = useSelector((state) => state.resource);
+  console.log("notes",resources)
   useEffect(() => {
     dispatch(getAllNotes());
   }, [dispatch]);
@@ -19,7 +19,7 @@ const NotesTable = () => {
         <p className="text-muted-foreground">Here&apos;s the list of notes!</p>
       </div>
 
-      <DataTable data={notes} columns={NoteColumns} />
+      <DataTable data={resources} columns={NoteColumns} />
     </div>
   );
 };

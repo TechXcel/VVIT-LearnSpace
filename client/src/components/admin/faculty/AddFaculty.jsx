@@ -11,8 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MultiSelect } from "@/components/ui/multi-select";
-import { Textarea } from "@/components/ui/textarea";
+
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormError } from "@/components/common/FormError";
@@ -42,14 +41,15 @@ const AddFaculty = () => {
     const facultyData = new FormData();
     data.branch = department;
     data.role = "faculty";
+    console.log("faculty avatar in handlefaculty",data.avatar[0])
     facultyData.append("avatar", data.avatar[0]);
     Object.keys(data).forEach((key) => {
       if (key !== "avatar") {
         facultyData.append(key, data[key]);
       }
     });
-
-    const response = await dispatch(userRegister(facultyData));
+    console.log("this is faculty data",facultyData)
+    await dispatch(userRegister(facultyData));
     setOpen(false);
   };
 

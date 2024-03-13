@@ -1,17 +1,12 @@
 import ArrowUpDown from "@/components/icons/ArrowUpDown";
 import GitHub from "@/components/icons/GitHub";
 import LiveLink from "@/components/icons/LiveLink";
-import MoreVertical from "@/components/icons/MoreVertical";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  //DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import DeleteAlert from "@/components/common/DeleteAlert";
+import { approveProject, deleteProject } from "@/redux/projectSlice";
+import ApprovalAlert from "@/components/common/ApprovalAlert";
+
 
 export const FacultyProjectColumns = [
   {
@@ -38,7 +33,19 @@ export const FacultyProjectColumns = [
     enableSorting: false,
     enableHiding: false,
   },
-
+  {
+    accessorKey: "owner.name",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Uploader
+        <ArrowUpDown />
+      </Button>
+    ),
+  },
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -96,36 +103,51 @@ export const FacultyProjectColumns = [
     header: "Tags",
     cell: ({ row }) => row.original.tags.join(", "),
   },
-
   {
-    id: "actions",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0 hover:bg-transparent"
+      >
+        Status
+        <ArrowUpDown />
+      </Button>
+    ),
+    id: "status",
+    enableHiding: false,
     cell: ({ row }) => {
-      const project = row.original;
-
-     // const toggleStatus = () => {
-        // Toggle the status
-        //const newStatus =
-        project.status === "approved" ? "pending" : "approved";
-
-        // You would normally call an API or update the status in your data source here
-        // For example: updateProjectStatus(project.id, newStatus);
-     // };
-
+      const projectId = row.original._id;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-8 h-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreVertical />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex justify-center ">
+          <ApprovalAlert
+            name="project"
+            id={projectId}
+            status={row.original.status}
+            alertTitle={`Are you sure you want to ${row.original.status === "approved" ? "pending" : "approve"} this project?`}
+            alertDescription={`This action will ${row.original.status === "approved" ? "pending" : "approve"} the project and notify the student.`}
+            handleApprove={approveProject}
+          />
+        </div>
+      );
+    },
+  },
+  {
+    header: "Delete",
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const projectId = row.original._id;
+      return (
+        <div className="flex justify-center ">
+          <DeleteAlert
+            name="project"
+            alertTitle="Are you sure?"
+            alertDescription="This action cannot be undone. This will permanently delete the student and remove their data from our servers."
+            id={projectId}
+            handleDelete={deleteProject}
+          />
+        </div>
       );
     },
   },

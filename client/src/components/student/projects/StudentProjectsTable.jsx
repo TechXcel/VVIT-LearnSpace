@@ -1,10 +1,21 @@
 import DataTable from "@/components/ui/data-table";
-import { userProjectsData } from "@/data/projects";
+//import { userProjectsData } from "@/data/projects";
+import { getUserProjects } from "@/redux/projectSlice";
 
 import { StudentProjectColumns } from "./StudentProjectColumns";
-import AddProject from "@/components/projects/AddProject";
+
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AddProject from "./AddProject";
 
 const StudentProjectsTable = () => {
+  const dispatch = useDispatch();
+  const { projects } = useSelector((state) => state.project);
+  console.log("projects array", projects);
+  useEffect(() => {
+    dispatch(getUserProjects());
+  }, [dispatch]);
+
   return (
     <div className="flex flex-col space-y-8">
       <div className="flex items-center justify-between">
@@ -17,7 +28,8 @@ const StudentProjectsTable = () => {
         </div>
         <AddProject />
       </div>
-      <DataTable data={userProjectsData} columns={StudentProjectColumns} />
+      {console.log("data for student column", projects)}
+      <DataTable data={projects} columns={StudentProjectColumns} />
     </div>
   );
 };

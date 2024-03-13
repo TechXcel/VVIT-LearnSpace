@@ -6,14 +6,16 @@ import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { FormError } from "../common/FormError";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { adminLogin, userLogin } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const LoginForm = () => {
   const [role, setRole] = useState("student");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
   const form = useForm({
     defaultValues: {
       email: "",
@@ -112,7 +114,16 @@ const LoginForm = () => {
           </div>
           <div>
             <Button className="w-full font-semibold" type="submit">
-              Get started <ArrowRight className="ml-2" size={16} />
+              {isLoading ? (
+                <>
+                  Signing in
+                  <Loader2 className="w-4 h-4 ml-2 font-semibold animate-spin" />
+                </>
+              ) : (
+                <>
+                  Get started <ArrowRight className="ml-2" size={16} />
+                </>
+              )}
             </Button>
           </div>
         </div>

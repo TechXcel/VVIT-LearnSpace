@@ -7,18 +7,10 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 // Create a new resource
 const createResource = asyncHandler(async (req, res) => {
   // Destructuring values from the request body
-  const { title, description, subject, semester, type, tags } = req.body;
+  const { title, description, type } = req.body;
 
   // Checking if all required fields are present
-  if (
-    !title ||
-    !description ||
-    !subject ||
-    !semester ||
-    !type ||
-    !tags ||
-    tags.length === 0
-  ) {
+  if (!title || !description || !type) {
     throw new ApiError(400, "Please enter all the required fields");
   }
 
@@ -29,11 +21,15 @@ const createResource = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Resource already exists");
   }
 
+  req.body.uploader = req.user._id;
+  console.log(req.user);
+  console.log(req.file);
+
   if (req.file) {
     // Upload the file to AWS S3
     await uploadFile(
       req.file,
-      "resource",
+      "fileUrl",
       req.body.title,
       req.user.identityNumber
     );
@@ -43,13 +39,16 @@ const createResource = asyncHandler(async (req, res) => {
     req.file.originalname = perfectName;
 
     // Create the file URL based on the AWS S3 bucket structure
-    req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.user.identityNumber}/resource/${req.file.originalname}`;
+    req.body.fileUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.user.identityNumber}/fileUrl/${req.file.originalname}`;
+    console.log(req.body.fileUrl);
   }
-  // Set the uploader ID based on the authenticated user
-  req.body.uploader = req.user._id;
 
   // Create a new resource in the database
   const newResource = await Resource.create(req.body);
+  const resources = await Resource.find({ type, uploader: req.user._id }).sort({
+    createdAt: -1,
+  });
+  console.log(resources);
 
   if (!newResource) {
     throw new ApiError(500, "Something went wrong while creating the resource");
@@ -58,13 +57,7 @@ const createResource = asyncHandler(async (req, res) => {
   // Respond with a success message and the created resource
   return res
     .status(201)
-    .json(
-      new ApiResponse(
-        200,
-        { resource: newResource },
-        "Resource created successfully"
-      )
-    );
+    .json(new ApiResponse(200, { resources }, "Resource created successfully"));
 });
 
 // Get all resources
@@ -137,21 +130,78 @@ const deleteResourceById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, null, "Resource deleted successfully"));
 });
 
-
-
 const getAllNotes = asyncHandler(async (req, res) => {
-  var notes = [];
-
-  notes = await Resource.find({ type: "lectureNote" })
+  const resources = await Resource.find({ type: "lectureNote" })
     .sort({ createdAt: -1 })
     .populate({ path: "uploader" });
 
-  if (!notes || notes.length === 0) {
+  if (!resources || resources.length === 0) {
     throw new ApiError(404, "Notes do not exist");
   }
 
   // Respond with a success message and all user details
-  return res.status(200).json(new ApiResponse(200, { notes }, "Notes details"));
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { resources }, "All Notes details"));
+});
+
+export const getUserNotes = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  // Find the resource by ID
+  console.log(req.user._id);
+  const resources = await Resource.find({
+    uploader: userId,
+    type: "lectureNote",
+  }).sort({ createdAt: -1 }).populate({path:"uploader"});
+
+  if (!resources) {
+    throw new ApiError(404, "notes not found");
+  }
+
+  console.log(resources, "resources");
+  // Respond with a success message and the resource details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { resources }, "Notes details"));
+});
+
+
+export const getUserPaper = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  // Find the resource by ID
+  console.log(req.user._id);
+  const papers = await Resource.find({
+    uploader: userId,
+    type: "previousPaper",
+  }).sort({ createdAt: -1 }).populate({path:"uploader"});
+
+  if (!papers) {
+    throw new ApiError(404, "notes not found");
+  }
+
+  // Respond with a success message and the resource details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { papers }, "Papers details"));
+});
+
+export const getUserResearchPapers = asyncHandler(async (req, res) => {
+  const userId = req.user._id;
+  // Find the resource by ID
+  console.log(req.user._id);
+  const research = await Resource.find({
+    uploader: userId,
+    type: "researchPaper",
+  }).sort({ createdAt: -1 }).populate({path:"uploader"});
+
+  if (!research) {
+    throw new ApiError(404, "notes not found");
+  }
+
+  // Respond with a success message and the resource details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { research }, "Research Papers details"));
 });
 
 const getAllPapers = asyncHandler(async (req, res) => {
@@ -309,8 +359,8 @@ export const noteApproval = asyncHandler(async (req, res) => {
   await note.save();
 
   console.log(note);
-  const notes = await Resource.find({type: "lectureNote"})
-    
+  const notes = await Resource.find({ type: "lectureNote" })
+
     .sort({ createdAt: -1 });
 
   return res
@@ -319,11 +369,91 @@ export const noteApproval = asyncHandler(async (req, res) => {
       new ApiResponse(
         200,
         { notes },
-        `Note ${note.status === "approved" ? "approved" : "pending"}`
+        `${note.title} ${note.status === "approved" ? "approved" : "pending"}`
       )
     );
 });
 
+
+
+export const paperApproval = asyncHandler(async (req, res) => {
+  const { paperId } = req.params;
+
+  const paper = await Resource.findById(paperId);
+
+  if (!paper) {
+    throw new ApiError(404, "paper not found");
+  }
+
+  if (paper.status === "approved") {
+    paper.status = "pending";
+  } else {
+    paper.status = "approved";
+  }
+
+  await paper.save();
+  const type=paper.type;
+  console.log(paper);
+  const papers = await Resource.find({type})
+    .populate({path:"uploader"})
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { papers },
+        `${paper.title} ${paper.status === "approved" ? "approved" : "pending"}`
+      )
+    );
+});
+
+
+export const ResearchpaperApproval = asyncHandler(async (req, res) => {
+  const { paperId } = req.params;
+
+  const paper = await Resource.findById(paperId);
+
+  if (!paper) {
+    throw new ApiError(404, "paper not found");
+  }
+
+  if (paper.status === "approved") {
+    paper.status = "pending";
+  } else {
+    paper.status = "approved";
+  }
+
+  await paper.save();
+  const type=paper.type;
+  console.log(paper);
+  const research = await Resource.find({type})
+    .populate({path:"uploader"})
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { research },
+        `${paper.title} ${paper.status === "approved" ? "approved" : "pending"}`
+      )
+    );
+});
+
+
+export const getApprovedResearch = asyncHandler(async (req, res) => {
+  const research = await Resource.find({ status: "approved", type:"researchPaper" })
+    .sort({ createdAt: -1 })
+    .populate({ path: "uploader" });
+
+  // Respond with a success message and all resources
+  return res
+    .status(200)
+    .json(new ApiResponse(200, { research }, "All Research Papers"));
+});
 
 
 // Export all the resource-related controllers

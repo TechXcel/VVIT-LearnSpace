@@ -2,7 +2,6 @@ import axios from "@/utils/api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
-
 export const getAllStudents = createAsyncThunk(
   "/api/v1/users/students",
   async (_, { rejectWithValue }) => {
@@ -62,7 +61,6 @@ export const getAllFaculty = createAsyncThunk(
   }
 );
 
-
 export const deleteFaculty = createAsyncThunk(
   "/api/v1/users/:facultyId",
   async (payload, { rejectWithValue }) => {
@@ -83,16 +81,31 @@ export const deleteFaculty = createAsyncThunk(
   }
 );
 
-
-
-
-
+export const getUserDetails = createAsyncThunk(
+  "/api/v1/users/user/:userId",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/api/v1/users/user/${payload}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
+    user: {},
     students: [],
-    faculty:[],
+    faculty: [],
     isLoading: false,
     error: null,
   },
@@ -132,12 +145,10 @@ export const userSlice = createSlice({
       state.error = null;
     });
     builder.addCase(getAllFaculty.fulfilled, (state, { payload }) => {
-      
       state.isLoading = false;
       state.faculty = payload.data.faculty;
       //console.log(payload.data.faculty);
       toast.success(payload.message);
-     
     });
     builder.addCase(getAllFaculty.rejected, (state, { payload }) => {
       state.isLoading = false;
@@ -158,12 +169,21 @@ export const userSlice = createSlice({
       state.error = payload;
       toast.error(payload.message);
     });
-
-   
-
+    builder.addCase(getUserDetails.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getUserDetails.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.user = payload.data.user;
+      toast.success(payload.message);
+    });
+    builder.addCase(getUserDetails.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
   },
 });
-
-
 
 export default userSlice.reducer;

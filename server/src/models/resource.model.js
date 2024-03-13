@@ -19,18 +19,20 @@ const resourceSchema = new mongoose.Schema(
     fileUrl: {
       type: String,
       required: [true, "Please provide a valid file URL for this resource."],
-       default:
-        "https://learnspace.s3.ap-south-1.amazonaws.com/female.png",
+      default: "https://learnspace.s3.ap-south-1.amazonaws.com/female.png",
       validate: {
         validator: validator.isURL,
         message: "Invalid URL",
       },
     },
+    branch: {
+      type: String,
+    },
     subject: {
       type: String,
     },
     semester: {
-      type: Number,
+      type: String,
     },
     type: {
       type: String,
@@ -46,7 +48,7 @@ const resourceSchema = new mongoose.Schema(
     tags: [
       {
         type: String,
-        // required: [true, "Please provide at least one tag for this resource."],
+        required: [true, "Please provide at least one tag for this resource."],
       },
     ],
     viewCount: {

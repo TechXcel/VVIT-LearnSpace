@@ -22,6 +22,22 @@ export const getAllAssignments = createAsyncThunk(
   }
 );
 
+export const getEveryAssignment = createAsyncThunk(
+  "/api/v1/assignments/all",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/api/v1/assignments/all");
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        return error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const deleteAssignment = createAsyncThunk(
   "/api/v1/assignments/:assignmentId",
   async (payload, { rejectWithValue }) => {
@@ -82,6 +98,20 @@ export const assignmentSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(getAllAssignments.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+      toast.error(payload.message);
+    });
+    builder.addCase(getEveryAssignment.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getEveryAssignment.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.assignments = payload.data.assignments;
+      toast.success(payload.message);
+    });
+    builder.addCase(getEveryAssignment.rejected, (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       toast.error(payload.message);

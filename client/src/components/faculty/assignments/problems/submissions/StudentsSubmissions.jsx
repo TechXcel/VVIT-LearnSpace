@@ -1,5 +1,4 @@
 import DataTable from "@/components/ui/data-table";
-import { submissions } from "@/data/assignments";
 import { StudentSubmissionsColumns } from "./StudentSubmissionsColumns";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

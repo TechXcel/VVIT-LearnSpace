@@ -24,7 +24,7 @@ router.route("/students").get(getAllStudents);
 router.route("/:studentId").delete(deleteStudent);
 
 router.route("/updatePassword").post(userPasswordUpdate);
-router.route("/:userId").delete(getUserDetails);
+router.route("/user/:userId").get(getUserDetails);
 
 //faculty routes
 router.route("/faculty").get(getAllFaculty);

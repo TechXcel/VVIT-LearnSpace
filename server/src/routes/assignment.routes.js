@@ -4,11 +4,14 @@ import {
   deleteAssignmentById,
   getAllAssignments,
   getAssignmentById,
+  getEveryAssignment,
   updateAssignmentById,
 } from "../controllers/assignment.controllers.js";
 import { isAuthenticated } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/upload.middleware.js";
 const router = Router();
+
+router.route("/all").get(getEveryAssignment);
 
 router.use(isAuthenticated);
 
