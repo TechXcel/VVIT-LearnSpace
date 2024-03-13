@@ -46,6 +46,7 @@ export const FacultyNoteColumns = [
         Uploader
         <ArrowUpDown />
       </Button>
+      
     ),
   },
   {

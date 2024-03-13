@@ -13,6 +13,7 @@ import { deleteResearch } from "@/redux/resourceSlice";
 
 export const FacultyResearchColumns = [
   {
+    
     id: "select",
     header: ({ table }) => (
       <Checkbox

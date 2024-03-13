@@ -165,6 +165,7 @@ export const getUserNotes = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { resources }, "Notes details"));
 });
 
+
 export const getUserPaper = asyncHandler(async (req, res) => {
   const userId = req.user._id;
   // Find the resource by ID

@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 
+
 const FacultyPaperTable = () => {
   const dispatch = useDispatch();
   const { papers } = useSelector((state) => state.resource);

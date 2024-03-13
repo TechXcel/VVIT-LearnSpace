@@ -13,6 +13,7 @@ const FacultyNotesTable = () => {
   useEffect(() => {
     dispatch(getAllNotes());
   }, [dispatch]);
+  
   return (
     <div className="flex flex-col space-y-8">
       <div className="flex items-center justify-between">

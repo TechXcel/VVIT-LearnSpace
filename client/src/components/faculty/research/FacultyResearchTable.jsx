@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FacultyResearchColumns } from "./FacultyResearchColumns";
 
 
+
 const FacultyResearchTable = () => {
   const dispatch = useDispatch();
   const { research } = useSelector((state) => state.resource);

@@ -9,6 +9,7 @@ import { deletePapers } from "@/redux/resourceSlice";
 import ApprovalAlert from "@/components/common/ApprovalAlert";
 import { approvePaper } from "@/redux/resourceSlice";
 
+
 export const FacultyPapersColumns = [
   {
     id: "select",

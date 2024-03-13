@@ -7,6 +7,7 @@ import DeleteAlert from "@/components/common/DeleteAlert";
 import { approveProject, deleteProject } from "@/redux/projectSlice";
 import ApprovalAlert from "@/components/common/ApprovalAlert";
 
+
 export const FacultyProjectColumns = [
   {
     id: "select",
