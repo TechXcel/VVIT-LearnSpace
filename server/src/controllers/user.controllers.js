@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadFile } from "../utils/s3.js";
+import { sendGreetingEmail } from "../utils/ses.js";
 
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
@@ -21,7 +22,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ApiError(400, "User already exists");
   }
-console.log("req file",req.file)
+  console.log("req file", req.file);
   if (req.file) {
     // Upload the user's avatar to AWS S3
     await uploadFile(
@@ -37,11 +38,13 @@ console.log("req file",req.file)
 
     // Set the avatar URL based on the AWS S3 bucket structure
     req.body.avatar = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.body.identityNumber}/avatar/${req.file.originalname}`;
-    console.log(req.body.avatar)
+    console.log(req.body.avatar);
   }
 
   // Create a new user in the database
   const user = await User.create(req.body);
+
+  await sendGreetingEmail(email);
 
   // Find the created user document excluding the password field
   const createdUser = await User.findById(user._id).select("-password");
