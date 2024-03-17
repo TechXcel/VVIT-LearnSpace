@@ -56,6 +56,8 @@ const createProject = asyncHandler(async (req, res) => {
     }
   }
 
+  console.log(req.body.tags);
+
   const newProject = await Project.create(req.body);
 
   const projects = await Project.find({ owner: req.user._id }).sort({

@@ -30,6 +30,7 @@ const AddProject = () => {
   const { errors } = formState;
   const [selected, setSelected] = useState([]);
   const [open, setOpen] = useState(false);
+  console.log("selected", selected);
 
   const handleAddProject = async (data) => {
     const projectData = new FormData();

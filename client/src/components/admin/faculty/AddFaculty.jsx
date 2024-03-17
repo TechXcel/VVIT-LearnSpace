@@ -41,14 +41,14 @@ const AddFaculty = () => {
     const facultyData = new FormData();
     data.branch = department;
     data.role = "faculty";
-    console.log("faculty avatar in handlefaculty",data.avatar[0])
+    console.log("faculty avatar in handlefaculty", data.avatar[0]);
     facultyData.append("avatar", data.avatar[0]);
     Object.keys(data).forEach((key) => {
       if (key !== "avatar") {
         facultyData.append(key, data[key]);
       }
     });
-    console.log("this is faculty data",facultyData)
+    console.log("this is faculty data", facultyData);
     await dispatch(userRegister(facultyData));
     setOpen(false);
   };
@@ -107,8 +107,8 @@ const AddFaculty = () => {
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
-                      value: /^[a-zA-Z0-9._-]+@vvit.net$/,
-                      message: "Invalid email address",
+                      value: /^[a-zA-Z0-9._-]+@(vvit\.net|gmail\.com)$/,
+                      message: "Invalid email",
                     },
                   })}
                   className="col-span-3"

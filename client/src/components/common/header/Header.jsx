@@ -42,7 +42,13 @@ const Header = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Avatar className="cursor-pointer">
-                    <AvatarImage src={user.avatar} alt="avatar" />
+                    <AvatarImage
+                      src={
+                        user.avatar || "https://github.com/shaikahmadnawaz.png"
+                      }
+                      alt="avatar"
+                    />
+
                     <AvatarFallback>{user.name}</AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>

@@ -18,10 +18,10 @@ const userSchema = new Schema(
       required: [true, "Please enter your email"],
       validate: {
         validator: function (value) {
-          return /^[\w.-]+@vvit\.net$/.test(value);
+          return /^[\w.-]+@(vvit\.net|gmail\.com)$/.test(value);
         },
         message:
-          "Please enter a valid college email address (e.g., student@vvit.net)",
+          "Please enter a valid college email address (e.g., student@vvit.net or student@gmail.com)",
       },
       max: [50, "Your email cannot exceed 50 characters"],
     },

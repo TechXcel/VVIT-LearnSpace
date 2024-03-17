@@ -56,12 +56,10 @@ const ResearchDialog = ({ research }) => {
                 onClick={() => handleCopyClick(fileUrlRef)}
               >
                 <span className="sr-only">Copy</span>
-                <CopyIcon className="h-4 w-4" />
+                <CopyIcon className="w-4 h-4" />
               </Button>
             </div>
           </div>
-
-          
 
           <div className="grid items-center gap-2">
             <Label htmlFor="owner">Owner</Label>
