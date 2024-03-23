@@ -12,7 +12,7 @@ const sesClient = new SESClient({
   },
 });
 
-export const sendGreetingEmail = async (email) => {
+export const sendEmail = async (email, subject, message) => {
   const params = {
     Destination: {
       ToAddresses: [email],
@@ -21,12 +21,12 @@ export const sendGreetingEmail = async (email) => {
       Body: {
         Text: {
           Charset: "UTF-8",
-          Data: "Welcome to LearnSpace! We are glad to have you on board.",
+          Data: message,
         },
       },
       Subject: {
         Charset: "UTF-8",
-        Data: "Welcome to Our Platform",
+        Data: subject,
       },
     },
     Source: process.env.SENDER_EMAIL_ADDRESS,

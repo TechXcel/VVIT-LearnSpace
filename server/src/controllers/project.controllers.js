@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadFile } from "../utils/s3.js";
+import { sendEmail } from "../utils/ses.js";
 
 const createProject = asyncHandler(async (req, res) => {
   const { title, description, repositoryUrl, liveDemoUrl } = req.body;
@@ -205,7 +206,10 @@ const deleteProject = asyncHandler(async (req, res) => {
 const projectApproval = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
 
-  const project = await Project.findById(projectId);
+  const project = await Project.findById(projectId).populate({
+    path: "owner",
+    select: "email",
+  });
 
   if (!project) {
     throw new ApiError(404, "Project not found");
@@ -218,6 +222,21 @@ const projectApproval = asyncHandler(async (req, res) => {
   }
 
   await project.save();
+
+  console.log(project.owner.email);
+
+  if (project.status === "approved") {
+    try {
+      await sendEmail(
+        project.owner.email,
+        "Project Approval",
+        `Your project ${project.title} has been approved`
+      );
+      console.log("Approval email sent to project owner");
+    } catch (error) {
+      console.error("Error sending approval email:", error);
+    }
+  }
 
   console.log(project);
   const projects = await Project.find({})
