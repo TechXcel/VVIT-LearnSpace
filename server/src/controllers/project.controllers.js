@@ -73,6 +73,20 @@ const createProject = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { projects }, "Project added successfully"));
 });
 
+const getProjectsByRole = async (req) => {
+  let projects = [];
+
+  if (req.user.role === "student") {
+    projects = await Project.find({ owner: req.user._id }).sort({
+      createdAt: -1,
+    });
+  } else {
+    projects = await Project.find({}).sort({ createdAt: -1 });
+  }
+
+  return projects;
+};
+
 const getAllProjects = asyncHandler(async (req, res) => {
   const projects = await Project.find({})
     .sort({ createdAt: -1 })
@@ -174,9 +188,7 @@ const deleteProject = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while deleting the student");
   }
 
-  const projects = await Project.find({})
-    .populate({ path: "owner" })
-    .sort({ createdAt: -1 });
+  const projects = await getProjectsByRole(req);
 
   // Respond with a success message
   return res
