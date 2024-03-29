@@ -10,6 +10,8 @@ import notificationRouter from "../src/routes/notification.routes.js";
 import assignmentRouter from "../src/routes/assignment.routes.js";
 import problemRouter from "../src/routes/problem.routes.js";
 import submissionRouter from "../src/routes/submission.routes.js";
+import { logUserActivity } from "./utils/cloudwatch.js";
+import { isAuthenticated } from "./middlewares/auth.middleware.js";
 
 const app = express();
 
@@ -35,10 +37,9 @@ app.use(
 
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.json({ message: "Welcome to LearnSpace API" });
 });
-
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/projects", projectRouter);

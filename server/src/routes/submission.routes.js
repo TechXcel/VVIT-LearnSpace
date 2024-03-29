@@ -10,10 +10,16 @@ import {
   getSubmissionById,
   updateSubmissionById,
 } from "../controllers/submission.controllers.js";
+import { logUserActivity } from "../utils/cloudwatch.js";
 
 const router = Router();
 
 router.use(isAuthenticated);
+
+router.use(async (req, res, next) => {
+  await logUserActivity(req);
+  next();
+});
 
 router.route("/all").get(getEverySubmission);
 

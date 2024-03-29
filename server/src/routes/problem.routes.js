@@ -8,11 +8,17 @@ import {
   getProblemById,
   updateProblemById,
 } from "../controllers/problem.controllers.js";
+import { logUserActivity } from "../utils/cloudwatch.js";
 const router = Router();
 
 router.route("/:assignmentId/all").get(getEachProblem);
 
 router.use(isAuthenticated);
+
+router.use(async (req, res, next) => {
+  await logUserActivity(req);
+  next();
+});
 
 router.route("/").post(createProblem);
 router.route("/:assignmentId").get(getAllProblems);

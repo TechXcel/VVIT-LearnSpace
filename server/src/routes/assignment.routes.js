@@ -9,11 +9,17 @@ import {
 } from "../controllers/assignment.controllers.js";
 import { isAuthenticated } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/upload.middleware.js";
+import { logUserActivity } from "../utils/cloudwatch.js";
 const router = Router();
 
 router.route("/all").get(getEveryAssignment);
 
 router.use(isAuthenticated);
+
+router.use(async (req, res, next) => {
+  await logUserActivity(req);
+  next();
+});
 
 router
   .route("/")
