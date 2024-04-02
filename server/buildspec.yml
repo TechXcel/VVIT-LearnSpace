@@ -16,14 +16,14 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $REPOSITORY_URI:$ENV-$APPLICATION-$COMMIT_HASH .
+      - docker build -t $REPOSITORY_URI:$ENV-$APPLICATION-latest .
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:$ENV-$APPLICATION-$COMMIT_HASH
+      - docker push $REPOSITORY_URI:$ENV-$APPLICATION-latest
       - echo Writing image definitions file...
-      - printf '[{"name":"learnspace-server","imageUri":"%s"}]' $REPOSITORY_URI:$ENV-$APPLICATION-$COMMIT_HASH > imagedefinitions.json
+      - printf '[{"name":"learnspace-server","imageUri":"%s"}]' $REPOSITORY_URI:$ENV-$APPLICATION-latest > imagedefinitions.json
       - echo Pushing the Docker completed on `date`
       - echo Deploying  images...
 artifacts:
