@@ -1,0 +1,30 @@
+version: 0.2
+env:
+  variables:
+    REPOSITORY_URI: "730335334901.dkr.ecr.ap-south-1.amazonaws.com/learnspace-server"
+    ENV: "prod"
+    PROJECT: "VVIT-LearnSpace"
+    APPLICATION: "learnspace-server"
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 730335334901.dkr.ecr.ap-south-1.amazonaws.com
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:$ENV-$APPLICATION-$COMMIT_HASH .
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:$ENV-$APPLICATION-$COMMIT_HASH
+      - echo Writing image definitions file...
+      - printf '[{"name":"learnspace-server","imageUri":"%s"}]' $REPOSITORY_URI:$ENV-$APPLICATION-$COMMIT_HASH > imagedefinitions.json
+      - echo Pushing the Docker completed on `date`
+      - echo Deploying  images...
+artifacts:
+  files: imagedefinitions.json
