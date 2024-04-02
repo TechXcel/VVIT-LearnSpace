@@ -10,17 +10,10 @@ import notificationRouter from "../src/routes/notification.routes.js";
 import assignmentRouter from "../src/routes/assignment.routes.js";
 import problemRouter from "../src/routes/problem.routes.js";
 import submissionRouter from "../src/routes/submission.routes.js";
-import { logUserActivity } from "./utils/cloudwatch.js";
-import { isAuthenticated } from "./middlewares/auth.middleware.js";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  })
-);
+app.use(cors({ origin: "*" }));
 
 app.use(
   express.json({
