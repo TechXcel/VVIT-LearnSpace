@@ -1,7 +1,20 @@
 import LoginForm from "@/components/auth/LoginForm";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
+  useEffect(() => {
+    const adminMessage = `Admin credentials\nEmail: admin@vvit.net\nPassword: 12345`;
+    const facultyMessage = `Faculty credentials\nEmail: faculty@vvit.net\nPassword: 123456`;
+    const studentMessage = `Student credentials\nEmail: nawaz@vvit.net\nPassword: 12345`;
+
+    const message = `${adminMessage}\n\n${facultyMessage}\n\n${studentMessage}`;
+
+    toast(message, {
+      duration: 6000,
+    });
+  }, []);
   return (
     <section>
       <div className="grid items-center justify-center grid-cols-1 lg:grid-cols-2">
