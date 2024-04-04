@@ -60,3 +60,9 @@
     font-style: normal;
   }
 }
+
+.scrollbar,
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #858585 #1d1d1d;
+}
